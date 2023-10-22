@@ -35,6 +35,7 @@ struct LoginView: View {
                 CustomTextField(
                     sfIcon: "at",
                     hint: "Email ID",
+                    type: .email,
                     value: $emailID
                 )
                 

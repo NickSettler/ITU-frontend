@@ -7,10 +7,15 @@
 
 import SwiftUI
 
+enum TextFieldType: String {
+    case email, text, fullname
+}
+
 struct CustomTextField: View {
     var sfIcon: String
     var iconTint: Color = .gray
     var hint: String
+    var type: TextFieldType = .text
     /// Hides TextField
     var isPassword: Bool = false
     @Binding var value: String
@@ -28,9 +33,9 @@ struct CustomTextField: View {
         HStack(alignment: .top, spacing: 8, content: {
             Image(systemName: sfIcon)
                 .foregroundStyle(iconTint)
-                /// Since I Need Same Width to Align TextFields Equally
+            /// Since I Need Same Width to Align TextFields Equally
                 .frame(width: 30)
-                /// Slightly Bringing Down
+            /// Slightly Bringing Down
                 .offset(y: 2)
             
             VStack(alignment: .leading, spacing: 8, content: {
@@ -46,7 +51,20 @@ struct CustomTextField: View {
                         }
                     }
                 } else {
-                    TextField(hint, text: $value)
+                    switch (type) {
+                    case .text:
+                        TextField(hint, text: $value)
+                    case .email:
+                        TextField(hint, text: $value)
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                            .textContentType(.emailAddress)
+                            .keyboardType(.emailAddress)
+                    case .fullname:
+                        TextField(hint, text: $value)
+                            .textInputAutocapitalization(.words)
+                            .textContentType(.name)
+                    }
                 }
                 
                 Divider()
@@ -76,6 +94,7 @@ struct CustomTextField: View {
         CustomTextField(
             sfIcon: "at",
             hint: "Email ID",
+            type: .email,
             value: .constant("Email")
         )
         
@@ -85,6 +104,7 @@ struct CustomTextField: View {
             isPassword: true,
             value: .constant("Pass")
         )
+        .padding(.top, 5)
     }
     .padding()
 }

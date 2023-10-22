@@ -13,7 +13,7 @@ struct SignUpView: View {
     @State private var emailID: String = ""
     @State private var fullName: String = ""
     @State private var password: String = ""
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 15, content: {
             /// Back Button
@@ -39,13 +39,28 @@ struct SignUpView: View {
             
             VStack(spacing: 25) {
                 /// Custom Text Fields
-                CustomTextField(sfIcon: "at", hint: "Email ID", value: $emailID)
+                CustomTextField(
+                    sfIcon: "at",
+                    hint: "Email ID",
+                    type: .email,
+                    value: $emailID
+                )
                 
-                CustomTextField(sfIcon: "person", hint: "Full Name", value: $fullName)
-                    .padding(.top, 5)
+                CustomTextField(
+                    sfIcon: "person",
+                    hint: "Full Name",
+                    type: .fullname,
+                    value: $fullName
+                )
+                .padding(.top, 5)
                 
-                CustomTextField(sfIcon: "lock", hint: "Password", isPassword: true, value: $password)
-                    .padding(.top, 5)
+                CustomTextField(
+                    sfIcon: "lock",
+                    hint: "Password",
+                    isPassword: true,
+                    value: $password
+                )
+                .padding(.top, 5)
                 
                 Text("By signing up, you're agreeing to our **[Terms & Condition](https://apple.com)** and **[Privacy Policy](https://apple.com)**")
                     .font(.caption)
