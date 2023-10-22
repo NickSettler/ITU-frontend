@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct GradientButton: View {
+    var title: String
+    var icon: String
+    var onClick: () -> ()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: onClick, label: {
+            HStack(spacing: 15) {
+                Text(title)
+                Image(systemName: icon)
+            }
+            .fontWeight(.bold)
+            .foregroundStyle(.white)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 35)
+            .background(
+                .linearGradient(
+                    colors: [.accentColor, .orange, .red],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ),
+                in: .capsule
+            )
+        })
     }
 }
 
 #Preview {
-    GradientButton()
+    GradientButton(title: "Login", icon: "arrow.right") {
+        // Nothing
+    }
 }
