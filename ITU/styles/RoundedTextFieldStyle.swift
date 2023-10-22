@@ -7,12 +7,25 @@
 
 import SwiftUI
 
-struct RoundedTextFieldStyle: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct RoundedTextFieldStyle : TextFieldStyle {
+    @FocusState var isFocused: Bool
+    
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+                .focused($isFocused)
+                .padding(.vertical, 12)
+                .padding(.horizontal, 16)
+                .foregroundColor(.TextColorPrimary)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .strokeBorder(isFocused ? Color.Accent : Color.TextColorSecondary, lineWidth: 2)
+                )
+                .animation(isFocused ? .easeIn(duration: 0.1) : .easeOut(duration: 0.0), value: isFocused)
     }
 }
 
 #Preview {
-    RoundedTextFieldStyle()
+    TextField("Text", text: .constant("Hello"))
+        .textFieldStyle(RoundedTextFieldStyle())
+        .padding()
 }
