@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct LoginView: View {
+    @StateObject private var viewModel = LoginViewModel()
+    
     @Binding var showSignup: Bool
-    /// View Properties
-    @State private var emailID: String = ""
-    @State private var password: String = ""
     @State private var showForgotPasswordView: Bool = false
     /// Reset Password View (with New Password and Confimration Password View)
     @State private var showResetView: Bool = false
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 15, content: {
             Spacer(minLength: 0)
@@ -36,14 +35,14 @@ struct LoginView: View {
                     sfIcon: "at",
                     hint: "Email ID",
                     type: .email,
-                    value: $emailID
+                    value: $viewModel.email
                 )
                 
                 CustomTextField(
                     sfIcon: "lock",
                     hint: "Password",
                     isPassword: true,
-                    value: $password
+                    value: $viewModel.password
                 )
                 .padding(.top, 5)
                 
@@ -57,11 +56,14 @@ struct LoginView: View {
                 
                 /// Login Button
                 GradientButton(title: "Login", icon: "arrow.right") {
-                    /// YOUR CODE
+                    viewModel.signIn()
                 }
                 .hSpacing(.trailing)
                 /// Disabling Until the Data is Entered
-                .disableWithOpacity(emailID.isEmpty || password.isEmpty)
+                .disableWithOpacity(
+                    viewModel.email.isEmpty ||
+                    viewModel.password.isEmpty
+                )
             }
             .padding(.top, 20)
             
@@ -83,30 +85,6 @@ struct LoginView: View {
         .padding(.vertical, 15)
         .padding(.horizontal, 25)
         .toolbar(.hidden, for: .navigationBar)
-        /// Asking Email ID For Sending Reset Link
-//        .sheet(isPresented: $showForgotPasswordView, content: {
-//            if #available(iOS 16.4, *) {
-//                /// Since I wanted a Custom Sheet Corner Radius
-//                ForgotPassword(showResetView: $showResetView)
-//                    .presentationDetents([.height(300)])
-//                    .presentationCornerRadius(30)
-//            } else {
-//                ForgotPassword(showResetView: $showResetView)
-//                    .presentationDetents([.height(300)])
-//            }
-//        })
-        /// Resetting New Password
-//        .sheet(isPresented: $showResetView, content: {
-//            if #available(iOS 16.4, *) {
-//                /// Since I wanted a Custom Sheet Corner Radius
-//                PasswordResetView()
-//                    .presentationDetents([.height(350)])
-//                    .presentationCornerRadius(30)
-//            } else {
-//                PasswordResetView()
-//                    .presentationDetents([.height(350)])
-//            }
-//        })
     }
 }
 
