@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) var access_token: String?
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if access_token == nil {
+            AuthView()
+                .transition(
+                    .move(edge: .top).animation(.easeInOut)
+                    .combined(with: .opacity.animation(.easeInOut))
+                )
+        } else {
+            MainView()
+                .transition(.opacity)
         }
-        .padding()
     }
 }
 
