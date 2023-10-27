@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct ListView: View {
+    @AppStorage("access_token") var access_token: String?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GradientButton(title: "Log out", icon: "house.fill") {
+            self.access_token = nil
+        }
     }
 }
 
