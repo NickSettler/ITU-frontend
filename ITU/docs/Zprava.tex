@@ -68,7 +68,42 @@
 	\setcounter{page}{1}
 
 	\section{Téma}
+ \subsection{House Manager}
+ Hlavní člen týmu \textbf{Nikita Moiseev} navrhl vývoj web aplikace \textbf{House Manager}.
+
+ Aplikace „House Manager“ měla byt navržena tak, aby zefektivnila a zjednodušila správu domácnosti. Poskytuje uživatelům komplexní platformu pro efektivní správu jejich domácích úkolů a povinností.
+
+ Zde jsou klíčové prvky aplikace:
+
+\begin{enumerate}
+    \item \textbf{Kalendář a Plánování:} Uživatelé mohou plánovat domácí úkoly a úkoly pro členy domácnosti v kalendáři. Každý úkol lze přiřadit k určitému dni a času, a aplikace pošle upomínky na splnění úkolu.
+    \item \textbf{Sdílené Nákupní Seznamy:} Aplikace umožňuje vytvoření sdílených nákupních seznamů, které mohou členové domácnosti upravovat a aktualizovat. To usnadňuje nákupy potravin a domácích potřeb.
+    \item \textbf{Finanční Správa:} Uživatelé mohou sledovat domácí rozpočet, zaznamenávat výdaje a příjmy a nastavit upozornění na blížící se platby a faktury.
+\end{enumerate}
+
+ \subsection{My finance}
+Další člen týmu \textbf{Nikita Pasynkov} navrhl vývoj aplikace \textbf{My Finance} na platformě iOS.
+
+"My Finance" měla byt zaměřena na pomoc uživatelům spravovat své osobní finance, efektivně rozpočet a činit informovaná finanční rozhodnutí.
+Zde jsou hlavní prvky aplikace:
+
+\begin{enumerate}
+    \item \textbf{Sledování Výdajů:} Uživatelé mohou snadno zaznamenávat své výdaje a příjmy, kategorizovat je a sledovat, kam peníze jdou. To pomáhá vytvořit přehled o finanční situaci.
+    \item \textbf{Rozpočet:} Aplikace umožňuje vytvořit a sledovat rozpočet na základě příjmů a výdajů. Uživatelé mohou nastavit rozpočtové cíle pro různé kategorie a sledovat, zda jsou dodržovány.
+    \item \textbf{Platby a Upomínky:} Uživatelé mohou nastavit upomínky na plánované platby, faktury a důležité termíny spojené s financemi.
+\end{enumerate}
+
+\subsection{Lékárnička}
+ Členka týmu \textbf{Elena Marochkina} navrhla pro vývoj web aplikaci \textbf{Lékárnička}.
+
+ "Lékárnička" měla byt komplexní mobilní aplikace navržená tak, aby uživatelům poskytovala škálu funkcí a služeb týkajících se zdravotní péče, které jim pomohou lépe spravovat své zdraví a pohodu. Cílem je podporovat zdravější životní styl a pomáhat s lékařskými potřebami.
+
+\subsection{Společné téma}
+Ve výsledku jsme došli k závěru, že je příliš složité vyvinout backend pro aplikaci House Manager a aplikace Moje finance má na trhu příliš velkou konkurenci a uživatele naprosto uspokojuje.
+
 Jako téma projektu jsme zvolili vytvoření aplikace \textbf{Lékárnička} pro platformu iOS.
+
+Jako vývojová platforma byla vybrána platforma iOS, protože tuto platformu používají všichni členové týmu.
 
 Aplikace \textbf{Lékárnička} pomáhá uživateli s následujícím:
 \begin{itemize}
@@ -82,16 +117,23 @@ Aplikace \textbf{Lékárnička} pomáhá uživateli s následujícím:
 	\section{Průzkum uživatelských potřeb}
 
 	\subsection{Dotazník}
+ Bylo rozhodnuto provést testování pomocí obecného dotazníku. Každý člen týmu byl zodpovědný za určité záležitosti. Po odsouhlasení otázek se všemi členy týmu byl každý člen týmu zodpovědný za provedení průzkumu pro svou cílovou skupinu:
+ \begin{enumerate}
+     \item Nikita Moiseev - studenti (do 26 let)
+     \item Elena Marochkina - dospělí (od 26 do 35 let)
+     \item Nikita Pasynkov - dospělí (od 36 let)
+ \end{enumerate}
+
 Jako testovací platformu jsme použili Google Forms.
 
 Dotazník se skládal z následujících otázek a možných odpovědí.
 \begin{enumerate}
-\item Máte doma lékárničku?
+\item Máte doma lékárničku? (autor: \textbf{Elena Marochkina})
 \begin{itemize}
 \item Ano
 \item No
 \end{itemize}
-\item Jak často kontrolujete datum spotřeby svých léků?
+\item Jak často kontrolujete datum spotřeby svých léků? (autor: \textbf{Elena Marochkina})
 \begin{itemize}
     \item Jednou týdně
     \item Jednou měsíčně
@@ -99,7 +141,7 @@ Dotazník se skládal z následujících otázek a možných odpovědí.
     \item Pololetně
     \item Jednou za rok
 \end{itemize}
-\item Jak často kupujete léky??
+\item Jak často kupujete léky? (autor: \textbf{Nikita Moiseev})
 \begin{itemize}
     \item Jednou týdně
     \item Jednou měsíčně
@@ -107,22 +149,22 @@ Dotazník se skládal z následujících otázek a možných odpovědí.
     \item Pololetně
     \item Jednou za rok
 \end{itemize}
-\item Stalo se vám někdy, že jste vyhodili léky, protože vypršela doba jejich spotřeby?
+\item Stalo se vám někdy, že jste vyhodili léky, protože vypršela doba jejich spotřeby? (autor: \textbf{Nikita Pasynkov})
 \begin{itemize}
 \item Ano
 \item No
 \end{itemize}
-\item Stává se vám, že si v lékárně koupíte léky, které už máte v lékárničce?
+\item Stává se vám, že si v lékárně koupíte léky, které už máte v lékárničce? (autor: \textbf{Nikita Pasynkov})
 \begin{itemize}
 \item Ano
 \item No
 \end{itemize}
-\item Chtěli byste používat aplikaci, která vám pomůže uspořádat lékárničku?
+\item Chtěli byste používat aplikaci, která vám pomůže uspořádat lékárničku? (autor: \textbf{Nikita Moiseev})
 \begin{itemize}
 \item Ano
 \item No
 \end{itemize}
-\item Jaké funkce byste v takové aplikaci rádi viděli??
+\item Jaké funkce byste v takové aplikaci rádi viděli? (\textbf{Obecná otázka})
 \begin{itemize}
 \item Sledování data expirace
 \item Způsob uchovávání léků
@@ -238,9 +280,13 @@ Na závěr, naše připravovaná aplikace si klade za cíl zaplnit jasnou mezeru
     Rozdělení práce spočívá v tom, že každý člen týmu se specializuje na určitou část vývoje aplikace, což nakonec vede k dokončení jediné celistvé aplikace.
 
 	\subsection{Maketa}
-   krátce popište jak váš návrh řeší potřeby uživatelů (odkazujte se na
-bod 5), maketu reprezentujte pomocí obrázků, diagramů nebo snímků obrazovky a
-vhodného krátkého popisu.
+   Všichni členové týmu připravili své návrhy aplikace v nástroji Figma. Tyto návrhy byly prezentovány uživatelům s cílem získat jejich názory a zhodnocení ohledně použitelnosti a designu aplikace. Uživatelský feedback je klíčovým prvkem vývoje, který nám pomáhá zajistit, že aplikace bude co nejlepší a bude co nejlépe splňovat potřeby uživatelů.
+   \subsubsection{Maketa Moiseev Nikita}
+
+   \subsubsection{Maketa Pasynkov Nikita}
+   \subsubsection{Maketa Marochkina Elena}
+   \subsubsection{Společná Maketa}
+
 
 	\subsubsection{Testování makety}
 
