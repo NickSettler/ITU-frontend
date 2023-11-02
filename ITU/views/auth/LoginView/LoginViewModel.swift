@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 @MainActor class LoginViewModel : ObservableObject {
-    @Published var email: String = "moiseevnikita14@gmail.com"
-    @Published var password: String = "JeWedu20"
+    @Published var email: String = "test@settler.tech"
+    @Published var password: String = "PassWord"
     
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) var access_token: String?
     

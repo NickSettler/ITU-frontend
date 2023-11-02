@@ -11,8 +11,22 @@ struct ListView: View {
     @AppStorage("access_token") var access_token: String?
     
     var body: some View {
-        GradientButton(title: "Log out", icon: "house.fill") {
-            self.access_token = nil
+        List(allDrugs, id: \.id) { drug in
+            HStack (alignment: .top, spacing: 4) {
+                Image(systemName: "pill")
+                    .font(.headline)
+
+                VStack (alignment: .leading, spacing: 4) {
+                    Text(drug.name)
+                        .font(.headline)
+                    Text(drug.complement)
+                        .font(.subheadline)
+                }
+            }
+        }
+        .listStyle(.inset)
+        .refreshable {
+            //
         }
     }
 }
