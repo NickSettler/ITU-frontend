@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum TextFieldType: String {
-    case email, text, fullname
+    case email, text, first_name, last_name
 }
 
 struct CustomTextField: View {
@@ -60,10 +60,14 @@ struct CustomTextField: View {
                             .textInputAutocapitalization(.never)
                             .textContentType(.emailAddress)
                             .keyboardType(.emailAddress)
-                    case .fullname:
+                    case .first_name:
                         TextField(hint, text: $value)
                             .textInputAutocapitalization(.words)
-                            .textContentType(.name)
+                            .textContentType(.givenName)
+                    case .last_name:
+                        TextField(hint, text: $value)
+                            .textInputAutocapitalization(.words)
+                            .textContentType(.familyName)
                     }
                 }
                 

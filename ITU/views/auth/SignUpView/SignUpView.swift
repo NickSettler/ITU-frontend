@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @StateObject private var viewModel = SignUpViewModel()
+    
     @Binding var showSignup: Bool
-    /// View Properties
-    @State private var emailID: String = ""
-    @State private var fullName: String = ""
-    @State private var password: String = ""
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15, content: {
@@ -38,27 +36,34 @@ struct SignUpView: View {
                 .padding(.top, -5)
             
             VStack(spacing: 25) {
-                /// Custom Text Fields
                 CustomTextField(
                     sfIcon: "at",
                     hint: "Email ID",
                     type: .email,
-                    value: $emailID
+                    value: $viewModel.email
                 )
-                
-                CustomTextField(
-                    sfIcon: "person",
-                    hint: "Full Name",
-                    type: .fullname,
-                    value: $fullName
-                )
-                .padding(.top, 5)
                 
                 CustomTextField(
                     sfIcon: "lock",
                     hint: "Password",
                     isPassword: true,
-                    value: $password
+                    value: $viewModel.password
+                )
+                .padding(.top, 5)
+                
+                CustomTextField(
+                    sfIcon: "person",
+                    hint: "First Name",
+                    type: .first_name,
+                    value: $viewModel.firstName
+                )
+                .padding(.top, 5)
+                
+                CustomTextField(
+                    sfIcon: "person.2",
+                    hint: "Last Name",
+                    type: .first_name,
+                    value: $viewModel.lastName
                 )
                 .padding(.top, 5)
                 
@@ -73,8 +78,7 @@ struct SignUpView: View {
                     /// YOUR CODE
                 }
                 .hSpacing(.trailing)
-                /// Disabling Until the Data is Entered
-                .disableWithOpacity(emailID.isEmpty || password.isEmpty || fullName.isEmpty)
+                .disableWithOpacity(viewModel.isRegisterButtonDisabled)
             }
             .padding(.top, 20)
             

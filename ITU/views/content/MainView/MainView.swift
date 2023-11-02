@@ -14,9 +14,7 @@ struct MainView: View {
     @StateObject private var viewModel = MainViewModel()
     
     var body: some View {
-        GeometryReader {
-            let size = $0.size
-            let safeArea = $0.safeAreaInsets
+        NavigationView {
             VStack(spacing: 0) {
                 TabView(selection: $viewModel.currentTab) {
                     ListView()
@@ -25,13 +23,13 @@ struct MainView: View {
                     ListView()
                         .tag(MenuTabModel.settings)
                 }
-                .padding(.top, -20)
-                .offset(y: 20)
+                .padding(.top, -72)
+                .offset(y: 72)
                 
                 CustomTabBar()
                     .background(.clear)
             }
-        }
+        }.searchable(text: $viewModel.searchQuery)
     }
     
     @ViewBuilder
@@ -107,7 +105,7 @@ struct MenuTabItem : View {
                 .foregroundColor(activeTab == tab ? .TextColorPrimary : .TextColorSecondary)
         }
         .frame(maxWidth: .infinity)
-        .contentShape(Rectangle())
+        //        .contentShape(Rectangle())
         .viewPosition{ rect in
             tabPosition.x = rect.midX
             
