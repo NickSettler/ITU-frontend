@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 enum ApiResponseCode : String, Codable {
     case ContainsNullValues = "CONTAINS_NULL_VALUES"
@@ -37,20 +38,66 @@ enum ApiResponseCode : String, Codable {
     case ValueTooLong = "VALUE_TOO_LONG"
 }
 
-struct ApiSuccessResponse<T : Codable> : Codable {
+struct ApiSuccessResponse<T : Decodable> : Decodable {
     let data: T
+    
+    enum CodingKeys: String, CodingKey {
+        case data
+    }
 }
 
 struct ApiErrorResponseExtension : Codable {
     let code: ApiResponseCode
     let field: String?
     let type: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case code
+        case field
+        case type
+    }
 }
 
 struct ApiErrorResponseItem : Codable {
     let message: String
+    let extensions: ApiErrorResponseExtension?
+    
+    enum CodingKeys: String, CodingKey {
+        case message
+        case extensions
+    }
+    
+    init(message: String) {
+        self.message = message
+        self.extensions = nil
+    }
+    
+    init(message: String, extensions: ApiErrorResponseExtension?) {
+        self.message = message
+        self.extensions = extensions
+    }
 }
 
-struct ApiErrorResponse : Error {
-    let error: ApiErrorResponseItem
+struct ApiErrorResponse : Error, Codable {
+    let errors: [ApiErrorResponseItem]
+    
+    enum CodingKeys: String, CodingKey {
+        case errors
+    }
+    
+    static var wrongError: ApiErrorResponse {
+        get {
+            return .init(errors: [.init(message: "Something went wrong")])
+        }
+    }
+}
+
+enum ApiResult<Success: Decodable, Error: Decodable>: Decodable {
+    case success(Success)
+    case failure(Error)
+    
+    enum CodingKeys: String, CodingKey {
+        case success
+        case failure
+    }
 }

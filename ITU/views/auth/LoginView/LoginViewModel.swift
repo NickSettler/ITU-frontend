@@ -16,7 +16,7 @@ import SwiftUI
     
     func signIn() {
         Task {
-            try await AuthService().signIn(
+            await AuthService().signIn(
                 email: email,
                 password: password
             ) {r in
