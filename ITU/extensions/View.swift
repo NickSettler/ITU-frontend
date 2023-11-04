@@ -29,4 +29,12 @@ extension View {
             .disabled(condition)
             .opacity(condition ? 0.5 : 1)
     }
+    
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
 }
