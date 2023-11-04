@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct DrugsService {
+    let client = true
+}
