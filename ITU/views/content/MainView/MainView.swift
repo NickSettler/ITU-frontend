@@ -17,10 +17,10 @@ struct MainView: View {
         NavigationView {
             VStack(spacing: 0) {
                 TabView(selection: $viewModel.currentTab) {
-                    ListView()
+                    ListView(drugs: $viewModel.searchResults)
                         .tag(MenuTabModel.home)
                     
-                    ListView()
+                    SettingsView()
                         .tag(MenuTabModel.settings)
                 }
                 .padding(.top, -72)
@@ -29,7 +29,21 @@ struct MainView: View {
                 CustomTabBar()
                     .background(.clear)
             }
-        }.searchable(text: $viewModel.searchQuery)
+            .if(viewModel.currentTab == .home) {
+                $0.toolbar {
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        NavigationLink {
+                            ListView(drugs: .constant([]))
+                        } label: {
+                            Image(systemName: "plus.circle")
+                        }
+                    }
+                }
+            }
+        }
+        .if(viewModel.currentTab == .home) {
+            $0.searchable(text: $viewModel.searchQuery)
+        }
     }
     
     @ViewBuilder
@@ -105,7 +119,7 @@ struct MenuTabItem : View {
                 .foregroundColor(activeTab == tab ? .TextColorPrimary : .TextColorSecondary)
         }
         .frame(maxWidth: .infinity)
-        //        .contentShape(Rectangle())
+        .contentShape(Rectangle())
         .viewPosition{ rect in
             tabPosition.x = rect.midX
             

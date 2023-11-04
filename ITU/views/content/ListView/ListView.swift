@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct ListView: View {
+    @Binding var drugs: [Drug]
+    
     @AppStorage("access_token") var access_token: String?
     
+    @StateObject private var viewModel = ListViewModel()
+    
     var body: some View {
-        List(allDrugs, id: \.id) { drug in
+        List(self.drugs, id: \.id) { drug in
             HStack (alignment: .top, spacing: 4) {
                 Image(systemName: "pill")
                     .font(.headline)
@@ -32,5 +36,5 @@ struct ListView: View {
 }
 
 #Preview {
-    ListView()
+    ListView(drugs: .constant(allDrugs))
 }

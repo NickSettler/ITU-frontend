@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
+
+@MainActor class ListViewModel : ObservableObject {
+    @Published var searchQuery: String = ""
+    @Published var drugs: [Drug] = []
+}
