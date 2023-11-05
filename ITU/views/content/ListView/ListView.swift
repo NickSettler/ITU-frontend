@@ -9,7 +9,24 @@ import SwiftUI
 
 struct ListView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(allDrugs, id: \.id) { drug in
+            NavigationLink {
+                DrugView()
+            } label: {
+                HStack (alignment: .top, spacing: 4) {
+                    Image(systemName: "pill")
+                        .font(.headline)
+                    
+                    VStack (alignment: .leading, spacing: 4) {
+                        Text(drug.name)
+                            .font(.headline)
+                        Text(drug.complement)
+                            .font(.subheadline)
+                    }
+                }
+            }
+        }
+        .listStyle(.inset)
     }
 }
 

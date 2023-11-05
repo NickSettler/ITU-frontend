@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+@MainActor class ListViewModel : ObservableObject {
+    private var folderID: String
+    
+    init(folderID: String) {
+        self.folderID = folderID
+    }
+    
+    func handleAppear() {
+        
+    }
+}

@@ -7,103 +7,71 @@
 
 import SwiftUI
 
+let tabs = ["ALL","HOME","CAR","COUNTRY","CLUB","VILLA"]
+
 struct CommonListView: View {
-    @AppStorage("access_token") var access_token: String?
-    
     @StateObject private var viewModel = CommonListViewModel()
+    
+    @State var offset: CGFloat = 0
+    @State var offsetY: CGFloat = 0
+    
+    var size: CGSize
+    var safeArea: EdgeInsets
     
     var body: some View {
         NavigationView {
-            VStack {
-                TabButtons(selectedTab: .constant(1))
-                
-                TabView(selection: /*@START_MENU_TOKEN@*/.constant(1)/*@END_MENU_TOKEN@*/) {
-                    Text("Tab Content 1").tabItem { /*@START_MENU_TOKEN@*/Text("Tab Label 1")/*@END_MENU_TOKEN@*/ }.tag(1)
-                    Text("Tab Content 2").tabItem { /*@START_MENU_TOKEN@*/Text("Tab Label 2")/*@END_MENU_TOKEN@*/ }.tag(2)
+            SearchingView(searchText: $viewModel.searchQuery) {
+                GeometryReader{ proxy in
+                    let rect = proxy.frame(in: .global)
+                    
+                    ScrollableTabBar(
+                        tabs: tabs,
+                        rect: rect,
+                        offset: $offset
+                    ) {
+                        HStack(spacing: 0){
+                            ForEach(tabs,id: \.self){ tab in
+                                ListView()
+                                    .frame(maxWidth: .infinity)
+                            }
+                        }
+                        .ignoresSafeArea()
+                    }
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
+                .padding(.top, 48)
+                .overlay(
+                    TabBar(offset: $offset),
+                    alignment: .top
+                )
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            //
+                        } label: {
+                            Image(systemName: "plus.circle")
+                        }
+                    }
+                    
+                }
+            } searchContent: {
+                Text("SEACRHHHH")
             }
-//                List(viewModel.searchResults, id: \.id) { drug in
-//                    HStack (alignment: .top, spacing: 4) {
-//                        Image(systemName: "pill")
-//                            .font(.headline)
-//                        
-//                        VStack (alignment: .leading, spacing: 4) {
-//                            Text(drug.name)
-//                                .font(.headline)
-//                            Text(drug.complement)
-//                                .font(.subheadline)
-//                        }
-//                    }
-//                }
-//                .listStyle(.inset)
-//                .refreshable {
-//                    //
-//                }
-//                .toolbar {
-//                    ToolbarItemGroup(placement: .topBarTrailing) {
-//                        NavigationLink {
-//                            ListView()
-//                        } label: {
-//                            Image(systemName: "plus.circle")
-//                        }
-//                    }
-//                }
-//                .tag("Something")
-            
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $viewModel.searchQuery)
-    }
-}
-
-struct TabButtons: View {
-    @Binding var selectedTab: Int
-
-    var body: some View {
-        HStack {
-            Spacer()
-            VStack(spacing: 5) {
-                Image(systemName: "square.and.pencil")
-                Text("Profile")
-                    .font(.caption)
-            }
-            .onTapGesture {
-                selectedTab = 1
-            }
-            .foregroundColor(selectedTab == 1 ? .blue : .gray)
-
-            Spacer()
-            VStack(spacing: 5) {
-                Image(systemName: "dollarsign")
-                Text("Invest")
-                    .font(.caption)
-            }
-            .onTapGesture {
-                selectedTab = 2
-            }
-            .foregroundColor(selectedTab == 2 ? .blue : .gray)
-
-            Spacer()
-            VStack(spacing: 5) {
-                Image(systemName: "chart.line.uptrend.xyaxis")
-                Text("Results")
-                    .font(.caption)
-            }
-            .onTapGesture {
-                selectedTab = 3
-            }
-            .foregroundColor(selectedTab == 3 ? .blue : .gray)
-            Spacer()
-        }
-        .padding(.vertical)
-        .background(
-            Rectangle()
-                .fill(.quaternary)
+        .searchable(
+            text: $viewModel.searchQuery,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: "Search drugs"
         )
+        .onAppear {
+            Task {
+                await viewModel.getAllUserDrugs()
+            }
+        }
     }
 }
 
 #Preview {
-    CommonListView()
+    CommonListView(size: .zero, safeArea: .init(.zero))
 }

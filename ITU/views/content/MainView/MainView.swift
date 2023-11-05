@@ -14,10 +14,10 @@ struct MainView: View {
     @StateObject private var viewModel = MainViewModel()
     
     var body: some View {
-        NavigationView {
+        GeometryReader { proxy in
             VStack(spacing: 0) {
                 TabView(selection: $viewModel.currentTab) {
-                    ListView(drugs: $viewModel.searchResults)
+                    CommonListView(size: proxy.size, safeArea: proxy.safeAreaInsets)
                         .tag(MenuTabModel.home)
                     
                     SettingsView()
@@ -29,20 +29,6 @@ struct MainView: View {
                 CustomTabBar()
                     .background(.clear)
             }
-            .if(viewModel.currentTab == .home) {
-                $0.toolbar {
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        NavigationLink {
-                            ListView(drugs: .constant([]))
-                        } label: {
-                            Image(systemName: "plus.circle")
-                        }
-                    }
-                }
-            }
-        }
-        .if(viewModel.currentTab == .home) {
-            $0.searchable(text: $viewModel.searchQuery)
         }
     }
     
@@ -70,7 +56,7 @@ struct MainView: View {
                 .fill(Color.BackgroundColor)
                 .ignoresSafeArea()
                 .shadow(
-                    color: Color.ColorPrimary.opacity(0.2),
+                    color: Color.colorPrimaryLight.opacity(0.2),
                     radius: 5,
                     x: 0,
                     y: -5
@@ -99,6 +85,7 @@ struct MenuTabItem : View {
     @Binding var position: CGPoint
     
     @State private var tabPosition: CGPoint = .zero
+    @State private var isAnimated: Bool?
     
     var body: some View {
         VStack(spacing: 2) {
@@ -113,6 +100,7 @@ struct MenuTabItem : View {
                             .matchedGeometryEffect(id: "ACTIVETAB", in: animation)
                     }
                 }
+                .symbolEffect(.bounce.down.byLayer, value: isAnimated)
             
             Text(tab.rawValue)
                 .font(.caption)
@@ -128,11 +116,13 @@ struct MenuTabItem : View {
             }
         }
         .onTapGesture {
-            activeTab = tab
-            
-            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)) {
+            withAnimation(.bouncy, completionCriteria: .removed, {
+                activeTab = tab
                 position.x = tabPosition.x
-            }
+                isAnimated = true
+            }, completion: {
+                isAnimated = nil
+            })
         }
     }
 }
