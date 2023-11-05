@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct FoldersView: View {
+    @Environment(\.editMode) var editMode
+    
     @ObservedObject private var viewModel = FoldersViewModel()
     
     var body: some View {
@@ -43,33 +45,44 @@ struct FoldersView: View {
                                     viewModel.isSheetVisible = true
                                 }
                             
-                            ForEach(tabs, id: \.self) { tab in
-                                Text(tab)
+                            Text("All")
+                            
+                            ForEach(viewModel.folders, id: \.id) { folder in
+                                Text(folder.name)
                             }
-                            .onDelete(perform: { _ in
-                                //
-                            })
-                            .onMove(perform: { _,_  in
-                                //
-                            })
+                            .onDelete {
+                                viewModel.handleDelete(offsets: $0)
+                            }
+                            .onMove {
+                                viewModel.handleMove(a: $0, b: $1)
+                            }
                             .scrollContentBackground(.hidden)
                             .scrollDisabled(true)
                         }
                         .listRowBackground(Color.gray.opacity(0.1))
                     }
-                    .listStyle(.insetGrouped)
-                    .background(Color.clear)
-                    .scrollContentBackground(.hidden)
                     .frame(
                         width: proxy.size.width - 5,
-                        height: proxy.size.height - 15,
+                        height: proxy.size.height - 50,
                         alignment: .center
                     )
+                    .listStyle(.insetGrouped)
+                    .scrollContentBackground(.hidden)
                 }
             }
         }
         .sheet(isPresented: $viewModel.isSheetVisible) {
             FolderSheet()
+        }
+        .onChange(of: viewModel.isSheetVisible, initial: false) {
+            if ($0 && !$1) {
+                viewModel.getAllUserFolders()
+            }
+        }
+        .onChange(of: editMode?.wrappedValue, initial: false) {
+            if ($0 == .active && $1 == .inactive) {
+                viewModel.handleSaveChanges()
+            }
         }
         .padding(.vertical, 36)
         .toolbar {
@@ -80,6 +93,8 @@ struct FoldersView: View {
         .navigationTitle("Folders")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
+            viewModel.getAllUserFolders()
+            
             withAnimation(.smooth, completionCriteria: .logicallyComplete, {
                 viewModel.isAnimating = true
             }, completion: {
