@@ -30,26 +30,26 @@ struct CommonListView: View {
                             drugs: $viewModel.drugs,
                             folderID: ""
                         ).tag(tabs[0])
-                        //                        ListView(
-                        //                            drugs: $viewModel.drugs,
-                        //                            folderID: ""
-                        //                        ).tag(tabs[1])
-                        //                        ListView(
-                        //                            drugs: $viewModel.drugs,
-                        //                            folderID: ""
-                        //                        ).tag(tabs[2])
-                        //                        ListView(
-                        //                            drugs: $viewModel.drugs,
-                        //                            folderID: ""
-                        //                        ).tag(tabs[3])
-                        //                        ListView(
-                        //                            drugs: $viewModel.drugs,
-                        //                            folderID: ""
-                        //                        ).tag(tabs[4])
-                        //                        ListView(
-                        //                            drugs: $viewModel.drugs,
-                        //                            folderID: ""
-                        //                        ).tag(tabs[5])
+                        ListView(
+                            drugs: $viewModel.drugs,
+                            folderID: ""
+                        ).tag(tabs[1])
+                        ListView(
+                            drugs: $viewModel.drugs,
+                            folderID: ""
+                        ).tag(tabs[2])
+                        ListView(
+                            drugs: $viewModel.drugs,
+                            folderID: ""
+                        ).tag(tabs[3])
+                        ListView(
+                            drugs: $viewModel.drugs,
+                            folderID: ""
+                        ).tag(tabs[4])
+                        ListView(
+                            drugs: $viewModel.drugs,
+                            folderID: ""
+                        ).tag(tabs[5])
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
