@@ -12,6 +12,21 @@ struct SettingsView: View {
     @AppStorage(E_AUTH_STORAGE_KEYS.REFRESH_TOKEN.rawValue) private var refreshToken: String?
     
     var body: some View {
+        VStack {
+            List {
+                Section(header: Text("In-App Settings")) {
+                    HStack(alignment: .center) {
+                        Image(systemName: "folder")
+                        Text("Folders")
+                    }
+                    HStack(alignment: .center) {
+                        Image(systemName: "bell")
+                        Text("Notifications")
+                    }
+                }
+            }
+            .listStyle(.grouped)
+        }
         Button {
             withAnimation {
                 accessToken = nil

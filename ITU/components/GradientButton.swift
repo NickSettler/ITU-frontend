@@ -9,14 +9,21 @@ import SwiftUI
 
 struct GradientButton: View {
     var title: String
-    var icon: String
+    var icon: String?
+    var fullWidth: Bool = false
     var onClick: () -> ()
     
     var body: some View {
         Button(action: onClick, label: {
             HStack(spacing: 15) {
                 Text(title)
-                Image(systemName: icon)
+                
+                if let icon = self.icon {
+                    Image(systemName: icon)
+                }
+            }
+            .if(fullWidth) {
+                $0.frame(maxWidth: .infinity)
             }
             .fontWeight(.bold)
             .foregroundStyle(.white)
@@ -35,7 +42,16 @@ struct GradientButton: View {
 }
 
 #Preview {
-    GradientButton(title: "Login", icon: "arrow.right") {
-        // Nothing
+    VStack {
+        GradientButton(title: "Login", icon: "arrow.right") {
+            // Nothing
+        }
+        GradientButton(title: "Continue") {
+            // Nothing
+        }
+        GradientButton(title: "Continue", fullWidth: true) {
+            // Nothing
+        }
     }
+    .padding()
 }
