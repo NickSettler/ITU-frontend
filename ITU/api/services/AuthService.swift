@@ -30,13 +30,28 @@ struct AuthService {
         }
     }
     
-    func signUp(
+    static func signUp(
         email: String,
         password: String,
         firstName: String,
         lastName: String
-    ) async throws {
-        
+    ) async -> ApiSuccessResponse<SignInResponse>? {
+        do {
+            let data = try await NetworkManager.shared.post(
+                path: "/users",
+                parameters: [
+                    "email": email,
+                    "password": password,
+                    "first_name": firstName,
+                    "last_name": lastName,
+                ]
+            )
+            
+            return await AuthService.signIn(email: email, password: password)
+        } catch let error {
+            print(error.localizedDescription)
+            return nil
+        }
     }
     
     static func refresh() async -> ApiSuccessResponse<SignInResponse>? {

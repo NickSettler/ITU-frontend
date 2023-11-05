@@ -75,7 +75,7 @@ struct SignUpView: View {
                 
                 /// SignUp Button
                 GradientButton(title: "Continue", icon: "arrow.right") {
-                    /// YOUR CODE
+                    viewModel.signUp()
                 }
                 .hSpacing(.trailing)
                 .disableWithOpacity(viewModel.isRegisterButtonDisabled)
