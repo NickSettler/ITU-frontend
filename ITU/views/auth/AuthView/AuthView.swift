@@ -2,7 +2,7 @@
 //  AuthView.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 22.10.2023.
+//  Created by Nikita Moiseev on 22.10.2023.
 //
 
 import SwiftUI

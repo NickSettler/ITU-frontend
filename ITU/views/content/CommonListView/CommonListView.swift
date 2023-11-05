@@ -2,7 +2,7 @@
 //  ListView.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 26.10.2023.
+//  Created by Nikita Moiseev on 26.10.2023.
 //
 
 import SwiftUI
