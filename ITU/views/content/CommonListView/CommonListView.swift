@@ -51,6 +51,11 @@ struct CommonListView: View {
                             folderID: ""
                         ).tag(tabs[5])
                     }
+                    .refreshable {
+                        Task {
+                            await viewModel.getAllUserDrugs()
+                        }
+                    }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
                 .toolbar {
@@ -66,13 +71,9 @@ struct CommonListView: View {
             } searchContent: {
                 Text("SEACRHHHH")
             }
+            .navigationTitle("My drugs")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
-        }
-        .refreshable {
-            Task {
-                await viewModel.getAllUserDrugs()
-            }
         }
         .searchable(
             text: $viewModel.searchQuery,

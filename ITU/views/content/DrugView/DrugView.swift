@@ -100,11 +100,26 @@ struct DrugView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
+                        
+                        HStack (spacing: inSectionGap) {
+                            VStack (spacing: 2) {
+                                Text("Dosage")
+                                    .font(.subheadline)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Text("Blistr")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            
+                            Spacer()
+                        }
+                        
+                        
                         VStack (spacing: 2) {
-                            Text("Name")
+                            Text("Complement")
                                 .font(.subheadline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("PARACETAMOL AUROVITAS")
+                            Text("500MG TBL NOB 10 II")
                                 .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
@@ -138,33 +153,6 @@ struct DrugView: View {
                                 .font(.subheadline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Text("ČESKÁ REPUBLIKA")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        
-                        HStack (spacing: inSectionGap) {
-                            VStack (spacing: 2) {
-                                Text("Package")
-                                    .font(.subheadline)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("24")
-                                    .font(.headline)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                            VStack (spacing: 2) {
-                                Text("Route")
-                                    .font(.subheadline)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Perorální podání")
-                                    .font(.headline)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                        }
-                        VStack (spacing: 2) {
-                            Text("Name")
-                                .font(.subheadline)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("PARACETAMOL AUROVITAS")
                                 .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
