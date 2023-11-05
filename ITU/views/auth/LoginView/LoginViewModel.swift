@@ -13,25 +13,17 @@ import SwiftUI
     @Published var password: String = ""
     
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) var access_token: String?
+    @AppStorage(E_AUTH_STORAGE_KEYS.REFRESH_TOKEN.rawValue) var refresh_token: String?
     
     func signIn() {
         Task {
-            await AuthService().signIn(
-                email: email,
-                password: password
-            ) {r in
-                switch r {
-                case .success(let response):
-                    DispatchQueue.main.async {
-                        withAnimation {
-                            self.access_token = response.data.access_token
-                        }
-                    }
-                    break
-                case .failure(let error):
-                    print(error)
-                    break
+            if let res = await AuthService.signIn(email: email, password: password) {
+                await MainActor.run {
+                    self.access_token = res.data.access_token
+                    self.refresh_token = res.data.refresh_token
                 }
+            } else {
+                print("Error during login")
             }
         }
     }

@@ -2,56 +2,31 @@
 //  AuthService.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 26.10.2023.
+//  Created by Nikita Moiseev on 26.10.2023.
 //
 
 import Foundation
-import SwiftHttp
-
-
 import Alamofire
 
 struct AuthService {
-    let session = Session.default
-    
-    func signIn(
+
+    static func signIn(
         email: String,
-        password: String,
-        completion: @escaping(Result<ApiSuccessResponse<SignInResponse>, ApiErrorResponse>) -> Void
-    ) async {
-        let parameters: [String: String] = [
-            "email": email,
-            "password": password,
-        ]
-        
-        session.request(
-            "https://directus.settler.tech/auth/login",
-            method: .post,
-            parameters: parameters,
-            encoding: JSONEncoding.default
-        )
-        .validate()
-        .responseDecodable(of: ApiSuccessResponse<SignInResponse>.self) { r in
-            switch(r.result) {
-            case let .success(data):
-                completion(.success(data))
-                break
-            case .failure(_):
-                guard let data = r.data else {
-                    completion(.failure(.wrongError))
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let errorObject = try decoder.decode(ApiErrorResponse.self, from: data)
-                    completion(.failure(errorObject))
-                } catch {
-                    completion(.failure(.wrongError))
-                }
-                break
-            }
+        password: String
+    ) async -> ApiSuccessResponse<SignInResponse>? {
+        do {
+            let data = try await NetworkManager.shared.post(
+                path: "/auth/login",
+                parameters: [
+                    "email": email,
+                    "password": password
+                ]
+            )
+            let result: ApiSuccessResponse<SignInResponse> = try NetworkAPI.parseData(data: data)
+            return result
+        } catch let error {
+            print(error.localizedDescription)
+            return nil
         }
     }
     
@@ -62,5 +37,43 @@ struct AuthService {
         lastName: String
     ) async throws {
         
+    }
+    
+    static func refresh() async -> ApiSuccessResponse<SignInResponse>? {
+        guard let refreshToken = NetworkAPI.refreshToken else {
+            return nil
+        }
+        
+        do {
+            let data = try await NetworkManager.shared.post(
+                path: "/auth/refresh",
+                parameters: [
+                    "refresh_token":  refreshToken,
+                    "mode": "json"
+                ]
+            )
+            let result: ApiSuccessResponse<SignInResponse> = try NetworkAPI.parseData(data: data)
+            return result
+        } catch let error {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    static func conditionalRefresh() async throws {
+        guard let token = NetworkAPI.accessToken else {
+            throw ApiErrorResponse.noTokenError
+        }
+        
+        if (NetworkAPI.isTokenExpired(token: token)) {
+            if let res = await AuthService.refresh() {
+                await MainActor.run {
+                    NetworkAPI.accessToken = res.data.access_token
+                    NetworkAPI.refreshToken = res.data.refresh_token
+                }
+            } else {
+                print("Error during refresh")
+            }
+        }
     }
 }

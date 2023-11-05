@@ -15,4 +15,5 @@ struct SignInResponse : Codable {
 
 enum E_AUTH_STORAGE_KEYS : String {
     case ACCESS_TOKEN = "access_token"
+    case REFRESH_TOKEN = "refresh_token"
 }

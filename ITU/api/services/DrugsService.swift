@@ -15,52 +15,19 @@ struct DrugsService {
     
     static let session = Session.default
     
-    static func getAllUserDrugs(completion: @escaping(Result<ApiSuccessResponse<GetAllUsersDrugsResponse>, ApiErrorResponse>) -> Void) async {
-        guard let token = accessToken else {
-            completion(.failure(.noTokenError))
-            return
-        }
+    static func getAllUserDrugs() async -> ApiSuccessResponse<GetAllUsersDrugsResponse>? {
+        try? await AuthService.conditionalRefresh()
         
-        guard let decodedToken = try? decode(jwt: token) else {
-            completion(.failure(.noTokenError))
-            return
-        }
-        
-        guard let userID = decodedToken.body["id"] else {
-            completion(.failure(.noTokenError))
-            return
-        }
-        
-        session.request(
-            "https://directus.settler.tech/items/user_drugs",
-            method: .get,
-            encoding: JSONEncoding.default,
-            headers: [
-                "Authorization": "Bearer " + token
-            ]
-        )
-        .validate()
-        .responseDecodable(of: ApiSuccessResponse<GetAllUsersDrugsResponse>.self) { r in
-            switch(r.result) {
-            case let .success(data):
-                completion(.success(data))
-                break
-            case .failure(_):
-                guard let data = r.data else {
-                    completion(.failure(.wrongError))
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let errorObject = try decoder.decode(ApiErrorResponse.self, from: data)
-                    completion(.failure(errorObject))
-                } catch {
-                    completion(.failure(.wrongError))
-                }
-                break
-            }
+        do {
+            let data = try await NetworkManager.shared.get(
+                path: "/items/user_drugs?fields=*.*.*",
+                parameters: nil
+            )
+            let result: ApiSuccessResponse<GetAllUsersDrugsResponse> = try NetworkAPI.parseData(data: data)
+            return result
+        } catch let error {
+            print(error.localizedDescription)
+            return nil
         }
     }
 }
