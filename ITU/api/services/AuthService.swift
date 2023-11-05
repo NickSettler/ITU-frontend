@@ -8,42 +8,6 @@
 import Foundation
 import SwiftHttp
 
-//struct AuthService : HttpCodablePipelineCollection {
-//    let client: HttpClient = UrlSessionHttpClient(session: .shared, logLevel: .debug)
-//    let apiBaseUrl = HttpUrl(scheme: "https", host: "directus.settler.tech")
-//    
-//    func signIn(
-//        email: String,
-//        password: String,
-//        completion: @escaping(Result<ApiSuccessResponse<SignInResponse>, ApiErrorResponse>) -> Void
-//    ) async throws {
-//        guard let body = try? JSONEncoder().encode([
-//            "email": email,
-//            "password": password
-//        ]) else {
-//            completion(.failure(.init(errors: [.init(message: "Error encoding JSON body")])))
-//            return
-//        }
-//        
-//        do {
-//            let response: ApiSuccessResponse<SignInResponse> = try await decodableRequest(
-//                executor: client.dataTask,
-//                url: apiBaseUrl.path("auth/login"),
-//                method: .post,
-//                body: body,
-//                headers: [
-//                    "Content-Type": "application/json"
-//                ]
-//            )
-//            
-//            completion(.success(response))
-//        } catch {
-//            completion(.failure(error as! ApiErrorResponse))
-//            print(error)
-//        }
-//    }
-//}
-
 
 import Alamofire
 
