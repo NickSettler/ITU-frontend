@@ -12,28 +12,40 @@ struct SettingsView: View {
     @AppStorage(E_AUTH_STORAGE_KEYS.REFRESH_TOKEN.rawValue) private var refreshToken: String?
     
     var body: some View {
-        VStack {
-            List {
-                Section(header: Text("In-App Settings")) {
-                    HStack(alignment: .center) {
-                        Image(systemName: "folder")
-                        Text("Folders")
+        NavigationStack {
+            VStack {
+                List {
+                    Section(header: Text("In-App Settings")) {
+                        NavigationLink {
+                            FoldersView()
+                        } label: {
+                            HStack(alignment: .center) {
+                                Image(systemName: "folder")
+                                Text("Folders")
+                            }
+                        }
+                        HStack(alignment: .center) {
+                            Image(systemName: "bell")
+                            Text("Notifications")
+                        }
                     }
-                    HStack(alignment: .center) {
-                        Image(systemName: "bell")
-                        Text("Notifications")
+                    Section(header: Text("Auth")) {
+                        HStack(alignment: .center) {
+                            Image(systemName: "door.right.hand.open")
+                            Text("Log out")
+                        }
+                        .onTapGesture {
+                            withAnimation {
+                                accessToken = nil
+                                refreshToken = nil
+                            }
+                        }
                     }
                 }
+                .listStyle(.grouped)
             }
-            .listStyle(.grouped)
-        }
-        Button {
-            withAnimation {
-                accessToken = nil
-                refreshToken = nil
-            }
-        } label: {
-            Text("Log out")
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

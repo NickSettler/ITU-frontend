@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+@MainActor class FoldersViewModel : ObservableObject {
+    @Published var isAnimating: Bool = true
+    @Published var isSheetVisible: Bool = false
+}
