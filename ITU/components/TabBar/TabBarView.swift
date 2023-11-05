@@ -8,11 +8,30 @@
 import SwiftUI
 
 struct TabBarView: View {
+    @Binding var currentTab: String
+    @Namespace var namespace
+    
+    var tabBarOptions: [String] = ["Hello World", "This is", "Something cool that I'm doing"]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 20) {
+                ForEach(tabs, id: \.self) { tab in
+                    TabBarItem(
+                        currentTab: self.$currentTab,
+                        namespace: namespace.self,
+                        tabBarItemName: tab,
+                        tab: tab
+                    )
+                    
+                }
+            }
+            .padding(.horizontal)
+        }
+        .background(Color.white)
+        .frame(height: 48)
     }
 }
 
 #Preview {
-    TabBarView()
+    TabBarView(currentTab: .constant(tabs[0]))
 }

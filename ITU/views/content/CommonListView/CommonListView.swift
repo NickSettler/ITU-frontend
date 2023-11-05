@@ -10,7 +10,7 @@ import SwiftUI
 let tabs = ["ALL","HOME","CAR","COUNTRY","CLUB","VILLA"]
 
 struct CommonListView: View {
-    @StateObject private var viewModel = CommonListViewModel()
+    @ObservedObject private var viewModel = CommonListViewModel()
     
     @State var offset: CGFloat = 0
     @State var offsetY: CGFloat = 0
@@ -18,31 +18,41 @@ struct CommonListView: View {
     var size: CGSize
     var safeArea: EdgeInsets
     
+    @State var currentTab: String = tabs[0]
+    
     var body: some View {
         NavigationView {
             SearchingView(searchText: $viewModel.searchQuery) {
-                GeometryReader{ proxy in
-                    let rect = proxy.frame(in: .global)
-                    
-                    ScrollableTabBar(
-                        tabs: tabs,
-                        rect: rect,
-                        offset: $offset
-                    ) {
-                        HStack(spacing: 0){
-                            ForEach(tabs,id: \.self){ tab in
-                                ListView()
-                                    .frame(maxWidth: .infinity)
-                            }
-                        }
-                        .ignoresSafeArea()
+                VStack {
+                    TabBarView(currentTab: self.$currentTab)
+                    TabView(selection: self.$currentTab) {
+                        ListView(
+                            drugs: $viewModel.drugs,
+                            folderID: ""
+                        ).tag(tabs[0])
+                        //                        ListView(
+                        //                            drugs: $viewModel.drugs,
+                        //                            folderID: ""
+                        //                        ).tag(tabs[1])
+                        //                        ListView(
+                        //                            drugs: $viewModel.drugs,
+                        //                            folderID: ""
+                        //                        ).tag(tabs[2])
+                        //                        ListView(
+                        //                            drugs: $viewModel.drugs,
+                        //                            folderID: ""
+                        //                        ).tag(tabs[3])
+                        //                        ListView(
+                        //                            drugs: $viewModel.drugs,
+                        //                            folderID: ""
+                        //                        ).tag(tabs[4])
+                        //                        ListView(
+                        //                            drugs: $viewModel.drugs,
+                        //                            folderID: ""
+                        //                        ).tag(tabs[5])
                     }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
                 }
-                .padding(.top, 48)
-                .overlay(
-                    TabBar(offset: $offset),
-                    alignment: .top
-                )
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
@@ -58,6 +68,11 @@ struct CommonListView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
+        }
+        .refreshable {
+            Task {
+                await viewModel.getAllUserDrugs()
+            }
         }
         .searchable(
             text: $viewModel.searchQuery,
