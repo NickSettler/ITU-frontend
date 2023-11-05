@@ -13,8 +13,6 @@ import JWTDecode
 struct DrugsService {
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) private static var accessToken: String?
     
-    static let session = Session.default
-    
     static func getAllUserDrugs() async -> ApiSuccessResponse<GetAllUsersDrugsResponse>? {
         try? await AuthService.conditionalRefresh()
         
