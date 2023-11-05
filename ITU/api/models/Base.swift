@@ -90,6 +90,12 @@ struct ApiErrorResponse : Error, Codable {
             return .init(errors: [.init(message: "Something went wrong")])
         }
     }
+    
+    static var noTokenError: ApiErrorResponse {
+        get {
+            return .init(errors: [.init(message: "No token is present")])
+        }
+    }
 }
 
 enum ApiResult<Success: Decodable, Error: Decodable>: Decodable {
