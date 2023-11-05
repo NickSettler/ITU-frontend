@@ -2,7 +2,7 @@
 //  MenuTabPosition.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 27.10.2023.
+//  Created by Elena Marochkina on 27.10.2023.
 //
 
 import SwiftUI

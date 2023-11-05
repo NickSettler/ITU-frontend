@@ -2,7 +2,7 @@
 //  CustomTextField.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 22.10.2023.
+//  Created by Elena Marochkina on 22.10.2023.
 //
 
 import SwiftUI
@@ -45,9 +45,17 @@ struct CustomTextField: View {
                         if showPassword {
                             TextField(hint, text: $value)
                                 .focused($passwordState, equals: .reveal)
+                                .autocorrectionDisabled()
+                                .textInputAutocapitalization(.never)
+                                .textContentType(.password)
+                                .keyboardType(.default)
                         } else {
                             SecureField(hint, text: $value)
                                 .focused($passwordState, equals: .hide)
+                                .autocorrectionDisabled()
+                                .textInputAutocapitalization(.never)
+                                .textContentType(.password)
+                                .keyboardType(.default)
                         }
                     }
                 } else {

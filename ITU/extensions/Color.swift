@@ -2,7 +2,7 @@
 //  Color.swift
 //  Finance App
 //
-//  Created by Nikita Moiseev on 26.05.2023.
+//  Created by Elena Marochkina on 21.10.2023.
 //
 
 import Foundation
