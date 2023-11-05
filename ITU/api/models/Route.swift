@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Route : Decodable {
+struct Route : Codable {
     var route: String
     var name: String
 }

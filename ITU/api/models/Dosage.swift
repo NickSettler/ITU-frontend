@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Dosage : Decodable {
+struct Dosage : Codable {
     var form: String
     var name: String
 }

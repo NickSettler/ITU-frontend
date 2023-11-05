@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Drug : Codable {
+struct Drug : Codable, Identifiable {
     var id: Int
     var name: String
-    var complement: String
+    var complement: String?
     var strength: String?
     var form: Form?
     var package: String?
@@ -18,15 +18,34 @@ struct Drug : Codable {
     var dosage: Dosage?
     var organization: Organization?
     var organization_country: Country?
-    var user_created: User?
+    var user_created: User
     var user_updated: User?
-    var date_created: String?
+    var date_created: String
     var date_updated: String?
     
     enum CodingKeys: CodingKey {
         case id
         case name
         case complement
+        case strength
+        case form
+        case package
+        case route
+        case dosage
+        case organization
+        case organization_country
+        case user_created
+        case user_updated
+        case date_created
+        case date_updated
+    }
+    
+    init(id: Int, name: String, complement: String) {
+        self.id = id
+        self.name = name
+        self.complement = complement
+        self.date_created = ""
+        self.user_created = .init(id: "f4aca9df-fb67-4f14-b321-cdbf3c985383")
     }
 }
 

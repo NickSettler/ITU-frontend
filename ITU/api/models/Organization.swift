@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Organization : Decodable {
+struct Organization : Codable {
     var code: String
     var country: Country
     var name: String
