@@ -5,12 +5,22 @@
 //  Created by Никита Моисеев on 04.11.2023.
 //
 
+import SwiftUI
 import Foundation
 
 @MainActor class ListViewModel : ObservableObject {
-    private var folderID: String
+    @Binding var drugs: [Drug]
     
-    init(folderID: String) {
+//    var drugs: [Drug] {
+//        get {
+//            self.drugsBinding.wrappedValue
+//        }
+//    }
+    
+    @Published var folderID: String
+    
+    init(drugs: Binding<[Drug]>, folderID: String) {
+        self._drugs = drugs
         self.folderID = folderID
     }
     
