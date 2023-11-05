@@ -12,7 +12,14 @@ import SwiftUI
     @Published var selectedFolder: String = tabs[0]
     @Published var searchQuery: String = ""
     
+    @Published var folders: [Folder] = defaultFolders
     @Published var drugs: [Drug] = []
+    
+    func getAllUserFolders() {
+        Task {
+//            await
+        }
+    }
     
     func getAllUserDrugs() async {
         if let res = await DrugsService.getAllUserDrugs() {
