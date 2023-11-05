@@ -2,7 +2,7 @@
 //  MenuTabModel.swift
 //  ITU
 //
-//  Created by Elena Marochkina on 27.10.2023.
+//  Created by Nikita Pasynkov, Elena Marochkina on 27.10.2023.
 //
 
 import Foundation

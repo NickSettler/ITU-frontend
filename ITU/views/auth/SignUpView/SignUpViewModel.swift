@@ -2,7 +2,7 @@
 //  SignUpViewModel.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov on 30.10.2023.
+//  Created by Nikita Pasynkov, Elena Marochkina on 30.10.2023.
 //
 
 import Foundation
@@ -12,10 +12,10 @@ import SwiftUI
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) var access_token: String?
     @AppStorage(E_AUTH_STORAGE_KEYS.REFRESH_TOKEN.rawValue) var refresh_token: String?
     
-    @Published var email: String = "test123@settler.tech"
-    @Published var password: String = "PassWord"
-    @Published var lastName: String = "Nick"
-    @Published var firstName: String = "Settler clone"
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var lastName: String = ""
+    @Published var firstName: String = ""
     
     @Published var isLoading: Bool = false
     

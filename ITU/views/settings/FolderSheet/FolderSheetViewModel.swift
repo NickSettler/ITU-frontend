@@ -2,7 +2,7 @@
 //  FolderSheetViewModel.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov on 05.11.2023.
+//  Created by Nikita Pasynkov, Elena Marochkina on 05.11.2023.
 //
 
 import SwiftUI
