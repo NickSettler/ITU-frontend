@@ -7,12 +7,39 @@
 
 import SwiftUI
 
-struct SearchingView: View {
+struct SearchingView<MContent : View, SContent: View>: View {
+    @Environment(\.isSearching) private var isSearching
+    @Binding var searchText: String
+    
+    var mainContent: MContent
+    var searchContent: SContent
+    
+    init(
+        searchText: Binding<String>,
+        @ViewBuilder mainContent: () -> MContent,
+        @ViewBuilder searchContent: () -> SContent
+    ) {
+        self._searchText = searchText
+        self.mainContent = mainContent()
+        self.searchContent = searchContent()
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if isSearching {
+            searchContent
+        } else {
+            mainContent
+        }
     }
 }
 
 #Preview {
-    SearchingView()
+    NavigationView {
+        SearchingView(searchText: .constant("")) {
+            Text("MAIN")
+        } searchContent: {
+            Text("SEARCH")
+        }
+        .searchable(text: .constant(""))
+    }
 }
