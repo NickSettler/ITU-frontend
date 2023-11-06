@@ -10,13 +10,6 @@ import Foundation
 
 @MainActor class ListViewModel : ObservableObject {
     @Binding var drugs: [Drug]
-    
-//    var drugs: [Drug] {
-//        get {
-//            self.drugsBinding.wrappedValue
-//        }
-//    }
-    
     @Published var folderID: String
     
     init(drugs: Binding<[Drug]>, folderID: String) {

@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct DrugView: View {
+    @StateObject var viewModel: DrugViewModel
+    
     @State var scrollOffset: CGPoint = .zero
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     private let inSectionGap: CGFloat = 8
+    
+    init(drug: Binding<Drug>) {
+        self._viewModel = StateObject(
+            wrappedValue: DrugViewModel(drug: drug)
+        )
+    }
     
     var body: some View {
         ScrollView {
@@ -46,6 +54,9 @@ struct DrugView: View {
                                 .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
+                    }
+                    .onTapGesture {
+                        self.viewModel.drugBinding.name = "SOME"
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
@@ -164,7 +175,7 @@ struct DrugView: View {
                 }
             }
         }
-        .navigationTitle("PARACETAMOL AUROVITAS")
+        .navigationTitle(viewModel.drugBinding.name)
         .navigationBarTitleDisplayMode(.inline)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -172,6 +183,6 @@ struct DrugView: View {
 
 #Preview {
     NavigationView {
-        DrugView()
+        DrugView(drug: .constant(allDrugs[0]))
     }
 }

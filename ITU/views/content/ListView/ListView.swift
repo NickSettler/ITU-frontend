@@ -8,45 +8,44 @@
 import SwiftUI
 
 struct ListView: View {
-    @ObservedObject private var viewModel: ListViewModel
+    @Namespace var animation
     
     @Binding var drugs: [Drug]
     
+    @ObservedObject var viewModel = ListViewModel(drugs: .constant([]), folderID: "")
+    
     init(drugs: Binding<[Drug]>, folderID: String) {
-        print(drugs.wrappedValue)
         self._drugs = drugs
-        self._viewModel = ObservedObject(initialValue: ListViewModel(drugs: drugs, folderID: folderID))
+        self._viewModel = ObservedObject(wrappedValue: ListViewModel(drugs: drugs, folderID: folderID)
+        )
     }
     
     var body: some View {
-        VStack {
-            List {
-                ForEach(self.drugs, id: \.id) { drug in
-                    NavigationLink {
-                        DrugView()
-                    } label: {
-                        HStack (alignment: .top, spacing: 4) {
-                            Image(systemName: "pill")
-                                .font(.headline)
-                            
-                            VStack (alignment: .leading, spacing: 4) {
-                                Text(drug.name)
-                                    .font(.headline)
-                                Text(drug.complement ?? "")
-                                    .font(.subheadline)
-                            }
-                        }
-                    }
+        ScrollView(.vertical) {
+            ForEach(self.viewModel.drugs.indices, id: \.self) { index in
+                let drug = $viewModel.drugs[index]
+                NavigationLink {
+                    DrugView(drug: drug)
+                } label: {
+                    DrugCard(drug: drug)
                 }
+                .if(index == 0) {
+                    $0.padding(.top, 12)
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 12)
             }
-            .listStyle(.inset)
         }
     }
 }
 
 #Preview {
-    ListView(
-        drugs: .constant(allDrugs),
-        folderID: ""
-    )
+    NavigationStack {
+        ListView(
+            drugs: .constant(allDrugs),
+            folderID: ""
+        )
+        .navigationTitle("List")
+        .navigationBarTitleDisplayMode(.inline)
+    }
 }

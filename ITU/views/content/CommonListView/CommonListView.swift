@@ -10,7 +10,7 @@ import SwiftUI
 let tabs = ["ALL","HOME","CAR","COUNTRY","CLUB","VILLA"]
 
 struct CommonListView: View {
-    @ObservedObject private var viewModel = CommonListViewModel()
+    @StateObject var viewModel = CommonListViewModel()
     
     @State var offset: CGFloat = 0
     @State var offsetY: CGFloat = 0
@@ -19,42 +19,25 @@ struct CommonListView: View {
     var safeArea: EdgeInsets
     
     @State var currentTab: String = tabs[0]
+    @State var drugs: [Drug] = []
     
     var body: some View {
         NavigationView {
             SearchingView(searchText: $viewModel.searchQuery) {
-                VStack {
+                VStack(spacing: 0) {
                     TabBarView(currentTab: self.$currentTab)
+                    
                     TabView(selection: self.$currentTab) {
-                        ListView(
-                            drugs: $viewModel.drugs,
-                            folderID: ""
-                        ).tag(tabs[0])
-                        ListView(
-                            drugs: $viewModel.drugs,
-                            folderID: ""
-                        ).tag(tabs[1])
-                        ListView(
-                            drugs: $viewModel.drugs,
-                            folderID: ""
-                        ).tag(tabs[2])
-                        ListView(
-                            drugs: $viewModel.drugs,
-                            folderID: ""
-                        ).tag(tabs[3])
-                        ListView(
-                            drugs: $viewModel.drugs,
-                            folderID: ""
-                        ).tag(tabs[4])
-                        ListView(
-                            drugs: $viewModel.drugs,
-                            folderID: ""
-                        ).tag(tabs[5])
+                        ForEach(tabs, id: \.self) { tab in
+                            ListView(
+                                drugs: $viewModel.drugs,
+                                folderID: tab
+                            )
+                            .tag(tab)
+                        }
                     }
                     .refreshable {
-                        Task {
-                            await viewModel.getAllUserDrugs()
-                        }
+                        viewModel.getAllUserDrugs()
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
@@ -81,9 +64,7 @@ struct CommonListView: View {
             prompt: "Search drugs"
         )
         .onAppear {
-            Task {
-                await viewModel.getAllUserDrugs()
-            }
+            viewModel.getAllUserDrugs()
         }
     }
 }

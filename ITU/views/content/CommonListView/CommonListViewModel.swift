@@ -13,7 +13,7 @@ import SwiftUI
     @Published var searchQuery: String = ""
     
     @Published var folders: [Folder] = defaultFolders
-    @Published var drugs: [Drug] = []
+    @Published var drugs: [Drug] = allDrugs
     
     func getAllUserFolders() {
         Task {
@@ -21,14 +21,15 @@ import SwiftUI
         }
     }
     
-    func getAllUserDrugs() async {
-        if let res = await DrugsService.getAllUserDrugs() {
-            await MainActor.run {
-//                print(res.data)
-                self.drugs = res.data
+    func getAllUserDrugs() {
+        Task {
+            if let res = await DrugsService.getAllUserDrugs() {
+                await MainActor.run {
+                    self.drugs = res.data
+                }
+            } else {
+                print("Failed fetching drugs")
             }
-        } else {
-            print("Failed fetching drugs")
         }
     }
 }
