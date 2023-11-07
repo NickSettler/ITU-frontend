@@ -10,7 +10,7 @@ import SwiftUI
 struct FoldersView: View {
     @Environment(\.editMode) var editMode
     
-    @ObservedObject private var viewModel = FoldersViewModel()
+    @StateObject private var viewModel = FoldersViewModel()
     
     var body: some View {
         GeometryReader { proxy in
