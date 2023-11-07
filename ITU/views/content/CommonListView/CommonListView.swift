@@ -18,25 +18,26 @@ struct CommonListView: View {
     var size: CGSize
     var safeArea: EdgeInsets
     
-    @State var currentTab: String = tabs[0]
-    @State var drugs: [Drug] = []
-    
     var body: some View {
         NavigationView {
             SearchingView(searchText: $viewModel.searchQuery) {
                 VStack(spacing: 0) {
-                    TabBarView(currentTab: self.$currentTab)
+                    TabBarView(
+                        currentFolder: self.$viewModel.selectedFolder,
+                        folders: self.$viewModel.folders
+                    )
                     
-                    TabView(selection: self.$currentTab) {
-                        ForEach(tabs, id: \.self) { tab in
+                    TabView(selection: self.$viewModel.selectedFolder) {
+                        ForEach(self.viewModel.folders, id: \.id) { folder in
                             ListView(
                                 drugs: $viewModel.drugs,
-                                folderID: tab
+                                folderID: folder.id
                             )
-                            .tag(tab)
+                            .tag(folder)
                         }
                     }
                     .refreshable {
+                        viewModel.getAllUserFolders()
                         viewModel.getAllUserDrugs()
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
@@ -64,6 +65,7 @@ struct CommonListView: View {
             prompt: "Search drugs"
         )
         .onAppear {
+            viewModel.getAllUserFolders()
             viewModel.getAllUserDrugs()
         }
     }

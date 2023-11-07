@@ -8,22 +8,25 @@
 import SwiftUI
 
 struct TabBarItem: View {
-    @Binding var currentTab: String
+    @Binding var currentFolder: Folder
     let namespace: Namespace.ID
     
-    var tabBarItemName: String
-    var tab: String
+    var folder: Folder
     
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0.3)) {
-                self.currentTab = tab
+                self.currentFolder = folder
             }
         } label: {
-            VStack {
+            VStack(spacing: 0) {
                 Spacer()
-                Text(tabBarItemName)
-                if currentTab == tab {
+                Text(folder.name)
+                    .font(.callout)
+                    .fontWeight(.medium)
+                    .padding(.bottom, 8)
+                
+                if currentFolder == folder {
                     Color.colorPrimaryLight
                         .frame(height: 2)
                         .matchedGeometryEffect(
@@ -35,25 +38,24 @@ struct TabBarItem: View {
                     Color.clear.frame(height: 2)
                 }
             }
-            .animation(.spring(.smooth, blendDuration: 0.15), value: self.currentTab)
+            .animation(
+                .spring(.smooth, blendDuration: 0.15),
+                value: self.currentFolder
+            )
         }
         .buttonStyle(.plain)
-        .fontWeight(.bold)
         .foregroundColor(
-            currentTab == tab
+            currentFolder == folder
             ? Color.colorPrimaryLight
             : Color.textColorSecondary
         )
+        .padding(.horizontal, 8)
     }
 }
 
 #Preview {
-    @Namespace var namespace
-    
-    return TabBarItem(
-        currentTab: .constant("ALL"),
-        namespace: namespace.self,
-        tabBarItemName: "All",
-        tab: "ALL"
+    TabBarView(
+        currentFolder: .constant(.allFolder),
+        folders: .constant([.allFolder])
     )
 }

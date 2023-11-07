@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Folder : Codable, Identifiable, Equatable {
+struct Folder : Codable, Identifiable, Equatable, Hashable {
     var id: String
     var name: String
     var sort: Int?
@@ -18,6 +18,11 @@ struct Folder : Codable, Identifiable, Equatable {
         case sort
     }
     
+    static var allFolder: Folder {
+        get {
+            .init(id: "ALL", name: "All", sort: 0)
+        }
+    }
     
     static func == (lhs: Folder, rhs: Folder) -> Bool {
         return lhs.id == rhs.id
@@ -26,7 +31,3 @@ struct Folder : Codable, Identifiable, Equatable {
 
 
 typealias GetAllUserFoldersResponse = [Folder]
-
-let defaultFolders: [Folder] = [
-    .init(id: "ALL", name: "All", sort: 1)
-]

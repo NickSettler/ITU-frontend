@@ -9,15 +9,25 @@ import Foundation
 import SwiftUI
 
 @MainActor class CommonListViewModel : ObservableObject {
-    @Published var selectedFolder: String = tabs[0]
+    @Published var selectedFolder: Folder = .allFolder
     @Published var searchQuery: String = ""
     
-    @Published var folders: [Folder] = defaultFolders
-    @Published var drugs: [Drug] = allDrugs
+    @Published var folders: [Folder] = [.allFolder]
+    @Published var drugs: [Drug] = []
     
     func getAllUserFolders() {
         Task {
-//            await
+            if let res = await FoldersService.getFolders() {
+                await MainActor.run {
+                    self.folders = [.allFolder] + res.data
+                    
+                    if (!self.folders.contains(keyPath: \.id, matching: self.selectedFolder.id)) {
+                        self.selectedFolder = .allFolder
+                    }
+                }
+            } else {
+                print("Failed fetching folders")
+            }
         }
     }
     

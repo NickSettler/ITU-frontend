@@ -8,24 +8,24 @@
 import SwiftUI
 
 struct TabBarView: View {
-    @Binding var currentTab: String
+    @Binding var currentFolder: Folder
+    @Binding var folders: [Folder]
     @Namespace var namespace
-    
-    var tabBarOptions: [String] = ["Hello World", "This is", "Something cool that I'm doing"]
+
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 20) {
-                ForEach(tabs, id: \.self) { tab in
-                    TabBarItem(
-                        currentTab: self.$currentTab,
-                        namespace: namespace.self,
-                        tabBarItemName: tab,
-                        tab: tab
-                    )
-                    
+        HStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 0) {
+                    ForEach(self.folders, id: \.id) { folder in
+                        TabBarItem(
+                            currentFolder: self.$currentFolder,
+                            namespace: namespace.self,
+                            folder: folder
+                        )
+                    }
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
             .background(Color.white)
         }
         .frame(height: 48)
@@ -44,5 +44,8 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView(currentTab: .constant(tabs[0]))
+    TabBarView(
+        currentFolder: .constant(.allFolder),
+        folders: .constant([.allFolder])
+    )
 }
