@@ -22,8 +22,8 @@ struct ListView: View {
     
     var body: some View {
         ScrollView(.vertical) {
-            ForEach(self.viewModel.drugs.indices, id: \.self) { index in
-                let drug = $viewModel.drugs[index]
+            ForEach(self.viewModel.filteredDrugs.indices, id: \.self) { index in
+                let drug = self.$viewModel.filteredDrugs[index]
                 NavigationLink {
                     DrugView(drug: drug)
                 } label: {
