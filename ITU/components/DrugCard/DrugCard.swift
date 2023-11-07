@@ -40,31 +40,16 @@ struct DrugCard: View {
                         .foregroundStyle(Color.textColorSecondary)
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
         }
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: Color.textColorPrimary.opacity(0.05), radius: 8, x: 0, y: 4)
-        .shadow(color: Color.textColorPrimary.opacity(0.1), radius: 24, x: 0, y: 4)
+        .shadow(color: Color.textColorSecondary.opacity(0.15), radius: 8, x: 0, y: 1)
+        .shadow(color: Color.textColorPrimary.opacity(0.05), radius: 12, x: 0, y: 2)
     }
 }
 
 #Preview {
-    NavigationStack {
-        List {
-            ForEach(allDrugs, id: \.id) { drug in
-                NavigationLink {
-                    DrugView(drug: .constant(drug))
-                } label: {
-                    DrugCard(drug: .constant(drug))
-                }
-            }
-            .listRowSeparator(.hidden)
-        }
-        .navigationTitle("Drug Card")
-        .navigationBarTitleDisplayMode(.inline)
-        .listRowSpacing(24)
-        .listStyle(.inset)
-    }
+    CommonListView(size: .zero, safeArea: .init(.zero))
 }

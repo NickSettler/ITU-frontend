@@ -30,22 +30,15 @@ struct ListView: View {
                     DrugCard(drug: drug)
                 }
                 .if(index == 0) {
-                    $0.padding(.top, 12)
+                    $0.padding(.top, 20)
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 12)
+                .padding(.bottom, 24)
             }
         }
     }
 }
 
 #Preview {
-    NavigationStack {
-        ListView(
-            drugs: .constant(allDrugs),
-            folderID: ""
-        )
-        .navigationTitle("List")
-        .navigationBarTitleDisplayMode(.inline)
-    }
+    CommonListView(size: .zero, safeArea: .init(.zero))
 }
