@@ -20,11 +20,16 @@ struct TabBarItem: View {
             }
         } label: {
             VStack(spacing: 0) {
-                Spacer()
                 Text(folder.name)
+                    .padding(.horizontal, 12)
+                    .frame(
+                        maxWidth: .infinity,
+                        minHeight: 44,
+                        maxHeight: 44,
+                        alignment: .center
+                    )
                     .font(.callout)
                     .fontWeight(.medium)
-                    .padding(.bottom, 8)
                 
                 if currentFolder == folder {
                     Color.colorPrimaryLight
@@ -38,6 +43,7 @@ struct TabBarItem: View {
                     Color.clear.frame(height: 2)
                 }
             }
+            .contentShape(Rectangle())
             .animation(
                 .spring(.smooth, blendDuration: 0.15),
                 value: self.currentFolder
@@ -49,7 +55,6 @@ struct TabBarItem: View {
             ? Color.colorPrimaryLight
             : Color.textColorSecondary
         )
-        .padding(.horizontal, 8)
     }
 }
 

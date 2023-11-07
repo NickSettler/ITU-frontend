@@ -28,16 +28,17 @@ struct TabBarView: View {
             }
             .background(Color.white)
         }
-        .frame(height: 48)
         .background(Color.white)
+        .frame(height: 48)
         .shadow(
-            color: Color.textColorPrimary.opacity(0.1),
-            radius: 10,
+            color: Color.textColorPrimary.opacity(0.15),
+            radius: 12,
             x: 0,
             y: 4
         )
         .mask(
             Rectangle()
+                .padding(.top, 1)
                 .padding(.bottom, -64)
         )
     }
