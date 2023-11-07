@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Role : Codable {
+struct Role : Codable, Hashable {
     var id: String
     var name: String
     var icon: String
@@ -31,12 +31,32 @@ struct Role : Codable {
     }
     
     init(id: String) {
+        self.init(id: id, name: "Role", icon: "icon", enforce_tfa: false, admin_access: false, app_access: false, users: [])
+    }
+    
+    init(
+        id: String,
+        name: String,
+        icon: String,
+        description: String? = nil,
+        ip_access: String? = nil,
+        enforce_tfa: Bool,
+        admin_access: Bool,
+        app_access: Bool,
+        users: [String]
+    ) {
         self.id = id
-        self.name = "Role"
-        self.icon = "icon"
-        self.enforce_tfa = false
-        self.admin_access = false
-        self.app_access = false
-        self.users = []
+        self.name = name
+        self.icon = icon
+        self.description = description
+        self.ip_access = ip_access
+        self.enforce_tfa = enforce_tfa
+        self.admin_access = admin_access
+        self.app_access = app_access
+        self.users = users
+    }
+    
+    static func == (lhs: Role, rhs: Role) -> Bool {
+        return lhs.id == rhs.id
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 struct Drug : Codable, Identifiable {
     var id: Int
     var name: String
+    var location: Folder
     var complement: String?
     var strength: String?
     var form: Form?
@@ -26,6 +27,7 @@ struct Drug : Codable, Identifiable {
     enum CodingKeys: CodingKey {
         case id
         case name
+        case location
         case complement
         case strength
         case form
@@ -40,10 +42,96 @@ struct Drug : Codable, Identifiable {
         case date_updated
     }
     
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.id = try values.decodeIfPresent(Int.self, forKey: .id)!
+        self.name = try values.decodeIfPresent(String.self, forKey: .name)!
+        
+        if let location = try? values.decodeIfPresent(Folder.self, forKey: .location) {
+            self.location = location
+        } else if let location = try? values.decodeIfPresent(String.self, forKey: .location) {
+            self.location = .init(id: location)
+        } else {
+            throw DecodingError.typeMismatch(
+                [String : Any].self,
+                .init(codingPath: [CodingKeys.self.location], debugDescription: "")
+            )
+        }
+        
+        self.complement = try? values.decodeIfPresent(String.self, forKey: .complement)
+        self.strength = try? values.decodeIfPresent(String.self, forKey: .strength)
+        
+        if let form = try? values.decodeIfPresent(Form.self, forKey: .form) {
+            self.form = form
+        } else if let form = try? values.decodeIfPresent(String.self, forKey: .form) {
+            self.form = .init(form: form)
+        } else {
+            self.form = nil
+        }
+        
+        self.package = try? values.decodeIfPresent(String.self, forKey: .package)
+        
+        if let route = try? values.decodeIfPresent(Route.self, forKey: .route) {
+            self.route = route
+        } else if let route = try? values.decodeIfPresent(String.self, forKey: .route) {
+            self.route = .init(route: route)
+        } else {
+            self.route = nil
+        }
+        
+        if let dosage = try? values.decodeIfPresent(Dosage.self, forKey: .dosage) {
+            self.dosage = dosage
+        } else if let dosage = try? values.decodeIfPresent(String.self, forKey: .dosage) {
+            self.dosage = .init(form: dosage)
+        } else {
+            self.dosage = nil
+        }
+        
+        if let organization = try? values.decodeIfPresent(Organization.self, forKey: .organization) {
+            self.organization = organization
+        } else if let organization = try? values.decodeIfPresent(String.self, forKey: .organization) {
+            self.organization = .init(code: organization)
+        } else {
+            self.organization = nil
+        }
+        
+        if let organization_country = try? values.decodeIfPresent(Country.self, forKey: .organization_country) {
+            self.organization_country = organization_country
+        } else if let organization_country = try? values.decodeIfPresent(String.self, forKey: .organization_country) {
+            self.organization_country = .init(code: organization_country)
+        } else {
+            self.organization_country = nil
+        }
+        
+        if let user_created = try? values.decodeIfPresent(User.self, forKey: .user_created) {
+            self.user_created = user_created
+        } else if let user_created = try? values.decodeIfPresent(String.self, forKey: .user_created) {
+            self.user_created = .init(id: user_created)
+        } else {
+            throw DecodingError.typeMismatch(
+                [String : Any].self,
+                .init(codingPath: [CodingKeys.self.user_created], debugDescription: "")
+            )
+        }
+        
+        if let user_updated = try? values.decodeIfPresent(User.self, forKey: .user_updated) {
+            self.user_updated = user_updated
+        } else if let user_updated = try? values.decodeIfPresent(String.self, forKey: .user_updated) {
+            self.user_updated = .init(id: user_updated)
+        } else {
+            self.user_updated = nil
+        }
+        
+        self.date_created = try values.decodeIfPresent(String.self, forKey: .date_created)!
+        self.date_updated = try values.decodeIfPresent(String.self, forKey: .date_updated) ?? nil
+    }
+    
     init(id: Int, name: String, complement: String) {
         self.id = id
         self.name = name
         self.complement = complement
+        self.location = .allFolder
         self.date_created = ""
         self.user_created = .init(id: "f4aca9df-fb67-4f14-b321-cdbf3c985383")
     }
