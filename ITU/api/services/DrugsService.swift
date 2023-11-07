@@ -18,7 +18,7 @@ struct DrugsService {
         
         do {
             let data = try await NetworkManager.shared.get(
-                path: "/items/user_drugs?fields=*.*.*",
+                path: "/items/user_drugs",
                 parameters: nil
             )
             let result: ApiSuccessResponse<GetAllUsersDrugsResponse> = try NetworkAPI.parseData(data: data)
