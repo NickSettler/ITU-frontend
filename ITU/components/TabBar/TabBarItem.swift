@@ -30,9 +30,9 @@ struct TabBarItem: View {
                     )
                     .font(.callout)
                     .fontWeight(.medium)
-                
+
                 if currentFolder == folder {
-                    Color.colorPrimaryLight
+                    Color.Primary300
                         .frame(height: 2)
                         .matchedGeometryEffect(
                             id: "underline",
@@ -52,7 +52,7 @@ struct TabBarItem: View {
         .buttonStyle(.plain)
         .foregroundColor(
             currentFolder == folder
-            ? Color.colorPrimaryLight
+            ? Color.Primary300
             : Color.textColorSecondary
         )
     }

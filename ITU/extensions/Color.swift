@@ -21,10 +21,6 @@ extension Color {
         return Color("BackgroundColorList")
     }
     
-    static var ColorPrimary: Color  {
-        return Color("ColorPrimary")
-    }
-    
     static var Accent: Color  {
         return Color("AccentColor")
     }
@@ -35,6 +31,158 @@ extension Color {
     
     static var TextColorSecondary: Color  {
         return Color("TextColorSecondary")
+    }
+    
+    static var Primary50: Color  {
+        return Color("Primary50")
+    }
+    
+    static var Primary100: Color  {
+        return Color("Primary100")
+    }
+    
+    static var Primary200: Color  {
+        return Color("Primary200")
+    }
+    
+    static var Primary300: Color  {
+        return Color("Primary300")
+    }
+    
+    static var Primary400: Color  {
+        return Color("Primary400")
+    }
+    
+    static var Primary500: Color  {
+        return Color("Primary500")
+    }
+    
+    static var Primary600: Color  {
+        return Color("Primary600")
+    }
+    
+    static var Primary700: Color  {
+        return Color("Primary700")
+    }
+    
+    static var Secondary50: Color  {
+        return Color("Secondary50")
+    }
+    
+    static var Secondary100: Color  {
+        return Color("Secondary100")
+    }
+    
+    static var Secondary200: Color  {
+        return Color("Secondary200")
+    }
+    
+    static var Secondary300: Color  {
+        return Color("Secondary300")
+    }
+    
+    static var Secondary400: Color  {
+        return Color("Secondary400")
+    }
+    
+    static var Secondary500: Color  {
+        return Color("Secondary500")
+    }
+    
+    static var Secondary600: Color  {
+        return Color("Secondary600")
+    }
+    
+    static var Secondary700: Color  {
+        return Color("Secondary700")
+    }
+    
+    static var Grey50: Color  {
+        return Color("Grey50")
+    }
+    
+    static var Grey100: Color  {
+        return Color("Grey100")
+    }
+    
+    static var Grey00: Color  {
+        return Color("Grey200")
+    }
+    
+    static var Grey300: Color  {
+        return Color("Grey300")
+    }
+    
+    static var Grey400: Color  {
+        return Color("Grey400")
+    }
+    
+    static var Grey500: Color  {
+        return Color("Grey500")
+    }
+    
+    static var Grey600: Color  {
+        return Color("Grey600")
+    }
+    
+    static var Grey700: Color  {
+        return Color("Grey700")
+    }
+
+    static var Tertiary100: Color  {
+        return Color("Tertiary100")
+    }
+    
+    static var Tertiary200: Color  {
+        return Color("Tertiary200")
+    }
+    
+    static var Tertiary300: Color  {
+        return Color("Tertiary300")
+    }
+    
+    static var Tertiary400: Color  {
+        return Color("Tertiary400")
+    }
+    
+    static var Tertiary500: Color  {
+        return Color("Tertiary500")
+    }
+    
+    static var Tertiary600: Color  {
+        return Color("Tertiary600")
+    }
+    
+    static var Tertiary700: Color  {
+        return Color("Tertiary700")
+    }
+    
+    static var Quaternary100: Color  {
+        return Color("Quaternary100")
+    }
+    
+    static var Quaternary200: Color  {
+        return Color("Quaternary200")
+    }
+    
+    static var Quaternary300: Color  {
+        return Color("Quaternary300")
+    }
+    
+    static var Quaternary400: Color  {
+        return Color("Quaternary400")
+    }
+    
+    static var Quaternary500: Color  {
+        return Color("Quaternary500")
+    }
+    
+    static var Quaternary600: Color  {
+        return Color("Quaternary600")
+    }
+    
+    static var Quaternary700: Color  {
+        return Color("Quaternary700")
     }
     
     init(hex: UInt, alpha: Double = 1) {
