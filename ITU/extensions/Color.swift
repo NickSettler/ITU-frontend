@@ -21,10 +21,6 @@ extension Color {
         return Color("BackgroundColorList")
     }
     
-    static var ColorPrimary: Color  {
-        return Color("ColorPrimary")
-    }
-    
     static var Accent: Color  {
         return Color("AccentColor")
     }
@@ -35,19 +31,6 @@ extension Color {
     
     static var TextColorSecondary: Color  {
         return Color("TextColorSecondary")
-    }
-
-    static var PrimaryBase: Color  {
-        return Color("Primary50")
-    }
-    static var SecondaryBase: Color  {
-        return Color("SecondaryBase")
-    }
-    static var TertiaryBase: Color  {
-        return Color("TertiaryBase")
-    }
-    static var QuaternaryBase: Color  {
-        return Color("QuaternaryBase")
     }
     
     static var Primary50: Color  {
