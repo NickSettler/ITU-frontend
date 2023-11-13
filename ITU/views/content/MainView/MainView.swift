@@ -56,7 +56,7 @@ struct MainView: View {
                 .fill(Color.BackgroundColor)
                 .ignoresSafeArea()
                 .shadow(
-                    color: Color.colorPrimaryLight.opacity(0.2),
+                    color: Color.PrimaryBase.opacity(0.2),
                     radius: 5,
                     x: 0,
                     y: -5
