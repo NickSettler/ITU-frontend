@@ -9,26 +9,19 @@ import SwiftUI
 
 struct DrugCard: View {
     @Binding var drug: Drug
-    var expDate: Date
-
-    init(drug: Binding<Drug>, expDate: Date = Calendar.current.date(from: DateComponents(year: 2022, month: 12, day: 23)) ?? Date()) {
-        self._drug = drug
-        self.expDate = expDate
-    }
 
     var body: some View {
-        let currentDate = Date()
-        let sixMonthsFromNow = Calendar.current.date(byAdding: .month, value: 6, to: currentDate) ?? Date()
-
         let rectangleColor: (Color, Color, Color)
-        if expDate < currentDate {
-            rectangleColor = (Color.Quaternary300, Color.Quaternary400, Color.Quaternary600)
-        } else if expDate < sixMonthsFromNow {
-            rectangleColor = (Color.Secondary100, Color.Secondary200, Color.Secondary400)
-        } else {
-            rectangleColor = (Color.Primary100, Color.Primary200, Color.Primary500)
-        }
-
+        
+        switch drug.expiry_state {
+                case .expired:
+                    rectangleColor = (Color.Quaternary300, Color.Quaternary400, Color.Quaternary600)
+                case .soon:
+                    rectangleColor = (Color.Secondary100, Color.Secondary200, Color.Secondary400)
+                case .not:
+                    rectangleColor = (Color.Primary100, Color.Primary200, Color.Primary500)
+                }
+        
         return VStack(spacing: 0) {
             Rectangle()
                 .fill(
@@ -40,7 +33,7 @@ struct DrugCard: View {
                 )
                 .frame(height: 32)
                 .overlay(
-                        Text("exp. date: 12/2023")
+                    Text(drug.expiry_date)
                             .font(.caption)
                             .foregroundColor(rectangleColor.2)
                             .padding(.trailing, 8)
@@ -57,6 +50,7 @@ struct DrugCard: View {
                     Text("10 tablets")
                         .font(.caption)
                         .foregroundStyle(Color.Grey400)
+
                 }
                 HStack {
                     Text("Tablets 100mg")
