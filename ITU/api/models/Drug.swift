@@ -7,6 +7,12 @@
 
 import Foundation
 
+
+
+enum E_DRUG_EXPIRY_STATE{
+    case    not, soon, expired
+}
+
 struct Drug : Codable, Identifiable {
     var id: Int
     var name: String
@@ -23,19 +29,19 @@ struct Drug : Codable, Identifiable {
     var user_updated: User?
     var date_created: String
     var date_updated: String?
-    var expiration_date: String
-    var expiry_state: E_drug_exp_state {
+    var expiration_date: Date
+    var expiry_state: E_DRUG_EXPIRY_STATE {
         get {
             let currentDate = Date()
             let fourMonthsFromNow = Calendar.current.date(byAdding: .month, value: 6, to: currentDate) ?? Date()
-            let expiryDate = dateFormatter.date(from: expiration_date) ?? currentDate
-            if expiryDate < currentDate {
-                       return .expired
-                   } else if expiryDate < fourMonthsFromNow {
-                       return .soon
-                   } else {
-                       return .not
-                   }
+            
+            if expiration_date < currentDate {
+                return .expired
+            } else if expiration_date < fourMonthsFromNow {
+                return .soon
+            } else {
+                return .not
+            }
         }
     }
     
@@ -56,10 +62,6 @@ struct Drug : Codable, Identifiable {
         case date_created
         case date_updated
         case expiration_date
-    }
-    
-    enum E_drug_exp_state{
-        case    not, soon, expired
     }
     
     init(from decoder: Decoder) throws {
@@ -146,7 +148,14 @@ struct Drug : Codable, Identifiable {
         self.date_created = try values.decodeIfPresent(String.self, forKey: .date_created)!
         self.date_updated = try values.decodeIfPresent(String.self, forKey: .date_updated) ?? nil
         
-        self.expiration_date = try values.decodeIfPresent(String.self, forKey: .expiration_date)!
+        if let expiration_date = try? values.decodeIfPresent(String.self, forKey: .expiration_date) {
+            self.expiration_date = dateFormatter.date(from: expiration_date) ?? Date()
+        } else {
+            throw DecodingError.typeMismatch(
+                [String : Any].self,
+                .init(codingPath: [CodingKeys.self.expiration_date], debugDescription: "")
+            )
+        }
     }
     
     init(id: Int, name: String, complement: String, expiration_date: String) {
@@ -156,7 +165,7 @@ struct Drug : Codable, Identifiable {
         self.location = .allFolder
         self.date_created = ""
         self.user_created = .init(id: "f4aca9df-fb67-4f14-b321-cdbf3c985383")
-        self.expiration_date = expiration_date
+        self.expiration_date = dateFormatter.date(from: expiration_date) ?? Date()
     }
 }
 

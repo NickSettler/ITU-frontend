@@ -9,18 +9,18 @@ import SwiftUI
 
 struct DrugCard: View {
     @Binding var drug: Drug
-
+    
     var body: some View {
         let rectangleColor: (Color, Color, Color)
         
         switch drug.expiry_state {
-                case .expired:
-                    rectangleColor = (Color.Quaternary300, Color.Quaternary400, Color.Quaternary600)
-                case .soon:
-                    rectangleColor = (Color.Secondary100, Color.Secondary200, Color.Secondary400)
-                case .not:
-                    rectangleColor = (Color.Primary100, Color.Primary200, Color.Primary500)
-                }
+        case .expired:
+            rectangleColor = (Color.Quaternary300, Color.Quaternary400, Color.Quaternary600)
+        case .soon:
+            rectangleColor = (Color.Secondary100, Color.Secondary200, Color.Secondary400)
+        case .not:
+            rectangleColor = (Color.Primary100, Color.Primary200, Color.Primary500)
+        }
         
         return VStack(spacing: 0) {
             Rectangle()
@@ -33,32 +33,40 @@ struct DrugCard: View {
                 )
                 .frame(height: 32)
                 .overlay(
-                    Text(drug.expiration_date)
-                            .font(.caption)
-                            .foregroundColor(rectangleColor.2)
-                            .padding(.trailing, 8)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                                )
+                    Text(
+                        drug.expiration_date.formatted(
+                            .dateTime.month(.twoDigits).year()
+                        )
+                        
+                    )
+                    .font(.caption)
+                    .foregroundColor(rectangleColor.2)
+                    .padding(.trailing, 8)
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .trailing
+                    )
+                )
             VStack(spacing: 12) {
                 HStack {
                     Text(drug.name)
                         .font(.headline)
                         .foregroundStyle(Color.Grey700)
-
+                    
                     Spacer()
-
+                    
                     Text("10 tablets")
                         .font(.caption)
                         .foregroundStyle(Color.Grey400)
-
+                    
                 }
                 HStack {
                     Text("Tablets 100mg")
                         .font(.caption)
                         .foregroundStyle(Color.Grey300)
-
+                    
                     Spacer()
-
+                    
                 }
             }
             .padding(.horizontal, 20)
