@@ -33,7 +33,7 @@ struct DrugCard: View {
                 )
                 .frame(height: 32)
                 .overlay(
-                    Text(drug.expiry_date)
+                    Text(drug.expiration_date)
                             .font(.caption)
                             .foregroundColor(rectangleColor.2)
                             .padding(.trailing, 8)
