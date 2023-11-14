@@ -23,32 +23,31 @@ struct DrugCard: View {
         }
         
         return VStack(spacing: 0) {
-            Rectangle()
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: [rectangleColor.0, rectangleColor.1]),
-                        startPoint: .leading,
-                        endPoint: .trailing
+            HStack(spacing: 4) {
+                Spacer()
+                
+                Text("exp. date:")
+                
+                Text(
+                    drug.expiration_date.formatted(
+                        .dateTime.month(.twoDigits).year()
                     )
                 )
-                .frame(height: 32)
-                .overlay(
-                    Text(
-                        drug.expiration_date.formatted(
-                            .dateTime.month(.twoDigits).year()
-                        )
-                        
-                    )
-                    .font(.caption)
-                    .foregroundColor(rectangleColor.2)
-                    .padding(.trailing, 8)
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .trailing
-                    )
+            }
+            .font(.caption)
+            .foregroundColor(rectangleColor.2)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 10)
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [rectangleColor.0, rectangleColor.1]),
+                    startPoint: .leading,
+                    endPoint: .trailing
                 )
+            )
+            
             VStack(spacing: 12) {
-                HStack {
+                HStack(alignment: .firstTextBaseline) {
                     Text(drug.name)
                         .font(.headline)
                         .foregroundStyle(Color.Grey700)
@@ -58,7 +57,6 @@ struct DrugCard: View {
                     Text("10 tablets")
                         .font(.caption)
                         .foregroundStyle(Color.Grey400)
-                    
                 }
                 HStack {
                     Text("Tablets 100mg")
@@ -73,9 +71,9 @@ struct DrugCard: View {
             .padding(.vertical, 16)
         }
         .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(color: Color.textColorSecondary.opacity(0.15), radius: 8, x: 0, y: 1)
-        .shadow(color: Color.textColorPrimary.opacity(0.05), radius: 12, x: 0, y: 2)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .shadow(color: .grey500.opacity(0.12), radius: 20, x: 0, y: 2)
+        .shadow(color: .grey700.opacity(0.08), radius: 8, x: 0, y: 1)
     }
 }
 
