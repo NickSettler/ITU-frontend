@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>JetBrainsMono-Regular</string>
-		<string>JetBrainsMono-ExtraBoldItalic</string>
-		<string>JetBrainsMono-Bold</string>
-		<string>JetBrainsMono-BoldItalic</string>
-		<string>JetBrainsMono-ExtraBold</string>
-		<string>JetBrainsMono-ExtraLight</string>
-		<string>JetBrainsMono-ExtraLightItalic</string>
-		<string>JetBrainsMono-Italic</string>
-		<string>JetBrainsMono-Light</string>
-		<string>JetBrainsMono-LightItalic</string>
-		<string>JetBrainsMono-Medium</string>
-		<string>JetBrainsMono-MediumItalic</string>
-		<string>JetBrainsMono-SemiBold</string>
-		<string>JetBrainsMono-SemiBoldItalic</string>
-		<string>JetBrainsMono-Thin</string>
-		<string>JetBrainsMono-ThinItalic</string>
-	</array>
-</dict>
+    <dict>
+        <key>UIAppFonts</key>
+        <array>
+            <string>JetBrainsMono-Regular.ttf</string>
+            <string>JetBrainsMono-ExtraBoldItalic.ttf</string>
+            <string>JetBrainsMono-Bold.ttf</string>
+            <string>JetBrainsMono-BoldItalic.ttf</string>
+            <string>JetBrainsMono-ExtraBold.ttf</string>
+            <string>JetBrainsMono-ExtraLight.ttf</string>
+            <string>JetBrainsMono-ExtraLightItalic.ttf</string>
+            <string>JetBrainsMono-Italic.ttf</string>
+            <string>JetBrainsMono-Light.ttf</string>
+            <string>JetBrainsMono-LightItalic.ttf</string>
+            <string>JetBrainsMono-Medium.ttf</string>
+            <string>JetBrainsMono-MediumItalic.ttf</string>
+            <string>JetBrainsMono-SemiBold.ttf</string>
+            <string>JetBrainsMono-SemiBoldItalic.ttf</string>
+            <string>JetBrainsMono-Thin.ttf</string>
+            <string>JetBrainsMono-ThinItalic.ttf</string>
+        </array>
+    </dict>
 </plist>

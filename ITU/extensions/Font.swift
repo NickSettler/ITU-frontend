@@ -46,9 +46,6 @@ extension Font {
     static func custom(_ font: JetBrainsMono, relativeTo style: Font.TextStyle) -> Font {
         custom(font.rawValue, size: style.size, relativeTo: style)
     }
-}
-
-extension Font {
-    static let mono = custom(.regular, relativeTo: .subheadline)
     
+    static let mono = custom(JetBrainsMono.light.rawValue, size: 16)
 }
