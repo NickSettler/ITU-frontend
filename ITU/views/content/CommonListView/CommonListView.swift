@@ -45,7 +45,7 @@ struct CommonListView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            //
+                            viewModel.isDrugCreateVisible = true
                         } label: {
                             Image(systemName: "plus.circle")
                         }
@@ -58,6 +58,9 @@ struct CommonListView: View {
             .navigationTitle("My drugs")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.hidden, for: .navigationBar)
+        }
+        .sheet(isPresented: $viewModel.isDrugCreateVisible) {
+            DrugAdditionView()
         }
         .searchable(
             text: $viewModel.searchQuery,

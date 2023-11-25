@@ -11,6 +11,7 @@ import SwiftUI
 @MainActor class CommonListViewModel : ObservableObject {
     @Published var selectedFolder: Folder = .allFolder
     @Published var searchQuery: String = ""
+    @Published var isDrugCreateVisible: Bool = false
     
     @Published var folders: [Folder] = [.allFolder]
     @Published var drugs: [Drug] = []

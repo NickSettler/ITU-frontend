@@ -12,7 +12,7 @@ enum TextFieldType: String {
 }
 
 struct CustomTextField: View {
-    var sfIcon: String
+    var sfIcon: String?
     var iconTint: Color = .gray
     var hint: String
     var type: TextFieldType = .text
@@ -31,12 +31,15 @@ struct CustomTextField: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 8, content: {
-            Image(systemName: sfIcon)
-                .foregroundStyle(iconTint)
-            /// Since I Need Same Width to Align TextFields Equally
-                .frame(width: 30)
-            /// Slightly Bringing Down
-                .offset(y: 2)
+            
+            if (sfIcon != nil) {
+                Image(systemName: sfIcon!)
+                    .foregroundStyle(iconTint)
+                /// Since I Need Same Width to Align TextFields Equally
+                    .frame(width: 30)
+                /// Slightly Bringing Down
+                    .offset(y: 2)
+            }
             
             VStack(alignment: .leading, spacing: 8, content: {
                 if isPassword {

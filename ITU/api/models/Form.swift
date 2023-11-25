@@ -30,4 +30,10 @@ struct Form : Codable {
         self.form = form
         self.name = name
     }
+    
+    static var empty: Form {
+        get {
+            return .init(form: "TAB", name: "")
+        }
+    }
 }

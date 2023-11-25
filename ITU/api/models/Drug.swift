@@ -19,7 +19,7 @@ struct Drug : Codable, Identifiable {
     var location: Folder
     var complement: String?
     var strength: String?
-    var form: Form?
+    var form: Form
     var package: String?
     var route: Route?
     var dosage: Dosage?
@@ -37,6 +37,7 @@ struct Drug : Codable, Identifiable {
     var date_created: String
     var date_updated: String?
     var expiration_date: Date
+    var count: String
     var expiry_state: E_DRUG_EXPIRY_STATE {
         get {
             let currentDate = Date()
@@ -76,6 +77,7 @@ struct Drug : Codable, Identifiable {
         case date_created
         case date_updated
         case expiration_date
+        case count
     }
     
     init(from decoder: Decoder) throws {
@@ -103,7 +105,7 @@ struct Drug : Codable, Identifiable {
         } else if let form = try? values.decodeIfPresent(String.self, forKey: .form) {
             self.form = .init(form: form)
         } else {
-            self.form = nil
+            self.form = Form.empty
         }
         
         self.package = try? values.decodeIfPresent(String.self, forKey: .package)
@@ -220,6 +222,8 @@ struct Drug : Codable, Identifiable {
                 .init(codingPath: [CodingKeys.self.expiration_date], debugDescription: "")
             )
         }
+        
+        self.count = try values.decodeIfPresent(String.self, forKey: .count)!
     }
     
     init(id: Int, name: String, complement: String, expiration_date: String) {
@@ -231,6 +235,14 @@ struct Drug : Codable, Identifiable {
         self.date_created = ""
         self.user_created = .init(id: "f4aca9df-fb67-4f14-b321-cdbf3c985383")
         self.expiration_date = dateFormatter.date(from: expiration_date) ?? Date()
+        self.form = Form.empty
+        self.count = ""
+    }
+    
+    static var empty: Drug {
+        get {
+            return .init(id: 0, name: "", complement: "", expiration_date: "")
+        }
     }
 }
 
