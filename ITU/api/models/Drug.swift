@@ -7,6 +7,12 @@
 
 import Foundation
 
+
+
+enum E_DRUG_EXPIRY_STATE{
+    case    not, soon, expired
+}
+
 struct Drug : Codable, Identifiable {
     var id: Int
     var name: String
@@ -23,6 +29,21 @@ struct Drug : Codable, Identifiable {
     var user_updated: User?
     var date_created: String
     var date_updated: String?
+    var expiration_date: Date
+    var expiry_state: E_DRUG_EXPIRY_STATE {
+        get {
+            let currentDate = Date()
+            let fourMonthsFromNow = Calendar.current.date(byAdding: .month, value: 6, to: currentDate) ?? Date()
+            
+            if expiration_date < currentDate {
+                return .expired
+            } else if expiration_date < fourMonthsFromNow {
+                return .soon
+            } else {
+                return .not
+            }
+        }
+    }
     
     enum CodingKeys: CodingKey {
         case id
@@ -40,6 +61,7 @@ struct Drug : Codable, Identifiable {
         case user_updated
         case date_created
         case date_updated
+        case expiration_date
     }
     
     init(from decoder: Decoder) throws {
@@ -125,33 +147,49 @@ struct Drug : Codable, Identifiable {
         
         self.date_created = try values.decodeIfPresent(String.self, forKey: .date_created)!
         self.date_updated = try values.decodeIfPresent(String.self, forKey: .date_updated) ?? nil
+        
+        if let expiration_date = try? values.decodeIfPresent(String.self, forKey: .expiration_date) {
+            self.expiration_date = dateFormatter.date(from: expiration_date) ?? Date()
+        } else {
+            throw DecodingError.typeMismatch(
+                [String : Any].self,
+                .init(codingPath: [CodingKeys.self.expiration_date], debugDescription: "")
+            )
+        }
     }
     
-    init(id: Int, name: String, complement: String) {
+    init(id: Int, name: String, complement: String, expiration_date: String) {
         self.id = id
         self.name = name
         self.complement = complement
         self.location = .allFolder
         self.date_created = ""
         self.user_created = .init(id: "f4aca9df-fb67-4f14-b321-cdbf3c985383")
+        self.expiration_date = dateFormatter.date(from: expiration_date) ?? Date()
     }
 }
 
 typealias GetAllUsersDrugsResponse = [Drug]
 
+private var dateFormatter: DateFormatter {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter
+}
+
 let allDrugs: [Drug] = [
-    .init(id: 1, name: "PARACETAMOL AUROVITAS", complement: "500MG TBL NOB 10 II"),
-    .init(id: 2, name: "PARACETAMOL AUROVITAS", complement: "500MG TBL NOB 20 II"),
-    .init(id: 3, name: "PARACETAMOL AUROVITAS", complement: "500MG TBL NOB 24 II"),
-    .init(id: 4, name: "PARACETAMOL STADA", complement: "600MG POR PLV SOL SCC 10"),
-    .init(id: 5, name: "PARACETAMOL STADA", complement: "600MG POR PLV SOL SCC 5"),
-    .init(id: 6, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 12"),
-    .init(id: 7, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 16"),
-    .init(id: 8, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 20"),
-    .init(id: 9, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 24"),
-    .init(id: 10, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 30"),
-    .init(id: 11, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 100"),
-    .init(id: 12, name: "PARACETAMOL ZENTIVA", complement: "1000MG TBL NOB 8"),
-    .init(id: 13, name: "PARACETAMOL ZENTIVA", complement: "1000MG TBL NOB 16"),
-    .init(id: 14, name: "PARACETAMOL ZENTIVA", complement: "1000MG TBL NOB 100"),
+    .init(id: 1, name: "PARACETAMOL AUROVITAS", complement: "500MG TBL NOB 10 II", expiration_date: "2022-10-12"),
+    .init(id: 2, name: "PARACETAMOL AUROVITAS", complement: "500MG TBL NOB 20 II", expiration_date: "2025-10-12"),
+    .init(id: 3, name: "PARACETAMOL AUROVITAS", complement: "500MG TBL NOB 24 II", expiration_date: "2023-12-12"),
+    .init(id: 4, name: "PARACETAMOL STADA", complement: "600MG POR PLV SOL SCC 10", expiration_date: "2022-10-12"),
+    .init(id: 5, name: "PARACETAMOL STADA", complement: "600MG POR PLV SOL SCC 5", expiration_date: "2022-10-12"),
+    .init(id: 6, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 12", expiration_date: "2022-10-12"),
+    .init(id: 7, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 16", expiration_date: "2022-10-12"),
+    .init(id: 8, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 20", expiration_date: "2022-10-12"),
+    .init(id: 9, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 24", expiration_date: "2022-10-12"),
+    .init(id: 10, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 30", expiration_date: "2022-10-12"),
+    .init(id: 11, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 100", expiration_date: "2022-10-12"),
+    .init(id: 12, name: "PARACETAMOL ZENTIVA", complement: "1000MG TBL NOB 8", expiration_date: "2022-10-12"),
+    .init(id: 13, name: "PARACETAMOL ZENTIVA", complement: "1000MG TBL NOB 16", expiration_date: "2022-10-12"),
+    .init(id: 14, name: "PARACETAMOL ZENTIVA", complement: "1000MG TBL NOB 100", expiration_date: "2022-10-12"),
 ]
