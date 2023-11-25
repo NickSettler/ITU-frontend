@@ -37,7 +37,7 @@ struct AuthService {
         lastName: String
     ) async -> ApiSuccessResponse<SignInResponse>? {
         do {
-            let data = try await NetworkManager.shared.post(
+            _ = try await NetworkManager.shared.post(
                 path: "/users",
                 parameters: [
                     "email": email,
