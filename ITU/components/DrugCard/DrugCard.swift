@@ -51,6 +51,7 @@ struct DrugCard: View {
                     Text(drug.name)
                         .font(.headline)
                         .foregroundStyle(Color.Grey700)
+                        .multilineTextAlignment(.leading)
                     
                     Spacer()
                     
