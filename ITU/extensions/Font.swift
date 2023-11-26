@@ -42,10 +42,16 @@ extension Font.TextStyle {
     }
 }
 
+fileprivate let helveticaFont = "Helvetica"
+
 extension Font {
     static func custom(_ font: JetBrainsMono, relativeTo style: Font.TextStyle) -> Font {
         custom(font.rawValue, size: style.size, relativeTo: style)
     }
     
     static let mono = custom(JetBrainsMono.light.rawValue, size: 16)
+    
+    static let helvetica16 = custom(helveticaFont, size: 16)
+    static let helvetica22 = custom(helveticaFont, size: 22)
+    static let helvetica30 = custom(helveticaFont, size: 30)
 }
