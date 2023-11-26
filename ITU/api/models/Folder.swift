@@ -32,7 +32,7 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try values.decodeIfPresent(String.self, forKey: .id)!
         self.name = try values.decodeIfPresent(String.self, forKey: .name)!
-        self.icon = try values.decodeIfPresent(String.self, forKey: .icon)
+        self.icon = try? values.decodeIfPresent(String.self, forKey: .icon)
         self.sort = try values.decodeIfPresent(Int.self, forKey: .sort) ?? 1
         
         if let user_created = try? values.decodeIfPresent(User.self, forKey: .user_created) {

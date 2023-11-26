@@ -17,20 +17,11 @@ extension Array where Element: Hashable {
 }
 
 @MainActor class FoldersViewModel : ObservableObject {
-    var currentFolder: Binding<Folder?> {
-        didSet {
-            print(currentFolder)
-        }
-    }
+    var currentFolder: Binding<Folder?> = .constant(nil)
     
     @Published var isPresented: Bool = false
     @Published var isAnimating: Bool = true
-    @Published var isSheetVisible: Bool = false
     @Published var folders: [Folder] = []
-    
-    init() {
-        self.currentFolder = .constant(nil)
-    }
     
     var initialFolders: [Folder] = []
     

@@ -87,14 +87,15 @@ struct FoldersView: View {
         .sheet(isPresented: $viewModel.isPresented) {
             FolderSheet(currentFolder: .constant(Folder.empty))
         }
-        .onChange(of: viewModel.isSheetVisible, initial: false) {
-            if ($0 && !$1) {
-                viewModel.getAllUserFolders()
-            }
-        }
         .onChange(of: editMode?.wrappedValue, initial: false) {
             if ($0 == .active && $1 == .inactive) {
                 viewModel.handleSaveChanges()
+            }
+        }
+        .onReceive(viewModel.$isPresented) {
+            if(!$0) {
+                print("HEHHEHEHRHR")
+                viewModel.getAllUserFolders()
             }
         }
         .padding(.vertical, 36)

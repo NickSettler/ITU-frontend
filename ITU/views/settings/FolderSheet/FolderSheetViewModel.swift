@@ -10,11 +10,7 @@ import Foundation
 
 @MainActor class FolderSheetViewModel : ObservableObject {
     private(set) var initialBinding: Binding<Folder>
-    private(set) var isCreate: Bool = true {
-        didSet {
-            print(isCreate)
-        }
-    }
+    private(set) var isCreate: Bool = true
     
     @Published var didRequestComplete: Bool = false
     @Published var isSymbolPickerPresent: Bool = false
@@ -42,7 +38,6 @@ import Foundation
     
     func updateFolder() {
         Task {
-            print(self.currentFolder.id)
             let updated = await FoldersService.updateFolder(
                 id: self.currentFolder.id,
                 name: self.currentFolder.name,
