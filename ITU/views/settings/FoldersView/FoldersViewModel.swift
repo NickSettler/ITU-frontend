@@ -44,7 +44,6 @@ extension Array where Element: Hashable {
     
     func handleDelete(offsets: IndexSet) {
         let idsToDelete = offsets.map { self.folders[$0].id }
-        print(idsToDelete)
         Task {
             let deleted = await FoldersService.deleteFolders(ids: idsToDelete)
             
@@ -60,7 +59,5 @@ extension Array where Element: Hashable {
             _element.sort = index
             return _element
         }
-        
-        print(self.folders)
     }
 }
