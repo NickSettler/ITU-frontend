@@ -23,8 +23,15 @@ struct Drug : Codable, Identifiable {
     var package: String?
     var route: Route?
     var dosage: Dosage?
+    var pharm_class: PharmClass?
     var organization: Organization?
     var organization_country: Country?
+    var actual_organization: Organization?
+    var actual_organization_country: Country?
+    var concurrent_import: String?
+    var concurrent_import_organization: Organization?
+    var concurrent_import_country: Country?
+    var registration_status: RegistraionStatus?
     var user_created: User
     var user_updated: User?
     var date_created: String
@@ -55,8 +62,15 @@ struct Drug : Codable, Identifiable {
         case package
         case route
         case dosage
+        case pharm_class
         case organization
         case organization_country
+        case actual_organization
+        case actual_organization_country
+        case concurrent_import
+        case concurrent_import_organization
+        case concurrent_import_country
+        case registration_status
         case user_created
         case user_updated
         case date_created
@@ -110,6 +124,14 @@ struct Drug : Codable, Identifiable {
             self.dosage = nil
         }
         
+        if let pharm_class = try? values.decodeIfPresent(PharmClass.self, forKey: .pharm_class) {
+            self.pharm_class = pharm_class
+        } else if let pharm_class = try? values.decodeIfPresent(String.self, forKey: .pharm_class) {
+            self.pharm_class = .init(code: pharm_class)
+        } else {
+            self.pharm_class = nil
+        }
+        
         if let organization = try? values.decodeIfPresent(Organization.self, forKey: .organization) {
             self.organization = organization
         } else if let organization = try? values.decodeIfPresent(String.self, forKey: .organization) {
@@ -124,6 +146,48 @@ struct Drug : Codable, Identifiable {
             self.organization_country = .init(code: organization_country)
         } else {
             self.organization_country = nil
+        }
+        
+        if let actual_organization = try? values.decodeIfPresent(Organization.self, forKey: .actual_organization) {
+            self.actual_organization = actual_organization
+        } else if let actual_organization = try? values.decodeIfPresent(String.self, forKey: .actual_organization) {
+            self.actual_organization = .init(code: actual_organization)
+        } else {
+            self.actual_organization = nil
+        }
+        
+        if let actual_organization_country = try? values.decodeIfPresent(Country.self, forKey: .actual_organization_country) {
+            self.actual_organization_country = actual_organization_country
+        } else if let actual_organization_country = try? values.decodeIfPresent(String.self, forKey: .actual_organization_country) {
+            self.actual_organization_country = .init(code: actual_organization_country)
+        } else {
+            self.actual_organization_country = nil
+        }
+        
+        self.concurrent_import = try values.decodeIfPresent(String.self, forKey: .concurrent_import) ?? nil
+        
+        if let concurrent_import_organization = try? values.decodeIfPresent(Organization.self, forKey: .concurrent_import_organization) {
+            self.concurrent_import_organization = concurrent_import_organization
+        } else if let concurrent_import_organization = try? values.decodeIfPresent(String.self, forKey: .concurrent_import_organization) {
+            self.concurrent_import_organization = .init(code: concurrent_import_organization)
+        } else {
+            self.concurrent_import_organization = nil
+        }
+        
+        if let concurrent_import_country = try? values.decodeIfPresent(Country.self, forKey: .concurrent_import_country) {
+            self.concurrent_import_country = concurrent_import_country
+        } else if let concurrent_import_country = try? values.decodeIfPresent(String.self, forKey: .concurrent_import_country) {
+            self.concurrent_import_country = .init(code: concurrent_import_country)
+        } else {
+            self.concurrent_import_country = nil
+        }
+        
+        if let registration_status = try? values.decodeIfPresent(RegistraionStatus.self, forKey: .registration_status) {
+            self.registration_status = registration_status
+        } else if let registration_status = try? values.decodeIfPresent(String.self, forKey: .registration_status) {
+            self.registration_status = .init(code: registration_status)
+        } else {
+            self.registration_status = nil
         }
         
         if let user_created = try? values.decodeIfPresent(User.self, forKey: .user_created) {
@@ -162,6 +226,7 @@ struct Drug : Codable, Identifiable {
         self.id = id
         self.name = name
         self.complement = complement
+        self.route = .init(route: "POR", name: "Oral")
         self.location = .allFolder
         self.date_created = ""
         self.user_created = .init(id: "f4aca9df-fb67-4f14-b321-cdbf3c985383")
@@ -170,6 +235,8 @@ struct Drug : Codable, Identifiable {
 }
 
 typealias GetAllUsersDrugsResponse = [Drug]
+
+typealias GetUsersDrugResponse = Drug
 
 private var dateFormatter: DateFormatter {
     let formatter = DateFormatter()
