@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SheeKit
+import UniformTypeIdentifiers
 
 enum DrugToastRole : String {
     case success
@@ -105,7 +106,6 @@ struct DrugToast: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity)
-        .cornerRadius(12)
         .background {
             RoundedRectangle(cornerRadius: 12)
                 .fill(self.color[1].opacity(0.36))
@@ -118,6 +118,25 @@ struct DrugToast: View {
                     .opacity(0.48),
                     lineWidth: 1
                 )
+        }
+        .contentShape(
+            .contextMenuPreview,
+            RoundedRectangle(cornerRadius: 12)
+                .inset(by: -0.5)
+        )
+        .contextMenu {
+            Button {
+                UIPasteboard.general.setValue(
+                    "\(title): \(text)",
+                    forPasteboardType: UTType.plainText.identifier
+                )
+            } label: {
+                HStack {
+                    Image(systemName: "doc.on.doc")
+                    
+                    Text("Copy")
+                }
+            }
         }
         .if(self.hintTitle != nil) {
             $0

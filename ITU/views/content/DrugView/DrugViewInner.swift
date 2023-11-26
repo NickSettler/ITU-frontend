@@ -223,11 +223,13 @@ struct DrugViewInner: View {
     
     @ViewBuilder
     func HeaderView() -> some View {
-        let headerHeight = (size.height * 0.2) + safeArea.top
+        let headerHeight = (size.height * 0.25) + safeArea.top
         let minimumHeaderHeight = 65 + safeArea.top
         /// Converting Offset into Progress
         /// Limiting it to 0 - 1
         let progress = max(min(-offsetY / (headerHeight - minimumHeaderHeight), 1), 0)
+        
+        print(progress)
         
         return GeometryReader { _ in
             ZStack {
@@ -247,17 +249,17 @@ struct DrugViewInner: View {
                         .offset(y: viewModel.getRequestInProgress ? 0 : min(-safeArea.top - 65 + offsetY, 0))
                         .font(.system(size: 20))
                     
-                    HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    HStack(alignment: .lastTextBaseline, spacing: 8) {
                         Text(viewModel.drug.name)
-                            .font(.helvetica30)
+                            .font(.system(size: 30 - (progress * 4)))
                             .fontWeight(.bold)
                             .foregroundStyle(.grey600)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .topLeading)
                             .scaleEffect(
                                 1 - (progress * 0.25),
                                 anchor: .leading
                             )
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)
                         
                         Text("10 Tablets")
                             .foregroundStyle(.grey500)
