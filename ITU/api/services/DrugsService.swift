@@ -43,7 +43,7 @@ struct DrugsService {
                 parameters: [
                     "name": createdDrug.name,
                     "strength": createdDrug.strength ?? "",
-                    "form": createdDrug.form.form,
+                    "form": createdDrug.form!.form,
                     "count": createdDrug.count,
                     "expiration_date": formattedDate
                 ]

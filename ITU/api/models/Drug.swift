@@ -19,7 +19,7 @@ struct Drug : Codable, Identifiable {
     var location: Folder
     var complement: String?
     var strength: String?
-    var form: Form
+    var form: Form?
     var package: String?
     var route: Route?
     var dosage: Dosage?

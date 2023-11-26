@@ -27,6 +27,33 @@ import Foundation
             createdDrug.count = newValue
         }
     }
+    
+    enum drugDosage: String, CaseIterable, Identifiable {
+        case mg = "mg"
+        case mcg = "mcg"
+        case g = "g"
+        case ml = "ml"
+        
+        var id: String { self.rawValue }
+    }
+    
+    enum countMeasurement: String, CaseIterable, Identifiable {
+        case pcs = "pcs"
+        case bottle = "bottle"
+        case tube = "tube"
+        case ml = "ml"
+        
+        var id: String { self.rawValue }
+    }
+    
+    @Published var selectedDosage: drugDosage = .mg
+    @Published var selectedMeasurement: countMeasurement = .pcs
+    @Published var selectedForm = "TBL NOB"
+    
+    @Published var strengthNumber: String = ""
+    @Published var countNumber: String = ""
+    
+    @Published var date = Date()
 
     @Published var didRequestComplete: Bool = false
 

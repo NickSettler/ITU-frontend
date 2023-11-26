@@ -67,6 +67,12 @@ struct CommonListView: View {
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: "Search drugs"
         )
+        .onReceive(viewModel.$isDrugCreateVisible) {
+            if (!$0) {
+                viewModel.getAllUserFolders()
+                viewModel.getAllUserDrugs()
+            }
+        }
         .onAppear {
             viewModel.getAllUserFolders()
             viewModel.getAllUserDrugs()
