@@ -18,10 +18,26 @@ struct DrugsService {
         
         do {
             let data = try await NetworkManager.shared.get(
-                path: "/items/user_drugs",
+                path: "/items/user_drugs?fields=*.*",
                 parameters: nil
             )
             let result: ApiSuccessResponse<GetAllUsersDrugsResponse> = try NetworkAPI.parseData(data: data)
+            return result
+        } catch let error {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    static func getUserDrug(_ id: Int) async -> ApiSuccessResponse<GetUsersDrugResponse>? {
+        try? await AuthService.conditionalRefresh()
+        
+        do {
+            let data = try await NetworkManager.shared.get(
+                path: "/items/user_drugs/\(id)?fields=*.*",
+                parameters: nil
+            )
+            let result: ApiSuccessResponse<GetUsersDrugResponse> = try NetworkAPI.parseData(data: data)
             return result
         } catch let error {
             print(error.localizedDescription)
