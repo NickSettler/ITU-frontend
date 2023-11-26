@@ -43,44 +43,55 @@ struct BoundsPreferenceKey: PreferenceKey {
     }
 }
 
-struct DrugToast<Content : View>: View {
+struct DrugToast: View {
     @StateObject var viewModel = DrugToastModel()
     
     let role: DrugToastRole
     
+    var title: String
+    var text: String
     var hintTitle: String? = nil
     var hintText: String? = nil
-    
-    let content: Content
     
     let color: [Color]
     
     init(
         role: DrugToastRole,
-        @ViewBuilder content: () -> Content
+        title: String,
+        text: String
     ) {
         self.role = role
         self.color = role.color
-        self.content = content()
+        self.title = title
+        self.text = text
     }
     
     init(
         role: DrugToastRole,
+        title: String,
+        text: String,
         hintTitle: String,
-        hintText: String,
-        @ViewBuilder content: () -> Content
+        hintText: String
     ) {
         self.role = role
         self.color = role.color
+        self.title = title
+        self.text = text
         self.hintTitle = hintTitle
         self.hintText = hintText
-        self.content = content()
     }
     
     var body: some View {
         ZStack {
-            HStack(alignment: .firstTextBaseline, spacing: 0) {
-                content
+            HStack(alignment: .top, spacing: 0) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(.system(size: 14, weight: .bold))
+                    
+                    Text(text)
+                        .font(.mono)
+                }
+                .textCase(.uppercase)
                 
                 Spacer()
                 
@@ -136,13 +147,13 @@ struct DrugToast<Content : View>: View {
     var hintSheet: some View {
         VStack(alignment: .center, spacing: 12) {
             Text(self.hintTitle ?? "")
-                .font(.custom("Helvetica", size: 22))
+                .font(.helvetica22)
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 .kerning(3.3)
                 .tracking(1.15)
             
             Text(self.hintText ?? "")
-                .font(.custom("Helvetica", size: 16))
+                .font(.helvetica16)
                 .kerning(1.76)
                 .multilineTextAlignment(.center)
         }
@@ -156,49 +167,35 @@ struct DrugToast<Content : View>: View {
 }
 
 #Preview {
-    var content: () -> some View = {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Route")
-                    .font(.system(size: 14, weight: .bold))
-                
-                Text("100 mg")
-                    .font(.mono)
-            }
-            .textCase(.uppercase)
-            
-            Spacer()
-        }
-    }
     var hintTitle = "Route"
     var hintText = "Route means a way how the medicine should be delivered into the organism. For example, oral route mostly means that you should swallow the medicine."
     return VStack {
         DrugToast(
             role: .success,
+            title: "Route",
+            text: "Oral",
             hintTitle: hintTitle,
             hintText: hintText
-        ) {
-            content()
-        }
+        )
         DrugToast(
             role: .warning,
+            title: "Route",
+            text: "Oral",
             hintTitle: hintTitle,
             hintText: hintText
-        ) {
-            content()
-        }
+        )
         DrugToast(
             role: .error,
+            title: "Strength",
+            text: "100MG",
             hintTitle: hintTitle,
             hintText: hintText
-        ) {
-            content()
-        }
+        )
         DrugToast(
-            role: .info
-        ) {
-            content()
-        }
+            role: .info,
+            title: "Route",
+            text: "Oral"
+        )
     }
     .padding()
 }
