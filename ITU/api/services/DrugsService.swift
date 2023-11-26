@@ -32,6 +32,7 @@ struct DrugsService {
     static func createDrug(createdDrug: Drug) async -> Bool {
         try? await AuthService.conditionalRefresh()
 
+
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = .current
         dateFormatter.dateFormat = "yyyy-MM-dd"
