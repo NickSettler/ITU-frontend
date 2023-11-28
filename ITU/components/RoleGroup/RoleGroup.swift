@@ -7,23 +7,23 @@
 
 import SwiftUI
 
-enum E_ROLE_GROUP : String, Codable {
-    case success
-    case warning
-    case error
-    case info
+enum E_ROLE_GROUP : Int, Codable {
+    case success = 0
+    case warning = 1
+    case error = 2
+    case info = -1
     
     var color: [Color] {
         get {
             switch (self) {
             case .error:
-                return [.Quaternary200, .Quaternary400, .Quaternary500, .Quaternary600]
+                return [.Quaternary200, .Quaternary300, .Quaternary400, .Quaternary500, .Quaternary600]
             case .warning:
-                return [.Secondary50, .Secondary200, .Secondary300, .Secondary400]
+                return [.Secondary50, .Secondary100, .Secondary200, .Secondary300, .Secondary400]
             case .success:
-                return [.Primary50, .Primary200, .Primary300, .Primary600]
+                return [.Primary50, .Primary200, .Primary200, .Primary300, .Primary600]
             case .info:
-                return [.Tertiary100, .Tertiary300, .Tertiary400, .Tertiary500]
+                return [.Tertiary100, .Tertiary200, .Tertiary300, .Tertiary400, .Tertiary500]
             }
         }
     }
@@ -83,7 +83,7 @@ struct RoleGroup<Content : View>: View {
         ZStack {
             content
         }
-        .foregroundColor(self.color[3])
+        .foregroundColor(self.color[4])
         .padding(.horizontal, paddindX)
         .padding(.vertical, paddindY)
         .if(form == .rounded) {
@@ -93,19 +93,11 @@ struct RoleGroup<Content : View>: View {
             $0.font(.mono)
         }
         .background {
-            RoundedRectangle(
-                cornerRadius: self.form == .chip ? 10000 : 12
-            )
-            .fill(self.color[1].opacity(0.36))
-            .stroke(
-                LinearGradient(
-                    colors: [self.color[2], self.color[1]],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .opacity(0.48),
-                lineWidth: 1
-            )
+            if (form == .chip) {
+                chipBackground
+            } else {
+                roundedBackground
+            }
         }
         .contentShape(
             .contextMenuPreview,
@@ -114,22 +106,49 @@ struct RoleGroup<Content : View>: View {
             ).inset(by: -0.5)
         )
     }
+    
+    var chipBackground: some View {
+        RoundedRectangle(
+            cornerRadius: 10000
+        )
+        .fill(self.color[1])
+        .stroke(self.role != .success ? self.color[3] : .clear)
+    }
+    
+    var roundedBackground: some View {
+        RoundedRectangle(
+            cornerRadius: 12
+        )
+        .fill(self.color[2].opacity(0.36))
+        .stroke(
+            LinearGradient(
+                colors: [self.color[3], self.color[2]],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .opacity(0.48),
+            lineWidth: 1
+        )
+    }
 }
 
 #Preview {
     VStack {
-        RoleGroup(role: .info) {
-            Text("HIIII!")
+        VStack {
+            RoleGroup(role: .info) {
+                Text("HIIII!")
+            }
+            RoleGroup(role: .success) {
+                Text("HIIII!")
+            }
+            RoleGroup(role: .warning) {
+                Text("HIIII!")
+            }
+            RoleGroup(role: .error) {
+                Text("HIIII!")
+            }
         }
-        RoleGroup(role: .success) {
-            Text("HIIII!")
-        }
-        RoleGroup(role: .warning) {
-            Text("HIIII!")
-        }
-        RoleGroup(role: .error) {
-            Text("HIIII!")
-        }
+        .padding(.horizontal)
         
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
@@ -149,7 +168,7 @@ struct RoleGroup<Content : View>: View {
                     Text("Tablets")
                 }
             }
+            .padding()
         }
     }
-    .padding()
 }
