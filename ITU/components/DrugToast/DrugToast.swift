@@ -23,7 +23,7 @@ struct BoundsPreferenceKey: PreferenceKey {
 }
 
 struct DrugToast: View {
-    @StateObject var viewModel = DrugToastModel()
+    @State var isHintVisible: Bool = false
     
     let role: E_ROLE_GROUP
     
@@ -98,10 +98,10 @@ struct DrugToast: View {
             $0
                 .onTapGesture {
                     withAnimation(.spring(response: 0.45, dampingFraction: 0.2, blendDuration: 0.35)) {
-                        viewModel.isHintVisible = true
+                        isHintVisible = true
                     }
                 }
-                .shee(isPresented: $viewModel.isHintVisible,
+                .shee(isPresented: $isHintVisible,
                       presentationStyle:
                         .popover(
                             permittedArrowDirections: .up,

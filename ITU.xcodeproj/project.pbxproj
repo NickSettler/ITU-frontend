@@ -13,7 +13,6 @@
 		6B3263B22B129CEE00868159 /* DrugToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3263B12B129CEE00868159 /* DrugToast.swift */; };
 		6B3263B42B12A42300868159 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3263B32B12A42300868159 /* Font.swift */; };
 		6B3263FB2B12A5E400868159 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6B3263EA2B12A5E300868159 /* fonts */; };
-		6B3264002B12A7D000868159 /* DrugToastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3263FF2B12A7D000868159 /* DrugToastModel.swift */; };
 		6B3264142B12AECD00868159 /* SheeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3264132B12AECD00868159 /* SheeKit */; };
 		6B32641C2B12B80000868159 /* ScrollDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B32641B2B12B80000868159 /* ScrollDetector.swift */; };
 		6B32641E2B12BD5B00868159 /* DrugViewInner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B32641D2B12BD5B00868159 /* DrugViewInner.swift */; };
@@ -83,7 +82,6 @@
 		6B3263B32B12A42300868159 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		6B3263B92B12A56400868159 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B3263EA2B12A5E300868159 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
-		6B3263FF2B12A7D000868159 /* DrugToastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugToastModel.swift; sourceTree = "<group>"; };
 		6B32641B2B12B80000868159 /* ScrollDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDetector.swift; sourceTree = "<group>"; };
 		6B32641D2B12BD5B00868159 /* DrugViewInner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugViewInner.swift; sourceTree = "<group>"; };
 		6B4164BA2B164FB600EFE75B /* RoleGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleGroup.swift; sourceTree = "<group>"; };
@@ -182,7 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				6B3263B12B129CEE00868159 /* DrugToast.swift */,
-				6B3263FF2B12A7D000868159 /* DrugToastModel.swift */,
 			);
 			path = DrugToast;
 			sourceTree = "<group>";
@@ -581,7 +578,6 @@
 				6B32641E2B12BD5B00868159 /* DrugViewInner.swift in Sources */,
 				6B8844432AE596E500814F92 /* GradientButton.swift in Sources */,
 				6B4164BB2B164FB600EFE75B /* RoleGroup.swift in Sources */,
-				6B3264002B12A7D000868159 /* DrugToastModel.swift in Sources */,
 				6B49B6022AEC39CD00AA0DA3 /* MenuTabModel.swift in Sources */,
 				6B5E7E902AF731D100BA7905 /* NetworkManager.swift in Sources */,
 				6B49B6082AEC3F6F00AA0DA3 /* DrugsService.swift in Sources */,
