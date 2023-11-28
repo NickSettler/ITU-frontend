@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum E_ROLE_GROUP : String {
+enum E_ROLE_GROUP : String, Codable {
     case success
     case warning
     case error
