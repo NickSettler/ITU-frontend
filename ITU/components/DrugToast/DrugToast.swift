@@ -9,28 +9,6 @@ import SwiftUI
 import SheeKit
 import UniformTypeIdentifiers
 
-enum DrugToastRole : String {
-    case success
-    case warning
-    case error
-    case info
-    
-    var color: [Color] {
-        get {
-            switch (self) {
-            case .error:
-                return [.Quaternary200, .Quaternary400, .Quaternary500, .Quaternary600]
-            case .warning:
-                return [.Secondary50, .Secondary200, .Secondary300, .Secondary400]
-            case .success:
-                return [.Primary50, .Primary200, .Primary300, .Primary600]
-            case .info:
-                return [.Tertiary100, .Tertiary300, .Tertiary400, .Tertiary500]
-            }
-        }
-    }
-}
-
 struct BoundsPreferenceKey: PreferenceKey {
     typealias Value = Anchor<CGRect>?
     
@@ -47,7 +25,7 @@ struct BoundsPreferenceKey: PreferenceKey {
 struct DrugToast: View {
     @StateObject var viewModel = DrugToastModel()
     
-    let role: DrugToastRole
+    let role: E_ROLE_GROUP
     
     var title: String
     var text: String
@@ -57,7 +35,7 @@ struct DrugToast: View {
     let color: [Color]
     
     init(
-        role: DrugToastRole,
+        role: E_ROLE_GROUP,
         title: String,
         text: String
     ) {
@@ -68,7 +46,7 @@ struct DrugToast: View {
     }
     
     init(
-        role: DrugToastRole,
+        role: E_ROLE_GROUP,
         title: String,
         text: String,
         hintTitle: String,
@@ -83,7 +61,7 @@ struct DrugToast: View {
     }
     
     var body: some View {
-        ZStack {
+        RoleGroup(role: role) {
             HStack(alignment: .top, spacing: 0) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
@@ -102,28 +80,6 @@ struct DrugToast: View {
                 }
             }
         }
-        .foregroundColor(self.color[3])
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .frame(maxWidth: .infinity)
-        .background {
-            RoundedRectangle(cornerRadius: 12)
-                .fill(self.color[1].opacity(0.36))
-                .stroke(
-                    LinearGradient(
-                        colors: [self.color[2], self.color[1]],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                    .opacity(0.48),
-                    lineWidth: 1
-                )
-        }
-        .contentShape(
-            .contextMenuPreview,
-            RoundedRectangle(cornerRadius: 12)
-                .inset(by: -0.5)
-        )
         .contextMenu {
             Button {
                 UIPasteboard.general.setValue(

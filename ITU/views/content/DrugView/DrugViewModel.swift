@@ -15,7 +15,7 @@ import Foundation
     @Published var getRequestInProgress: Bool = false
     @Published var rotation = 0.0
     
-    var expiryDateToastRole: DrugToastRole {
+    var expiryDateToastRole: E_ROLE_GROUP {
         get {
             switch(drug.expiry_state) {
             case .not:
