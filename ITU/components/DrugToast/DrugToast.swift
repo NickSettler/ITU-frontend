@@ -114,30 +114,13 @@ struct DrugToast: View {
                             )
                         )
                 ) {
-                    hintSheet
+                    DrugHint(
+                        color: color,
+                        title: hintTitle ?? "",
+                        text: hintText ?? ""
+                    )
                 }
         }
-    }
-    
-    var hintSheet: some View {
-        VStack(alignment: .center, spacing: 12) {
-            Text(self.hintTitle ?? "")
-                .font(.helvetica22)
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                .kerning(3.3)
-                .tracking(1.15)
-            
-            Text(self.hintText ?? "")
-                .font(.helvetica16)
-                .kerning(1.76)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.top, 64)
-        .padding(.horizontal, 24)
-        .foregroundColor(self.color[0])
-        .background(self.color[3])
-        .ignoresSafeArea()
     }
 }
 
