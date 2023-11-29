@@ -59,6 +59,18 @@ import Foundation
 
     func createDrug() {
         Task {
+            if (countNumber != "") {
+                countBinding = "\(countNumber) \(selectedMeasurement.rawValue)"
+            }
+            
+            if (strengthNumber != "") {
+                strengthBinding = "\(strengthNumber) \(selectedDosage.rawValue)"
+            }
+            
+            createdDrug.form!.form = selectedForm
+            
+            print(strengthBinding)
+            
             let created = await DrugsService.createDrug(createdDrug: createdDrug)
             
             if (created) {

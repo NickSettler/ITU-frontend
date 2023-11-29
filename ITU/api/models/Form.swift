@@ -33,7 +33,7 @@ struct Form : Codable {
     
     static var empty: Form {
         get {
-            return .init(form: "TAB", name: "")
+            return .init(form: "", name: "")
         }
     }
 }

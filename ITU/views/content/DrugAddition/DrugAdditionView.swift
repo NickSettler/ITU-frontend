@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct DrugAdditionView: View {
     
@@ -27,7 +28,14 @@ struct DrugAdditionView: View {
                     CustomTextField(
                         hint: "Dose",
                         value: $viewModel.strengthNumber
-                    )
+                    ).keyboardType(.numberPad)
+                        .onReceive(Just(viewModel.strengthNumber)) { newValue in
+                            let filtered = newValue.filter { "0123456789".contains($0) }
+                            if filtered != newValue {
+                                self.viewModel.strengthNumber = filtered
+                            }
+                        }
+                    
                     
                     Picker("Dosage", selection: $viewModel.selectedDosage) {
                         ForEach(DrugAdditionViewModel.drugDosage.allCases) { option in
@@ -38,7 +46,13 @@ struct DrugAdditionView: View {
                     CustomTextField(
                         hint: "Count",
                         value: $viewModel.countNumber
-                    )
+                    ).keyboardType(.numberPad)
+                        .onReceive(Just(viewModel.countNumber)) { newValue in
+                            let filtered = newValue.filter { "0123456789".contains($0) }
+                            if filtered != newValue {
+                                self.viewModel.countNumber = filtered
+                            }
+                        }
                     
                     Picker("Count", selection: $viewModel.selectedMeasurement) {
                         ForEach(DrugAdditionViewModel.countMeasurement.allCases) { option in
@@ -80,14 +94,9 @@ struct DrugAdditionView: View {
                 
                 
                 GradientButton(title: "Add", fullWidth: true) {
-                    if (viewModel.strengthNumber != "" && viewModel.countNumber != "") {
-                        viewModel.countBinding = "\(viewModel.countNumber) \(viewModel.selectedMeasurement.rawValue)"
-                        viewModel.strengthBinding = "\(viewModel.strengthNumber) \(viewModel.selectedDosage.rawValue)"
-                        viewModel.createdDrug.form!.form = viewModel.selectedForm
-                    }
                     viewModel.createDrug()
                 }
-                .disabled(viewModel.createdDrug.name.isEmpty)
+                .disabled(viewModel.createdDrug.name.isEmpty || viewModel.countNumber.isEmpty)
                 .padding(.top, 64)
             }
             .padding()
