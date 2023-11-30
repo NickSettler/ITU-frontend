@@ -67,9 +67,13 @@ import Foundation
                 strengthBinding = "\(strengthNumber) \(selectedDosage.rawValue)"
             }
             
-            createdDrug.form!.form = selectedForm
+            if (createdDrug.form == nil) {
+                createdDrug.form = .init(form: selectedForm)
+            } else {
+                createdDrug.form!.form = selectedForm
+            }
             
-            print(strengthBinding)
+            createdDrug.form!.form = selectedForm
             
             let created = await DrugsService.createDrug(createdDrug: createdDrug)
             

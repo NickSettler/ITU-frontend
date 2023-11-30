@@ -32,11 +32,16 @@ struct DrugsService {
     static func createDrug(createdDrug: Drug) async -> Bool {
         try? await AuthService.conditionalRefresh()
 
-
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = .current
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let formattedDate = dateFormatter.string(from: createdDrug.expiration_date)
+        
+        var createdDrugForm = ""
+        
+        if (createdDrug.form != nil) {
+            createdDrugForm = createdDrug.form!.form
+        }
 
         do {
             _ = try await NetworkManager.shared.post(
@@ -44,7 +49,7 @@ struct DrugsService {
                 parameters: [
                     "name": createdDrug.name,
                     "strength": createdDrug.strength ?? "",
-                    "form": createdDrug.form!.form,
+                    "form": createdDrugForm,
                     "count": createdDrug.count,
                     "expiration_date": formattedDate
                 ]
