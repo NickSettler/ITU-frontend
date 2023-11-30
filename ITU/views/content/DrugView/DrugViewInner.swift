@@ -9,11 +9,11 @@ import SwiftUI
 
 struct DrugViewInner: View {
     @Environment (\.dismiss) var dismiss
-    
+
     @StateObject var viewModel: DrugViewModel
     
     var drugViewVisible: Binding<Bool>
-    
+
     var size: CGSize
     var safeArea: EdgeInsets
     @State var offsetY: CGFloat = 0
@@ -42,7 +42,7 @@ struct DrugViewInner: View {
                         VStack(alignment: .leading, spacing: subSectionGap) {
                             SectionTitle("Actions")
                                 .padding(.horizontal, 16)
-                            
+
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 8) {
                                     DrugButton(title: "Move", icon: "folder.fill") {
@@ -58,7 +58,7 @@ struct DrugViewInner: View {
                                 .padding(.horizontal, 16)
                             }
                         }
-                        
+
                         VStack(alignment: .leading, spacing: subSectionGap) {
                             SectionTitle("Personal")
                             
@@ -66,7 +66,9 @@ struct DrugViewInner: View {
                                 DrugToast(
                                     role: viewModel.expiryDateToastRole,
                                     title: "Expiration date",
-                                    text: viewModel.drug.expiration_date.formatted(.dateTime.month(.twoDigits).year())
+                                    text: viewModel.drug.expiration_date.formatted(.dateTime.month(.twoDigits).year()),
+                                    hintTitle: "Expirtion date",
+                                    hintText: viewModel.expiryDateHint
                                 )
                                 
                                 if let location = viewModel.drug.location {
@@ -79,57 +81,73 @@ struct DrugViewInner: View {
                             }
                         }
                         .padding(.horizontal, 16)
-                        
+
                         if viewModel.drug.hasGeneral {
                             VStack(alignment: .leading, spacing: subSectionGap) {
                                 SectionTitle("General")
-                                
+
                                 VStack(spacing: toastGap) {
                                     if let strength = viewModel.drug.strength {
                                         DrugToast(
                                             role: .success,
                                             title: "Strength",
-                                            text: strength
+                                            text: strength,
+                                          hintTitle: "Strength",
+                                          hintText: "The term strength refers to the concentration or dosage of the active ingredient(s) in a medication."
                                         )
                                     }
-                                    
+
                                     if let form = viewModel.drug.form?.name {
                                         DrugToast(
                                             role: .success,
                                             title: "Form",
-                                            text: form
+                                            text: form,
+                                                                                              hintTitle: "Form",
+                                                                                              hintText: "A drug form is just the way medicine comes. It could be a pill you swallow, a shot you get, or even a cream you put on your skin. It's like the package that helps the medicine work the best for you."
+
                                         )
                                     }
-                                    
+
                                     if let route = viewModel.drug.route?.name {
                                         DrugToast(
                                             role: .success,
                                             title: "Route",
-                                            text: route
+                                            text: route,
+                                                                                               hintTitle:"Route",
+                                                                                               hintText:"The route is how you take or apply a medicine. It's like the path the medicine follows to get into your body and start working."
+
                                         )
                                     }
-                                    
+
                                     if let package = viewModel.drug.package {
                                         DrugToast(
                                             role: .success,
                                             title: "Package",
-                                            text: package
+                                            text: package,
+                                                                                                 hintTitle: "Package",
+                                                                                                 hintText: "A package is like the wrapping of your medicine. It's what keeps it safe and easy to use."
                                         )
                                     }
-                                    
+
                                     if let dosage = viewModel.drug.dosage?.name {
                                         DrugToast(
                                             role: .success,
                                             title: "Dosage",
-                                            text: dosage
+                                            text: dosage,
+                                                                                                hintTitle: "Dosage",
+                                                                                                hintText: "Dosage is simply the amount of medicine you're supposed to take or use. It's like following a recipe – it tells you how much of the medicine will be effective and safe for your body. "
+
                                         )
                                     }
-                                    
+
                                     if let pharm_class = viewModel.drug.pharm_class?.name {
                                         DrugToast(
                                             role: .success,
                                             title: "Drug class",
-                                            text: pharm_class
+                                            text: pharm_class,
+                                                                                                     hintTitle: "Drug Class",
+                                                                                                     hintText: "Drug class is like putting medicines into groups based on how they work or what they treat. It's a way to organize them. For example, pain relievers might be in one class, while antibiotics are in another."
+
                                         )
                                     }
                                 }
@@ -140,40 +158,44 @@ struct DrugViewInner: View {
                         if viewModel.drug.hasSources {
                             VStack(alignment: .leading, spacing: subSectionGap) {
                                 SectionTitle("Sources")
-                                
+
                                 VStack(spacing: toastGap) {
                                     if let organization = viewModel.drug.organization?.name {
                                         DrugToast(
                                             role: .success,
-                                            title: "Organization",
-                                            text: organization
+                                            title: "Marketing authorization holder",
+                                            text: organization,
+                                        hintTitle: "Marketing authorization holder",
+                                        hintText: "The marketing authorization holder is the company or organization that has been given the official approval to market and sell a specific medicine or medical product."
                                         )
                                     }
-                                    
+
                                     if let organization_country = viewModel.drug.organization_country?.name {
                                         DrugToast(
                                             role: .success,
-                                            title: "Organization country",
+                                            title: "Marketing authorization holder country",
                                             text: organization_country
                                         )
                                     }
-                                    
+
                                     if let actual_organization = viewModel.drug.actual_organization?.name {
                                         DrugToast(
                                             role: .success,
-                                            title: "Actual organization",
+                                            title: "Manufacturer",
                                             text: actual_organization
                                         )
                                     }
-                                    
+
                                     if let actual_organization_country = viewModel.drug.actual_organization_country?.name {
                                         DrugToast(
                                             role: .success,
-                                            title: "Actual organization country",
-                                            text: actual_organization_country
+                                            title: "Manufacturer country",
+                                            text: actual_organization_country,
+                                        hintTitle: "Manufacturer country",
+                                        hintText: "A manufacturer is a company or facility that produces or makes a product, including medicines."
                                         )
                                     }
-                                    
+
                                     if let concurrent_import = viewModel.drug.concurrent_import {
                                         DrugToast(
                                             role: .success,
@@ -181,7 +203,7 @@ struct DrugViewInner: View {
                                             text: concurrent_import
                                         )
                                     }
-                                    
+
                                     if let concurrent_import_organization = viewModel.drug.concurrent_import_organization?.name {
                                         DrugToast(
                                             role: .success,
@@ -189,7 +211,7 @@ struct DrugViewInner: View {
                                             text: concurrent_import_organization
                                         )
                                     }
-                                    
+
                                     if let concurrent_import_country = viewModel.drug.concurrent_import_country?.name {
                                         DrugToast(
                                             role: .success,
@@ -197,7 +219,7 @@ struct DrugViewInner: View {
                                             text: concurrent_import_country
                                         )
                                     }
-                                    
+
                                     if let source = viewModel.drug.source?.name {
                                         DrugToast(
                                             role: .success,
@@ -209,19 +231,22 @@ struct DrugViewInner: View {
                             }
                             .padding(.horizontal, 16)
                         }
-                        
+
                         if viewModel.drug.hasRegistration {
                             VStack(alignment: .leading, spacing: subSectionGap) {
-                                SectionTitle("Registraion")
+                                SectionTitle("Registration")
                                 
                                 if let registration_status = viewModel.drug.registration_status?.name {
                                     DrugToast(
                                         role: .success,
                                         title: "Registration status",
-                                        text: registration_status
+                                        text: registration_status,
+                                        hintTitle: "Registration status",
+                                        hintText: "Registration status is like the permission a medicine gets to be sold. If it's approved or registered, it means it passed the safety and effectiveness checks by the authorities. If it's pending, it's still being reviewed."
+
                                     )
                                 }
-                                
+
                                 if let valid_till = viewModel.drug.valid_till {
                                     DrugToast(
                                         role: .success,
@@ -229,7 +254,7 @@ struct DrugViewInner: View {
                                         text: valid_till.formatted(.dateTime.month(.twoDigits).year())
                                     )
                                 }
-                                
+
                                 if let present_till = viewModel.drug.present_till {
                                     DrugToast(
                                         role: .success,
@@ -237,7 +262,7 @@ struct DrugViewInner: View {
                                         text: present_till.formatted(.dateTime.month(.twoDigits).year())
                                     )
                                 }
-                                
+
                                 if let unlimited_registration = viewModel.drug.unlimited_registration {
                                     DrugToast(
                                         role: .success,
@@ -245,7 +270,7 @@ struct DrugViewInner: View {
                                         text: unlimited_registration
                                     )
                                 }
-                                
+
                                 if let registration_procedure = viewModel.drug.registration_procedure?.name {
                                     DrugToast(
                                         role: .success,
@@ -253,7 +278,7 @@ struct DrugViewInner: View {
                                         text: registration_procedure
                                     )
                                 }
-                                
+
                                 if let registration_name = viewModel.drug.registration_name {
                                     DrugToast(
                                         role: .success,
@@ -261,7 +286,7 @@ struct DrugViewInner: View {
                                         text: registration_name
                                     )
                                 }
-                                
+
                                 if let legal_registration_base = viewModel.drug.legal_registration_base?.name {
                                     DrugToast(
                                         role: .success,
@@ -272,11 +297,11 @@ struct DrugViewInner: View {
                             }
                             .padding(.horizontal, 16)
                         }
-                        
+
                         if viewModel.drug.hasDispense {
                             VStack(alignment: .leading, spacing: subSectionGap) {
                                 SectionTitle("Dispense")
-                                
+
                                 VStack(spacing: toastGap) {
                                     if let daily_amount = viewModel.drug.daily_amount {
                                         DrugToast(
@@ -285,7 +310,7 @@ struct DrugViewInner: View {
                                             text: daily_amount.formatted()
                                         )
                                     }
-                                    
+
                                     if let daily_unit = viewModel.drug.daily_unit?.name {
                                         DrugToast(
                                             role: .success,
@@ -293,7 +318,7 @@ struct DrugViewInner: View {
                                             text: daily_unit
                                         )
                                     }
-                                    
+
                                     if let daily_count = viewModel.drug.daily_count {
                                         DrugToast(
                                             role: .success,
@@ -301,7 +326,7 @@ struct DrugViewInner: View {
                                             text: daily_count.formatted()
                                         )
                                     }
-                                    
+
                                     if let dispense = viewModel.drug.dispense?.name {
                                         DrugToast(
                                             role: .success,
@@ -313,11 +338,11 @@ struct DrugViewInner: View {
                             }
                             .padding(.horizontal, 16)
                         }
-                        
+
                         if viewModel.drug.hasEffects {
                             VStack(alignment: .leading, spacing: subSectionGap) {
                                 SectionTitle("Effects")
-                                
+
                                 VStack(spacing: toastGap) {
                                     if let addiction = viewModel.drug.addiction?.name {
                                         DrugToast(
@@ -326,7 +351,7 @@ struct DrugViewInner: View {
                                             text: addiction
                                         )
                                     }
-                                    
+
                                     if let doping = viewModel.drug.doping?.name {
                                         DrugToast(
                                             role: .success,
@@ -334,7 +359,7 @@ struct DrugViewInner: View {
                                             text: doping
                                         )
                                     }
-                                    
+
                                     if let hormones = viewModel.drug.hormones?.name {
                                         DrugToast(
                                             role: .success,
@@ -346,11 +371,11 @@ struct DrugViewInner: View {
                             }
                             .padding(.horizontal, 16)
                         }
-                        
+
                         if viewModel.drug.hasMisc {
                             VStack(alignment: .leading, spacing: subSectionGap) {
                                 SectionTitle("Miscellaneous")
-                                
+
                                 VStack(spacing: toastGap) {
                                     if let supplied = viewModel.drug.supplied {
                                         DrugToast(
@@ -359,7 +384,7 @@ struct DrugViewInner: View {
                                             text: supplied
                                         )
                                     }
-                                    
+
                                     if let EAN = viewModel.drug.EAN {
                                         DrugToast(
                                             role: .success,
@@ -367,7 +392,7 @@ struct DrugViewInner: View {
                                             text: EAN
                                         )
                                     }
-                                    
+
                                     if let brail_sign = viewModel.drug.brail_sign {
                                         DrugToast(
                                             role: .success,
@@ -375,7 +400,7 @@ struct DrugViewInner: View {
                                             text: brail_sign
                                         )
                                     }
-                                    
+
                                     if let expiration = viewModel.drug.expiration {
                                         DrugToast(
                                             role: .success,
@@ -383,7 +408,7 @@ struct DrugViewInner: View {
                                             text: expiration.formatted()
                                         )
                                     }
-                                    
+
                                     if let expiration_period = viewModel.drug.expiration_period {
                                         DrugToast(
                                             role: .success,
@@ -391,7 +416,7 @@ struct DrugViewInner: View {
                                             text: expiration_period
                                         )
                                     }
-                                    
+
                                     if let mrp_number = viewModel.drug.mrp_number {
                                         DrugToast(
                                             role: .success,
@@ -399,7 +424,7 @@ struct DrugViewInner: View {
                                             text: mrp_number
                                         )
                                     }
-                                    
+
                                     if let safety_element = viewModel.drug.safety_element {
                                         DrugToast(
                                             role: .success,
@@ -471,7 +496,7 @@ struct DrugViewInner: View {
         /// Converting Offset into Progress
         /// Limiting it to 0 - 1
         let progress = max(min(-offsetY / (headerHeight - minimumHeaderHeight), 1), 0)
-        
+
         return GeometryReader { _ in
             ZStack {
                 Rectangle()

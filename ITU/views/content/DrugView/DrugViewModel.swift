@@ -13,14 +13,14 @@ struct DrugChipData : Codable, Hashable {
     var role: E_ROLE_GROUP
     var hintTitle: String?
     var hintText: String?
-    
+
     enum CodingKeys: CodingKey {
         case text
         case role
         case hintTitle
         case hintText
     }
-    
+
     init(text: String, role: E_ROLE_GROUP, hintTitle: String? = nil, hintText: String? = nil) {
         self.text = text
         self.role = role
@@ -70,7 +70,7 @@ struct DrugChipData : Codable, Hashable {
     var tags: [DrugChipData] {
         get {
             var result: [DrugChipData] = []
-            
+
             switch(drug.expiry_state) {
             case .not:
                 result.append(.init(text: "Not Expired", role: .success))
@@ -79,39 +79,52 @@ struct DrugChipData : Codable, Hashable {
             case .expired:
                 result.append(.init(text: "Expired", role: .error))
             }
-            
+
             if let strength = drug.strength {
                 result.append(.init(text: "\(strength)", role: .success))
             }
-            
+
             if let form = drug.form?.name {
                 result.append(.init(text: "\(form)", role: .success))
             }
-            
+
             if let route = drug.route?.name {
                 result.append(.init(text: "\(route)", role: .success))
             }
-            
+
             if let package = drug.package {
                 result.append(.init(text: "\(package)", role: .success))
             }
-            
+
             if let dosage = drug.dosage?.name {
                 result.append(.init(text: "\(dosage)", role: .success))
             }
-            
+
             if let pharm_class = drug.pharm_class?.name {
                 result.append(.init(text: "\(pharm_class)", role: .success))
             }
-            
+
             result = result.sorted { tag1, tag2 in
                 return tag1.role.rawValue > tag2.role.rawValue
             }
-            
+
             return result
         }
     }
-    
+
+    var expiryDateHint: String {
+        get{
+            switch(drug.expiry_state) {
+            case .not:
+                return "The expiration date is fine. Keep using the medicine."
+            case .soon:
+                return "The medicine will expire soon. Continue using it, but don't forget to check the expiration date."
+            case .expired:
+                return "The medicine has expired. Please refrain from using it, as it could be harmful. To utilize the medicine effectively carefully read and follow the instructions provided by your healthcare provider or on the medicine's packaging. "
+            }
+        }
+    }
+
     init(drug: Binding<Drug>) {
         self.drugBinding = drug
         self.drug = drug.wrappedValue
