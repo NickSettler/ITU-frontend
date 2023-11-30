@@ -37,10 +37,8 @@ struct DrugsService {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let formattedDate = dateFormatter.string(from: createdDrug.expiration_date)
         
-        var createdDrugForm = ""
-        
-        if (createdDrug.form != nil) {
-            createdDrugForm = createdDrug.form!.form
+        guard let createdDrugForm = createdDrug.form else {
+            return false
         }
 
         do {
@@ -49,7 +47,7 @@ struct DrugsService {
                 parameters: [
                     "name": createdDrug.name,
                     "strength": createdDrug.strength ?? "",
-                    "form": createdDrugForm,
+                    "form": createdDrug.form!.form,
                     "count": createdDrug.count,
                     "expiration_date": formattedDate
                 ]
