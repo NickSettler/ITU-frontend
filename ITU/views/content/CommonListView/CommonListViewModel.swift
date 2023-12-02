@@ -36,7 +36,7 @@ import SwiftUI
         Task {
             if let res = await DrugsService.getAllUserDrugs() {
                 await MainActor.run {
-                    self.drugs =  res.data
+                    self.drugs = res.data
                 }
             } else {
                 print("Failed fetching drugs")
