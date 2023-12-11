@@ -14,7 +14,7 @@ struct User : Codable, Hashable {
     var email: String
     var password: String
     var role: Role
-    var household: Household
+    var household: Household?
     
     enum CodingKeys: CodingKey {
         case id
@@ -51,10 +51,7 @@ struct User : Codable, Hashable {
         } else if let household = try? values.decodeIfPresent(Int.self, forKey: .household) {
             self.household = .init(id: household)
         } else {
-            throw DecodingError.typeMismatch(
-                [String : Any].self,
-                .init(codingPath: [CodingKeys.self.household], debugDescription: "")
-            )
+            self.household = nil
         }
     }
     
