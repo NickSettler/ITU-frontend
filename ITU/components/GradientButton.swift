@@ -11,10 +11,11 @@ struct GradientButton: View {
     var title: String
     var icon: String?
     var fullWidth: Bool = false
+    var disabled: Bool = false
     var onClick: () -> ()
     
     var body: some View {
-        Button(action: onClick, label: {
+        Button(action: disabled ? {} : onClick, label: {
             HStack(spacing: 15) {
                 Text(title)
                 
@@ -38,6 +39,8 @@ struct GradientButton: View {
                 in: .capsule
             )
         })
+        .opacity(disabled ? 0.5 : 1)
+        .disabled(self.disabled)
     }
 }
 
@@ -50,6 +53,9 @@ struct GradientButton: View {
             // Nothing
         }
         GradientButton(title: "Continue", fullWidth: true) {
+            // Nothing
+        }
+        GradientButton(title: "Continue", fullWidth: true, disabled: true) {
             // Nothing
         }
     }
