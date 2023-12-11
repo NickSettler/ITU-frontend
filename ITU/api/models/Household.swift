@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Household : Codable, Hashable {
+struct Household : Codable, Hashable {
     var id: Int
     var user_created: User?
     var members: [User]
@@ -18,7 +18,7 @@ class Household : Codable, Hashable {
         case members
     }
     
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try values.decode(Int.self, forKey: .id)
         
@@ -30,7 +30,12 @@ class Household : Codable, Hashable {
             self.user_created = nil
         }
         
-        self.members = try values.decode([User].self, forKey: .members)
+        
+        if let members = try? values.decodeIfPresent([User].self, forKey: .members) {
+            self.members = members
+        } else {
+            self.members = []
+        }
     }
     
     init(id: Int, user_created: User? = nil, members: [User]) {
@@ -39,7 +44,7 @@ class Household : Codable, Hashable {
         self.members = members
     }
     
-    convenience init(id: Int) {
+    init(id: Int) {
         self.init(id: id, user_created: nil, members: [])
     }
     

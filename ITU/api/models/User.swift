@@ -7,31 +7,31 @@
 
 import Foundation
 
-struct User : Codable, Hashable {
+class User : Codable, Hashable {
     var id: String
-    var first_name: String
-    var last_name: String
+    var first_name: String?
+    var last_name: String?
     var email: String
     var password: String
     var role: Role
     var household: Household?
     
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id
         case first_name
         case last_name
         case email
         case password
         case role
-        case household
+        case household = "household"
     }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         self.id = try values.decode(String.self, forKey: .id)
-        self.first_name = try values.decode(String.self, forKey: .first_name)
-        self.last_name = try values.decode(String.self, forKey: .last_name)
+        self.first_name = try? values.decode(String.self, forKey: .first_name)
+        self.last_name = try? values.decode(String.self, forKey: .last_name)
         self.email = try values.decode(String.self, forKey: .email)
         self.password = try values.decode(String.self, forKey: .password)
         
@@ -55,7 +55,7 @@ struct User : Codable, Hashable {
         }
     }
     
-    init(id: String) {
+    convenience init(id: String) {
         self.init(
             id: id,
             first_name: "",
@@ -79,5 +79,9 @@ struct User : Codable, Hashable {
     
     static func == (lhs: User, rhs: User) -> Bool {
         return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
