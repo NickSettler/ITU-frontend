@@ -51,7 +51,7 @@ struct DrugViewInner: View {
                                 )
                             }
                         }
-
+                        
                         VStack(alignment: .leading, spacing: subSectionGap) {
                             SectionTitle("General")
                             
@@ -125,7 +125,7 @@ struct DrugViewInner: View {
                                         text: organization_country
                                     )
                                 }
-
+                                
                                 if let actual_organization = viewModel.drug.actual_organization?.name {
                                     DrugToast(
                                         role: .success,
@@ -141,7 +141,7 @@ struct DrugViewInner: View {
                                         text: actual_organization_country
                                     )
                                 }
-
+                                
                                 if let concurrent_import = viewModel.drug.concurrent_import {
                                     DrugToast(
                                         role: .success,
@@ -149,7 +149,7 @@ struct DrugViewInner: View {
                                         text: concurrent_import
                                     )
                                 }
-
+                                
                                 if let concurrent_import_organization = viewModel.drug.concurrent_import_organization?.name {
                                     DrugToast(
                                         role: .success,
@@ -224,7 +224,7 @@ struct DrugViewInner: View {
     @ViewBuilder
     func HeaderView() -> some View {
         let headerHeight = (size.height * 0.25) + safeArea.top
-        let minimumHeaderHeight = 65 + safeArea.top
+        let minimumHeaderHeight = 96 + safeArea.top
         /// Converting Offset into Progress
         /// Limiting it to 0 - 1
         let progress = max(min(-offsetY / (headerHeight - minimumHeaderHeight), 1), 0)
@@ -242,14 +242,16 @@ struct DrugViewInner: View {
                         )
                     )
                 
-                VStack(spacing: 12) {
+                VStack(spacing: 0) {
                     Image(systemName: "pill.fill")
                         .foregroundStyle(.primary400)
                         .rotationEffect(.degrees(viewModel.rotation))
                         .offset(y: viewModel.getRequestInProgress ? 0 : min(-safeArea.top - 65 + offsetY, 0))
                         .font(.system(size: 20))
                     
-                    HStack(alignment: .lastTextBaseline, spacing: 8) {
+                    Spacer()
+                    
+                    HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text(viewModel.drug.name)
                             .font(.system(size: 30 - (progress * 4)))
                             .fontWeight(.bold)
@@ -264,10 +266,26 @@ struct DrugViewInner: View {
                         Text("10 Tablets")
                             .foregroundStyle(.grey500)
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 12)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(viewModel.tags, id: \.hashValue) { tag in
+                                DrugChip(
+                                    role: tag.role,
+                                    text: tag.text,
+                                    hintTitle: tag.hintTitle,
+                                    hintText: tag.hintText
+                                )
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 4)
+                    }
                 }
                 .padding(.top, 64)
                 .padding(.bottom, 16)
-                .padding(.horizontal, 16)
             }
             .frame(height: (headerHeight + offsetY) < minimumHeaderHeight ? minimumHeaderHeight : (headerHeight + offsetY), alignment: .bottom)
             .offset(y: -offsetY)

@@ -8,6 +8,27 @@
 import SwiftUI
 import Foundation
 
+struct DrugChipData : Codable, Hashable {
+    var text: String
+    var role: E_ROLE_GROUP
+    var hintTitle: String?
+    var hintText: String?
+    
+    enum CodingKeys: CodingKey {
+        case text
+        case role
+        case hintTitle
+        case hintText
+    }
+    
+    init(text: String, role: E_ROLE_GROUP, hintTitle: String? = nil, hintText: String? = nil) {
+        self.text = text
+        self.role = role
+        self.hintTitle = hintTitle
+        self.hintText = hintText
+    }
+}
+
 @MainActor class DrugViewModel : ObservableObject {
     private(set) var drugBinding: Binding<Drug>
     
@@ -25,6 +46,51 @@ import Foundation
             case .expired:
                 return .error
             }
+        }
+    }
+    
+    var tags: [DrugChipData] {
+        get {
+            var result: [DrugChipData] = []
+            
+            switch(drug.expiry_state) {
+            case .not:
+                result.append(.init(text: "Not Expired", role: .success))
+            case .soon:
+                result.append(.init(text: "Expires soon", role: .warning))
+            case .expired:
+                result.append(.init(text: "Expired", role: .error))
+            }
+            
+            if let strength = drug.strength {
+                result.append(.init(text: "\(strength)", role: .success))
+            }
+            
+            if let form = drug.form?.name {
+                result.append(.init(text: "\(form)", role: .success))
+            }
+            
+            if let route = drug.route?.name {
+                result.append(.init(text: "\(route)", role: .success))
+            }
+            
+            if let package = drug.package {
+                result.append(.init(text: "\(package)", role: .success))
+            }
+            
+            if let dosage = drug.dosage?.name {
+                result.append(.init(text: "\(dosage)", role: .success))
+            }
+            
+            if let pharm_class = drug.pharm_class?.name {
+                result.append(.init(text: "\(pharm_class)", role: .success))
+            }
+            
+            result = result.sorted { tag1, tag2 in
+                return tag1.role.rawValue > tag2.role.rawValue
+            }
+            
+            return result
         }
     }
     
