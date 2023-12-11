@@ -58,9 +58,12 @@ struct SettingsView: View {
                             }
                             
                         }
-                        HStack(alignment: .center) {
+                        NavigationLink {
+                            NotificationView()
+                        } label: {HStack(alignment: .center) {
                             Image(systemName: "bell")
                             Text("Notifications")
+                        }
                         }
                     }
                     Section(header: Text("Auth")) {

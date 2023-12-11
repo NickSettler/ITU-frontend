@@ -14,7 +14,7 @@ import SwiftUI
     @Published var isDrugCreateVisible: Bool = false
     
     @Published var folders: [Folder] = [.allFolder]
-    @Published var drugs: [Drug] = []
+    @Published var drugs: [Drug] = allDrugs
     
     func getAllUserFolders() {
         Task {
@@ -36,7 +36,7 @@ import SwiftUI
         Task {
             if let res = await DrugsService.getAllUserDrugs() {
                 await MainActor.run {
-                    self.drugs = res.data
+                    self.drugs = allDrugs + res.data
                 }
             } else {
                 print("Failed fetching drugs")
