@@ -49,6 +49,34 @@ actor NetworkManager: GlobalActor {
         }
     }
     
+    func patch(path: String, parameters: Parameters?) async throws -> Data {
+        if let token = self.accessToken {
+            if (!NetworkAPI.isTokenExpired(token: token)) {
+                commonHeaders.add(name: "Authorization", value: "Bearer " + token)
+            }
+        }
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.request(
+                API_BASE_URL + path,
+                method: .patch,
+                parameters: parameters,
+                encoding: JSONEncoding.default,
+                headers: commonHeaders,
+                requestModifier: { $0.timeoutInterval = self.maxWaitTime }
+            )
+            .validate()
+            .responseData { response in
+                switch(response.result) {
+                case let .success(data):
+                    continuation.resume(returning: data)
+                case let .failure(error):
+                    continuation.resume(throwing: self.handleError(error: error))
+                }
+            }
+        }
+    }
+    
     func delete(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             if (!NetworkAPI.isTokenExpired(token: token)) {
