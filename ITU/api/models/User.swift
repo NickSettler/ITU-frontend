@@ -14,6 +14,7 @@ struct User : Codable, Hashable {
     var email: String
     var password: String
     var role: Role
+    var household: Household
     
     enum CodingKeys: CodingKey {
         case id
@@ -22,6 +23,7 @@ struct User : Codable, Hashable {
         case email
         case password
         case role
+        case household
     }
     
     init(from decoder: Decoder) throws {
@@ -43,19 +45,39 @@ struct User : Codable, Hashable {
                 .init(codingPath: [CodingKeys.self.role], debugDescription: "")
             )
         }
+        
+        if let household = try? values.decodeIfPresent(Household.self, forKey: .household) {
+            self.household = household
+        } else if let household = try? values.decodeIfPresent(Int.self, forKey: .household) {
+            self.household = .init(id: household)
+        } else {
+            throw DecodingError.typeMismatch(
+                [String : Any].self,
+                .init(codingPath: [CodingKeys.self.household], debugDescription: "")
+            )
+        }
     }
     
     init(id: String) {
-        self.init(id: id, first_name: "Test", last_name: "Test", email: "test@localhost", password: "********", role: .init(id: "test"))
+        self.init(
+            id: id,
+            first_name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            role: .init(id: ""),
+            household: .init(id: -1)
+        )
     }
     
-    init(id: String, first_name: String, last_name: String, email: String, password: String, role: Role) {
+    init(id: String, first_name: String, last_name: String, email: String, password: String, role: Role, household: Household) {
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = password
         self.role = role
+        self.household = household
     }
     
     static func == (lhs: User, rhs: User) -> Bool {
