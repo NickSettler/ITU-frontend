@@ -24,6 +24,14 @@ struct SettingsView: View {
                                 Text("Folders")
                             }
                         }
+                        NavigationLink {
+                            HouseholdView()
+                        } label: {
+                            HStack(alignment: .center) {
+                                Image(systemName: "house")
+                                Text("Household")
+                            }
+                        }
                         HStack(alignment: .center) {
                             Image(systemName: "bell")
                             Text("Notifications")
