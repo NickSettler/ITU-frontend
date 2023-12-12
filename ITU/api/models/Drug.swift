@@ -457,5 +457,5 @@ let allDrugs: [Drug] = [
     .init(id: 11, name: "PARACETAMOL ZENTIVA", complement: "500MG TBL NOB 100", expiration_date: "2025-10-12"),
     .init(id: 12, name: "PARACETAMOL ZENTIVA", complement: "1000MG TBL NOB 8", expiration_date: "2025-10-12"),
     .init(id: 13, name: "PARACETAMOL ZENTIVA", complement: "1000MG TBL NOB 16", expiration_date: "2022-10-12"),
-    .init(id: 14, name: "PARACETAMOL", complement: "1000MG TBL NOB 100", expiration_date: "2023-12-12"),
+    .init(id: 14, name: "PARACETAMOL", complement: "1000MG TBL NOB 100", expiration_date: "2024-01-12"),
 ]
