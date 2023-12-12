@@ -48,9 +48,7 @@ import SwiftUI
             } else if selectedUnit == 30 {
                 daysBeforeExpired = selectedNumber * 30
             }
-            
-            print("Days before exp")
-            print(daysBeforeExpired)
+
             if let daysDifference = difference.day {
                 if daysDifference > 0 && daysDifference <= daysBeforeExpired {
                     // Schedule notification for expiration in a month
@@ -68,22 +66,40 @@ import SwiftUI
         content.title = title
         content.body = body
         
-        //change reminderFrequency
-        print("reminder")
-        print(reminderFrequency)
-        // Set the time for the notification
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(60), repeats: true)
+        // Unique identifier for each notification
+        let identifier = UUID().uuidString
         
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        // Set the time for the first notification to appear almost immediately
+        let initialTimeInterval: TimeInterval = 10
+        let initialTrigger = UNTimeIntervalNotificationTrigger(timeInterval: initialTimeInterval, repeats: false)
         
-        UNUserNotificationCenter.current().add(request) { error in
+        // Set the time for the subsequent notifications to repeat based on reminderFrequency
+        let repeatingTrigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(reminderFrequency), repeats: true)
+        
+        // Create requests for initial and repeating notifications
+        let initialRequest = UNNotificationRequest(identifier: identifier, content: content, trigger: initialTrigger)
+        let repeatingRequest = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: repeatingTrigger)
+        
+        // Add the initial request
+        UNUserNotificationCenter.current().add(initialRequest) { error in
             if let error = error {
-                print("Error scheduling notification: \(error.localizedDescription)")
+                print("Error scheduling initial notification: \(error.localizedDescription)")
             } else {
-                print("Notification scheduled successfully!")
+                print("Initial notification scheduled successfully!")
+            }
+        }
+        
+        // Add the repeating request
+        UNUserNotificationCenter.current().add(repeatingRequest) { error in
+            if let error = error {
+                print("Error scheduling repeating notification: \(error.localizedDescription)")
+            } else {
+                print("Repeating notification scheduled successfully!")
             }
         }
     }
+
+
     
     func performOnAction () {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
