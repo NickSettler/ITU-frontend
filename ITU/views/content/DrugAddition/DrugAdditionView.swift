@@ -22,7 +22,6 @@ struct DrugAdditionView: View {
                     hint: "Name",
                     value: $viewModel.createdDrug.name
                 )
-                .padding(.top, 32)
                 
                 HStack {
                     CustomTextField(
@@ -89,10 +88,9 @@ struct DrugAdditionView: View {
                 .padding(.horizontal, -12)
                 .pickerStyle(.inline)
                 .frame(maxWidth: .infinity, minHeight: 120)
-       
+                
                 Spacer()
-                
-                
+
                 GradientButton(title: "Add", fullWidth: true) {
                     viewModel.createDrug()
                 }
@@ -110,7 +108,7 @@ struct DrugAdditionView: View {
                 }
             }
         }
-        .presentationDetents([.medium])
+        .presentationDetents([.large])
         .onReceive(viewModel.$didRequestComplete) {
             if ($0) {
                 self.presentationMode.wrappedValue.dismiss()
