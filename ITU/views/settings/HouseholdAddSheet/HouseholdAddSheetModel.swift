@@ -49,7 +49,9 @@ import SwiftUI
     
     func search(query: String) {
         Task {
-            self.searched = false
+            if query.isEmpty {
+                self.searched = false
+            }
             
             if let foundUsers = await UsersService.search(query: query)?.data {
                 self.foundUsers = foundUsers
