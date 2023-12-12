@@ -14,27 +14,53 @@ struct ListView: View {
     
     @ObservedObject var viewModel = ListViewModel(drugs: .constant([]), folderID: "")
     
-    init(drugs: Binding<[Drug]>, folderID: String) {
+    private(set) var refreshFunc: () -> Void
+    
+    init(drugs: Binding<[Drug]>, folderID: String, refreshFunc: @escaping () -> Void) {
         self._drugs = drugs
         self._viewModel = ObservedObject(wrappedValue: ListViewModel(drugs: drugs, folderID: folderID)
         )
+        self.refreshFunc = refreshFunc
     }
     
     var body: some View {
-        ScrollView(.vertical) {
-            ForEach(self.viewModel.filteredDrugs.indices, id: \.self) { index in
-                let drug = self.$viewModel.filteredDrugs[index]
-                NavigationLink {
-                    DrugView(drug: drug)
-                } label: {
-                    DrugCard(drug: drug)
+        if !self.viewModel.filteredDrugs.isEmpty {
+            ScrollView(.vertical) {
+                ForEach(self.viewModel.filteredDrugs.indices, id: \.self) { index in
+                    let drug = self.$viewModel.filteredDrugs[index]
+                    NavigationLink {
+                        DrugView(drug: drug)
+                    } label: {
+                        DrugCard(drug: drug)
+                    }
+                    .if(index == 0) {
+                        $0.padding(.top, 20)
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 24)
                 }
-                .if(index == 0) {
-                    $0.padding(.top, 20)
-                }
-                .padding(.horizontal)
-                .padding(.bottom, 24)
             }
+        } else {
+            VStack (spacing: 48) {
+                Spacer()
+                
+                VStack (spacing: 12) {
+                    Image(systemName: "space")
+                        .font(.system(size: 60))
+                    
+                    Text("No drugs found in the folder")
+                        .multilineTextAlignment(.center)
+                        .textCase(.uppercase)
+                        .font(.title)
+                }
+                
+                GradientButton(title: "REFRESH") {
+                    self.refreshFunc()
+                }
+                
+                Spacer()
+            }
+            .foregroundColor(.grey200)
         }
     }
 }

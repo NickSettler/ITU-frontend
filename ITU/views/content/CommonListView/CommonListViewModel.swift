@@ -43,4 +43,9 @@ import SwiftUI
             }
         }
     }
+    
+    func refresh() {
+        self.getAllUserFolders()
+        self.getAllUserDrugs()
+    }
 }

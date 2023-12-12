@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let tabs = ["ALL","HOME","CAR","COUNTRY","CLUB","VILLA"]
-
 struct CommonListView: View {
     @StateObject var viewModel = CommonListViewModel()
     
@@ -31,14 +29,14 @@ struct CommonListView: View {
                         ForEach(self.viewModel.folders, id: \.id) { folder in
                             ListView(
                                 drugs: $viewModel.drugs,
-                                folderID: folder.id
+                                folderID: folder.id,
+                                refreshFunc: viewModel.refresh
                             )
                             .tag(folder)
                         }
                     }
                     .refreshable {
-                        viewModel.getAllUserFolders()
-                        viewModel.getAllUserDrugs()
+                        viewModel.refresh()
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
@@ -69,13 +67,11 @@ struct CommonListView: View {
         )
         .onReceive(viewModel.$isDrugCreateVisible) {
             if (!$0) {
-                viewModel.getAllUserFolders()
-                viewModel.getAllUserDrugs()
+                viewModel.refresh()
             }
         }
         .onAppear {
-            viewModel.getAllUserFolders()
-            viewModel.getAllUserDrugs()
+            viewModel.refresh()
         }
     }
 }
