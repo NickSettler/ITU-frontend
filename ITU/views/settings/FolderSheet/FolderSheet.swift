@@ -6,25 +6,54 @@
 //
 
 import SwiftUI
+import SymbolPicker
 
 struct FolderSheet: View {
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject private var viewModel = FolderSheetViewModel()
+    @StateObject private var viewModel : FolderSheetViewModel
+    
+    init(currentFolder: Binding<Folder>) {
+        _viewModel = StateObject(wrappedValue: FolderSheetViewModel(currentFolder: currentFolder))
+    }
     
     var body: some View {
         NavigationStack {
             VStack {
-                CustomTextField(
-                    sfIcon: "textformat.size.larger",
-                    hint: "Name",
-                    value: $viewModel.name
-                )
-                
+                HStack{
+                    CustomTextField(
+                        sfIcon: "textformat.size.larger",
+                        hint: "Name",
+                        value: $viewModel.currentFolder.name
+                    )
+                    
+                    Button {
+                        viewModel.isSymbolPickerPresent = true
+                    } label: {
+                        Image(systemName: viewModel.currentFolder.icon ?? "")
+                            .foregroundColor(Color.TextColorPrimary)
+                            .padding(8)
+                            .frame(
+                                width: 48,
+                                height: 48
+                            )
+                            .background {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .strokeBorder(Color.TextColorSecondary, lineWidth: 2)
+                            }
+                    }
+                    .sheet(isPresented: $viewModel.isSymbolPickerPresent) {
+                        SymbolPicker(symbol: $viewModel.currentFolder.icon)
+                    }
+                }
                 Spacer()
                 
-                GradientButton(title: "Create", fullWidth: true) {
-                    viewModel.createFolder()
+                GradientButton(title: "Save", fullWidth: true) {
+                    if(viewModel.isCreate){
+                        viewModel.createFolder()
+                    } else {
+                        viewModel.updateFolder()
+                    }
                 }
             }
             .padding()
@@ -49,6 +78,6 @@ struct FolderSheet: View {
 
 #Preview {
     NavigationStack {
-        FolderSheet()
+        FoldersView()
     }
 }

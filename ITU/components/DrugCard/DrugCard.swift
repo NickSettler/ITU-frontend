@@ -12,7 +12,7 @@ struct DrugCard: View {
     
     var body: some View {
         let rectangleColor: (Color, Color, Color)
-        
+
         switch drug.expiry_state {
         case .expired:
             rectangleColor = (Color.Quaternary300, Color.Quaternary400, Color.Quaternary600)
@@ -21,13 +21,13 @@ struct DrugCard: View {
         case .not:
             rectangleColor = (Color.Primary100, Color.Primary200, Color.Primary500)
         }
-        
+
         return VStack(spacing: 0) {
             HStack(spacing: 4) {
                 Spacer()
-                
+
                 Text("exp. date:")
-                
+
                 Text(
                     drug.expiration_date.formatted(
                         .dateTime.month(.twoDigits).year()
@@ -65,7 +65,7 @@ struct DrugCard: View {
                         .foregroundStyle(Color.Grey300)
                     
                     Spacer()
-                    
+
                 }
             }
             .padding(.horizontal, 20)

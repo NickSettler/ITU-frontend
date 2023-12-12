@@ -51,11 +51,11 @@ actor NetworkManager: GlobalActor {
     
     func patch(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
-            if (!NetworkAPI.isTokenExpired(token: token)) {
+            if !NetworkAPI.isTokenExpired(token: token) {
                 commonHeaders.add(name: "Authorization", value: "Bearer " + token)
             }
         }
-        
+
         return try await withCheckedThrowingContinuation { continuation in
             AF.request(
                 API_BASE_URL + path,
@@ -67,7 +67,7 @@ actor NetworkManager: GlobalActor {
             )
             .validate()
             .responseData { response in
-                switch(response.result) {
+                switch response.result {
                 case let .success(data):
                     continuation.resume(returning: data)
                 case let .failure(error):
@@ -76,7 +76,7 @@ actor NetworkManager: GlobalActor {
             }
         }
     }
-    
+
     func delete(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             if (!NetworkAPI.isTokenExpired(token: token)) {

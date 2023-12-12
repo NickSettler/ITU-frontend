@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension Array where Element: Hashable {
     func difference(from other: [Element]) -> [Element] {
@@ -16,11 +17,13 @@ extension Array where Element: Hashable {
 }
 
 @MainActor class FoldersViewModel : ObservableObject {
+    var currentFolder: Binding<Folder?> = .constant(nil)
+    
+    @Published var isPresented: Bool = false
     @Published var isAnimating: Bool = true
-    @Published var isSheetVisible: Bool = false
+    @Published var folders: [Folder] = []
     
     var initialFolders: [Folder] = []
-    @Published var folders: [Folder] = []
     
     func getAllUserFolders() {
         Task {

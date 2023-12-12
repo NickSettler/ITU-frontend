@@ -10,6 +10,7 @@ import Foundation
 struct Folder : Codable, Identifiable, Equatable, Hashable {
     var id: String
     var name: String
+    var icon: String?
     var sort: Int?
     var user_created: User
     var date_created: String
@@ -19,6 +20,7 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
     enum CodingKeys: CodingKey {
         case id
         case name
+        case icon
         case sort
         case user_created
         case date_created
@@ -30,6 +32,7 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try values.decodeIfPresent(String.self, forKey: .id)!
         self.name = try values.decodeIfPresent(String.self, forKey: .name)!
+        self.icon = try? values.decodeIfPresent(String.self, forKey: .icon)
         self.sort = try values.decodeIfPresent(Int.self, forKey: .sort) ?? 1
         
         if let user_created = try? values.decodeIfPresent(User.self, forKey: .user_created) {
@@ -55,12 +58,13 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
     }
     
     init (id: String) {
-        self.init(id: id, name: id, user_created: .init(id: id), date_created: "")
+        self.init(id: id, name: id, icon: id, user_created: .init(id: id), date_created: "")
     }
     
     init(
         id: String,
         name: String,
+        icon: String,
         sort: Int? = nil,
         user_created: User,
         date_created: String,
@@ -69,6 +73,7 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
     ) {
         self.id = id
         self.name = name
+        self.icon = icon
         self.sort = sort
         self.user_created = user_created
         self.date_created = date_created
@@ -78,8 +83,18 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
     
     static var allFolder: Folder {
         get {
-            .init(id: "ALL", name: "All", sort: 0, user_created: .init(id: "test"), date_created: "")
+            .init(id: "ALL", name: "All", icon: "", sort: 0, user_created: .init(id: "test"), date_created: "")
         }
+    }
+    
+    static var empty: Folder {
+        get {
+            .init(id: "", name: "", icon: "", sort: 0, user_created: .init(id: ""), date_created: "")
+        }
+    }
+    
+    var isEmpty: Bool {
+        return self.id == "";
     }
     
     static func == (lhs: Folder, rhs: Folder) -> Bool {

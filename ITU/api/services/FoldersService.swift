@@ -26,14 +26,15 @@ struct FoldersService {
         }
     }
     
-    static func createFolder(name: String) async -> Bool {
+    static func createFolder(name: String, icon: String) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
         do {
             _ = try await NetworkManager.shared.post(
                 path: "/items/user_locations",
                 parameters: [
-                    "name": name
+                    "name": name,
+                    "icon": icon
                 ]
             )
             
@@ -44,6 +45,26 @@ struct FoldersService {
         }
     }
     
+    static func updateFolder(id: String, name: String, icon: String) async -> Bool {
+        try? await AuthService.conditionalRefresh()
+
+        do {
+            print("/items/user_locations/" + id)
+            _ = try await NetworkManager.shared.patch(
+                path: "/items/user_locations/" + id,
+                parameters: [
+                    "name": name,
+                    "icon": icon
+                ]
+            )
+
+            return true
+        } catch let error {
+            print(error.localizedDescription)
+            return false
+        }
+    }
+
     static func deleteFolder(id: String) async -> Bool {
         try? await AuthService.conditionalRefresh()
         

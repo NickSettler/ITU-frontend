@@ -20,16 +20,21 @@ struct TabBarItem: View {
             }
         } label: {
             VStack(spacing: 0) {
-                Text(folder.name)
-                    .padding(.horizontal, 12)
-                    .frame(
-                        maxWidth: .infinity,
-                        minHeight: 44,
-                        maxHeight: 44,
-                        alignment: .center
-                    )
-                    .font(.callout)
-                    .fontWeight(.medium)
+                HStack(spacing: 0){
+                    Image(systemName: folder.icon ?? "folder")
+
+                    Text(folder.name)
+                        .padding(.horizontal, 2)
+                        .frame(
+                            maxWidth: .infinity,
+                            minHeight: 44,
+                            maxHeight: 44,
+                            alignment: .center
+                        )
+                        .font(.callout)
+                        .fontWeight(.medium)
+                }
+                .padding(.horizontal, 6)
 
                 if currentFolder == folder {
                     Color.Primary300

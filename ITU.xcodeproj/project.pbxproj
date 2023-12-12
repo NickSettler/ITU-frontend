@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55AEAF0D2B07C4AA004CEBA6 /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 55AEAF0C2B07C4AA004CEBA6 /* SymbolPicker */; };
 		118962E32B121E84005A46B3 /* DrugAdditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118962E22B121E84005A46B3 /* DrugAdditionView.swift */; };
 		118962E52B121E90005A46B3 /* DrugAdditionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118962E42B121E90005A46B3 /* DrugAdditionViewModel.swift */; };
 		6B02B55B2B17FBDC0036B77A /* HouseholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B02B55A2B17FBDC0036B77A /* HouseholdView.swift */; };
@@ -88,6 +89,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		55AEAF092B07C312004CEBA6 /* Symbols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbols.framework; path = System/Library/Frameworks/Symbols.framework; sourceTree = SDKROOT; };
 		118962E22B121E84005A46B3 /* DrugAdditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugAdditionView.swift; sourceTree = "<group>"; };
 		118962E42B121E90005A46B3 /* DrugAdditionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugAdditionViewModel.swift; sourceTree = "<group>"; };
 		6B02B55A2B17FBDC0036B77A /* HouseholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdView.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				6B5CAE072AF38CA500BE96EC /* SwiftHttp in Frameworks */,
 				6B1E647A2AF0656B00DA2896 /* Alamofire in Frameworks */,
 				6B5E7E712AF6910100BA7905 /* JWTDecode in Frameworks */,
+				55AEAF0D2B07C4AA004CEBA6 /* SymbolPicker in Frameworks */,
 				6B02B55E2B1811B00036B77A /* TagField in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +303,7 @@
 		6B5CAE052AF38CA500BE96EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55AEAF092B07C312004CEBA6 /* Symbols.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -578,6 +582,7 @@
 				6B1E64792AF0656B00DA2896 /* Alamofire */,
 				6B5CAE062AF38CA500BE96EC /* SwiftHttp */,
 				6B5E7E702AF6910100BA7905 /* JWTDecode */,
+				55AEAF0C2B07C4AA004CEBA6 /* SymbolPicker */,
 				6B3264132B12AECD00868159 /* SheeKit */,
 				6B02B55D2B1811B00036B77A /* TagField */,
 			);
@@ -613,6 +618,7 @@
 				6B9328CE2AE9C7CA0015B0E9 /* XCRemoteSwiftPackageReference "swift-http" */,
 				6B1E64782AF0656B00DA2896 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				6B5E7E6F2AF6910100BA7905 /* XCRemoteSwiftPackageReference "JWTDecode" */,
+				55AEAF0B2B07C4AA004CEBA6 /* XCRemoteSwiftPackageReference "SymbolPicker" */,
 				6B3264122B12AECD00868159 /* XCRemoteSwiftPackageReference "SheeKit" */,
 				6B02B55C2B1811B00036B77A /* XCRemoteSwiftPackageReference "TagField" */,
 			);
@@ -936,6 +942,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		55AEAF0B2B07C4AA004CEBA6 /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/xnth97/SymbolPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
 		6B02B55C2B1811B00036B77A /* XCRemoteSwiftPackageReference "TagField" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/changemin/TagField";
@@ -979,6 +993,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		55AEAF0C2B07C4AA004CEBA6 /* SymbolPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 55AEAF0B2B07C4AA004CEBA6 /* XCRemoteSwiftPackageReference "SymbolPicker" */;
+			productName = SymbolPicker;
+		};
 		6B02B55D2B1811B00036B77A /* TagField */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6B02B55C2B1811B00036B77A /* XCRemoteSwiftPackageReference "TagField" */;

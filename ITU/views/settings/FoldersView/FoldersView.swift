@@ -10,7 +10,7 @@ import SwiftUI
 struct FoldersView: View {
     @Environment(\.editMode) var editMode
     
-    @StateObject private var viewModel = FoldersViewModel()
+    @StateObject var viewModel = FoldersViewModel()
     
     var body: some View {
         GeometryReader { proxy in
@@ -42,13 +42,26 @@ struct FoldersView: View {
                             Text("Create folder")
                                 .foregroundStyle(Color.accentColor)
                                 .onTapGesture {
-                                    viewModel.isSheetVisible = true
+                                    viewModel.isPresented = true
                                 }
-                            
+    
                             Text("All")
                             
-                            ForEach(viewModel.folders, id: \.id) { folder in
-                                Text(folder.name)
+                            ForEach($viewModel.folders, id: \.id) { $folder in
+                                NavigationLink {
+                                    FolderSheet(currentFolder: $folder)
+                                } label: {
+                                    HStack {
+                                        Image(systemName: folder.icon ?? "")
+                                            .foregroundColor(Color.TextColorPrimary)
+                                            .padding(4)
+                                            .frame(
+                                                width: 32,
+                                                height: 32
+                                            )
+                                        Text(folder.name)
+                                    }
+                                }
                             }
                             .onDelete {
                                 viewModel.handleDelete(offsets: $0)
@@ -71,17 +84,17 @@ struct FoldersView: View {
                 }
             }
         }
-        .sheet(isPresented: $viewModel.isSheetVisible) {
-            FolderSheet()
-        }
-        .onChange(of: viewModel.isSheetVisible, initial: false) {
-            if ($0 && !$1) {
-                viewModel.getAllUserFolders()
-            }
+        .sheet(isPresented: $viewModel.isPresented) {
+            FolderSheet(currentFolder: .constant(Folder.empty))
         }
         .onChange(of: editMode?.wrappedValue, initial: false) {
             if ($0 == .active && $1 == .inactive) {
                 viewModel.handleSaveChanges()
+            }
+        }
+        .onReceive(viewModel.$isPresented) {
+            if(!$0) {
+                viewModel.getAllUserFolders()
             }
         }
         .padding(.vertical, 36)
