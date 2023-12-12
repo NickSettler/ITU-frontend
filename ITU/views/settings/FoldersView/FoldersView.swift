@@ -94,7 +94,6 @@ struct FoldersView: View {
         }
         .onReceive(viewModel.$isPresented) {
             if(!$0) {
-                print("HEHHEHEHRHR")
                 viewModel.getAllUserFolders()
             }
         }
