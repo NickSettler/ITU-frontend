@@ -19,7 +19,7 @@ import Foundation
             }
             
             return self.drugsBinding.filter {
-                return $0.location.id == folderID
+                return $0.location?.id == folderID
             }
         }
         set {

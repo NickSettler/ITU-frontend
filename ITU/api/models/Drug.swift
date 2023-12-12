@@ -16,7 +16,7 @@ enum E_DRUG_EXPIRY_STATE{
 struct Drug : Codable, Identifiable {
     var id: Int
     var name: String
-    var location: Folder
+    var location: Folder?
     var complement: String?
     var strength: String?
     var form: Form?
@@ -91,10 +91,7 @@ struct Drug : Codable, Identifiable {
         } else if let location = try? values.decodeIfPresent(String.self, forKey: .location) {
             self.location = .init(id: location)
         } else {
-            throw DecodingError.typeMismatch(
-                [String : Any].self,
-                .init(codingPath: [CodingKeys.self.location], debugDescription: "")
-            )
+            self.location = nil
         }
         
         self.complement = try? values.decodeIfPresent(String.self, forKey: .complement)
@@ -239,9 +236,22 @@ struct Drug : Codable, Identifiable {
         self.count = ""
     }
     
+    init(id: Int, name: String, complement: String, expiration_date: String, location: Folder?) {
+        self.id = id
+        self.name = name
+        self.complement = complement
+        self.route = .init(route: "POR", name: "Oral")
+        self.location = location
+        self.date_created = ""
+        self.user_created = .init(id: "f4aca9df-fb67-4f14-b321-cdbf3c985383")
+        self.expiration_date = dateFormatter.date(from: expiration_date) ?? Date()
+        self.form = Form.empty
+        self.count = ""
+    }
+    
     static var empty: Drug {
         get {
-            return .init(id: 0, name: "", complement: "", expiration_date: "")
+            return .init(id: 0, name: "", complement: "", expiration_date: "", location: nil)
         }
     }
 }

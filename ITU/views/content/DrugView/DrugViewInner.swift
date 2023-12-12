@@ -44,11 +44,13 @@ struct DrugViewInner: View {
                                     text: viewModel.drug.expiration_date.formatted(.dateTime.month(.twoDigits).year())
                                 )
                                 
-                                DrugToast(
-                                    role: .success,
-                                    title: "Location",
-                                    text: viewModel.drug.location.name
-                                )
+                                if let location = viewModel.drug.location {
+                                    DrugToast(
+                                        role: .success,
+                                        title: "Location",
+                                        text: location.name
+                                    )
+                                }
                             }
                         }
                         
