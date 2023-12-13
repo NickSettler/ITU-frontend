@@ -72,7 +72,7 @@ struct NotificationView: View {
                     }
                 }
             }
-            .onDisappear {
+            .onChange(of: viewModel.isNotificationAllowed) {
                 viewModel.getAllUserDrugs()
 
                 // Check if there is any drug with an expired state

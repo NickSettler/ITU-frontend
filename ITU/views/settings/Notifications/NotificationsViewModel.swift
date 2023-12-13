@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @MainActor class NotificationViewModel : ObservableObject {
-    @Published var drugs: [Drug] = allDrugs
+    @Published var drugs: [Drug] = []
     @Published var expiredDrugs: [Drug] = []
     
     @AppStorage("isNotificationAllowed") var isNotificationAllowed: Bool = false
@@ -22,7 +22,7 @@ import SwiftUI
         Task {
             if let res = await DrugsService.getAllUserDrugs() {
                 await MainActor.run {
-                    self.drugs = allDrugs + res.data
+                    self.drugs = res.data
                 }
             } else {
                 print("Failed fetching drugs")
