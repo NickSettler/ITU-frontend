@@ -92,7 +92,7 @@ struct DrugsService {
         }
     }
     
-    static func moveDrug(_ id: Int, folderID: String) async -> Bool {
+    static func moveDrug(_ id: Int, folderID: String?) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
         do {

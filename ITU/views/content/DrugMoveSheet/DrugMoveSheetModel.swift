@@ -32,7 +32,7 @@ import Foundation
     
     func moveDrug() {
         Task {
-            let done = await DrugsService.moveDrug(drugID, folderID: currentFolder.id)
+            let done = await DrugsService.moveDrug(drugID, folderID: currentFolder != .empty ? currentFolder.id : nil)
             
             if done {
                 self.didMoveComplete = true
