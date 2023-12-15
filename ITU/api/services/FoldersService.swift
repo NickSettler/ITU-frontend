@@ -49,7 +49,6 @@ struct FoldersService {
         try? await AuthService.conditionalRefresh()
 
         do {
-            print("/items/user_locations/" + id)
             _ = try await NetworkManager.shared.patch(
                 path: "/items/user_locations/" + id,
                 parameters: [
