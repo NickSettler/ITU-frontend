@@ -125,8 +125,8 @@ struct DrugToast: View {
 }
 
 #Preview {
-    var hintTitle = "Route"
-    var hintText = "Route means a way how the medicine should be delivered into the organism. For example, oral route mostly means that you should swallow the medicine."
+    let hintTitle = "Route"
+    let hintText = "Route means a way how the medicine should be delivered into the organism. For example, oral route mostly means that you should swallow the medicine."
     return VStack {
         DrugToast(
             role: .success,
