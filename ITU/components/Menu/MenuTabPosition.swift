@@ -2,7 +2,7 @@
 //  MenuTabPosition.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov,Elena Marochkina
+//  Created by Nikita Pasynkov
 //
 
 import SwiftUI

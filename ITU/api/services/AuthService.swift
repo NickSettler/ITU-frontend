@@ -2,14 +2,22 @@
 //  AuthService.swift
 //  ITU
 //
-//  Created by Nikita Moiseev
+//  Created by Elena Marochkina,Nikita Pasynkov
 //
 
 import Foundation
 import Alamofire
 
 struct AuthService {
-
+    /// User sign in
+    ///
+    /// - Author: Elena Marochkina
+    ///
+    /// - Parameters:
+    ///     - email: User email
+    ///     - password: User password
+    ///
+    /// - Returns: A SignInResponse with access token
     static func signIn(
         email: String,
         password: String
@@ -30,6 +38,17 @@ struct AuthService {
         }
     }
     
+    /// User sign up
+    ///
+    /// - Author: Nikita Pasynkov
+    ///
+    /// - Parameters:
+    ///     - email: User email
+    ///     - password: User password
+    ///     - firstName: User first name
+    ///     - lastName: User last name
+    ///
+    /// - Returns: A SignInResponse with access token
     static func signUp(
         email: String,
         password: String,
@@ -54,6 +73,11 @@ struct AuthService {
         }
     }
     
+    /// Refresh token
+    ///
+    /// - Author: Elena Marochkina
+    ///
+    /// - Returns: A SignInResponse with access token
     static func refresh() async -> ApiSuccessResponse<SignInResponse>? {
         guard let refreshToken = NetworkAPI.refreshToken else {
             return nil
@@ -75,6 +99,9 @@ struct AuthService {
         }
     }
     
+    /// Atempt to refresh user access token
+    ///
+    /// - Author: Elena Marochkina
     static func conditionalRefresh() async throws {
         guard let token = NetworkAPI.accessToken else {
             throw ApiErrorResponse.noTokenError

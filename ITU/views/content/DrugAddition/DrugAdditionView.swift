@@ -2,7 +2,7 @@
 //  DrugAdditionView.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov
+//  Created by Nikita Moiseev
 //
 
 import SwiftUI

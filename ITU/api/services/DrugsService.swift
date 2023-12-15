@@ -2,7 +2,7 @@
 //  DrugsService.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov,Elena Marochkina
+//  Created by Nikita Moiseev
 //
 
 import SwiftUI
@@ -13,6 +13,9 @@ import JWTDecode
 struct DrugsService {
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) private static var accessToken: String?
     
+    /// Get all user drugs function
+    ///
+    /// - Returns: Array of user drugs, they has access to
     static func getAllUserDrugs() async -> ApiSuccessResponse<GetAllUsersDrugsResponse>? {
         try? await AuthService.conditionalRefresh()
         
@@ -29,6 +32,12 @@ struct DrugsService {
         }
     }
 
+    /// Create new drug function
+    ///
+    /// - Parameters:
+    ///     - createdDrug: Drug entity to be created
+    ///
+    /// - Returns: true if created, false otherwise
     static func createDrug(createdDrug: Drug) async -> Bool {
         try? await AuthService.conditionalRefresh()
 
@@ -60,6 +69,13 @@ struct DrugsService {
         }
     }
     
+    /// Update existing drug function
+    ///
+    /// - Parameters:
+    ///     - id: Drug ID to update by
+    ///     - createdDrug: Drug entity to be updated
+    ///
+    /// - Returns: updated drug entity
     static func updateDrug(id: Int, updatedDrug: Drug) async -> ApiSuccessResponse<Drug>? {
         try? await AuthService.conditionalRefresh()
 

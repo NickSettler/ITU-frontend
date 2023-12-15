@@ -2,7 +2,7 @@
 //  SettingsView.swift
 //  ITU
 //
-//  Created by Elena Marochkina
+//  Created by Nikita Pasynkov
 //
 
 import SwiftUI

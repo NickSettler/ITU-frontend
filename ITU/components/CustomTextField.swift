@@ -2,7 +2,7 @@
 //  CustomTextField.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov,Elena Marochkina
+//  Created by Elena Marochkina
 //
 
 import SwiftUI
