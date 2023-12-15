@@ -18,12 +18,10 @@ import Foundation
     @Published var currentFolder: Folder
     
     init(currentFolder: Binding<Folder>) {
-        print(currentFolder)
         self.initialBinding = currentFolder
         self.currentFolder = currentFolder.wrappedValue
         self.isCreate = currentFolder.wrappedValue.isEmpty
     }
-    
     
     func createFolder() {
         Task {
@@ -49,5 +47,4 @@ import Foundation
             }
         }
     }
-    
 }
