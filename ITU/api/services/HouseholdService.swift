@@ -52,7 +52,7 @@ struct HouseholdService {
         try? await AuthService.conditionalRefresh()
         
         do {
-            let data = try await NetworkManager.shared.delete(
+            _ = try await NetworkManager.shared.delete(
                 path: "/items/user_household/\(householdID)",
                 parameters: nil
             )
