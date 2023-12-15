@@ -30,11 +30,29 @@ struct DrugChipData : Codable, Hashable {
 }
 
 @MainActor class DrugViewModel : ObservableObject {
-    private(set) var drugBinding: Binding<Drug>
+    var drugBinding: Binding<Drug>
     
     @Published var drug: Drug
     @Published var getRequestInProgress: Bool = false
     @Published var rotation = 0.0
+    
+    @Published var isMoveVisible: Bool = false {
+        willSet {
+            if isMoveVisible && !newValue {
+                self.getDrugInfo(false)
+            }
+        }
+    }
+    
+    @Published var isUpdateVisible: Bool = false {
+        willSet {
+            if isUpdateVisible && !newValue {
+                self.getDrugInfo()
+            }
+        }
+    }
+    
+    @Published var isDeletedRequestComplete: Bool = false
     
     var expiryDateToastRole: E_ROLE_GROUP {
         get {
@@ -99,7 +117,7 @@ struct DrugChipData : Codable, Hashable {
         self.drug = drug.wrappedValue
     }
     
-    func getDrugInfo() {
+    func getDrugInfo(_ bindingUpdate: Bool = true) {
         Task {
             withAnimation(.interactiveSpring(response: 0.55, dampingFraction: 0.65, blendDuration: 0.65)) {
                 getRequestInProgress = true
@@ -111,7 +129,7 @@ struct DrugChipData : Codable, Hashable {
                 rotation = 360.0
             }
             
-            try await Task.sleep(nanoseconds: 2_000_000_000)
+            try await Task.sleep(nanoseconds: 500_000_000)
             
             let data = await DrugsService.getUserDrug(drugBinding.id)
             
@@ -121,8 +139,21 @@ struct DrugChipData : Codable, Hashable {
                 
                 if let drug = data?.data {
                     self.drug = drug
-                    self.drugBinding.wrappedValue = self.drug
+                    
+                    if bindingUpdate {
+                        self.drugBinding.wrappedValue = self.drug
+                    }
                 }
+            }
+        }
+    }
+    
+    func deleteDrug() {
+        Task {
+            let deleted = await DrugsService.deleteDrug(drug.id)
+            
+            if deleted {
+                self.isDeletedRequestComplete = true
             }
         }
     }

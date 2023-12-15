@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DrugViewInner: View {
+    @Environment (\.dismiss) var dismiss
+    
     @StateObject var viewModel: DrugViewModel
     
     var drugViewVisible: Binding<Bool>
@@ -37,6 +39,26 @@ struct DrugViewInner: View {
                         .zIndex(1000)
                     
                     VStack(spacing: sectionGap) {
+                        VStack(alignment: .leading, spacing: subSectionGap) {
+                            SectionTitle("Actions")
+                                .padding(.horizontal, 16)
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 8) {
+                                    DrugButton(title: "Move", icon: "folder.fill") {
+                                        viewModel.isMoveVisible = true
+                                    }
+                                    DrugButton(title: "Update", icon: "pencil") {
+                                        viewModel.isUpdateVisible = true
+                                    }
+                                    DrugButton(title: "Delete", color: .error, icon: "trash.fill") {
+                                        viewModel.deleteDrug()
+                                    }
+                                }
+                                .padding(.horizontal, 16)
+                            }
+                        }
+                        
                         VStack(alignment: .leading, spacing: subSectionGap) {
                             SectionTitle("Personal")
                             
@@ -213,6 +235,18 @@ struct DrugViewInner: View {
                 }
             }
             .ignoresSafeArea(.all, edges: .top)
+            .onReceive(viewModel.$isDeletedRequestComplete) {
+                if $0 {
+                    self.dismiss()
+                    self.drugViewVisible.wrappedValue = false
+                }
+            }
+            .sheet(isPresented: $viewModel.isUpdateVisible) {
+                DrugAdditionView(drug: $viewModel.drug)
+            }
+            .sheet(isPresented: $viewModel.isMoveVisible) {
+                DrugMoveSheet(drugID: viewModel.drug.id, currentFolder: viewModel.drug.location ?? .empty)
+            }
         }
     }
     
