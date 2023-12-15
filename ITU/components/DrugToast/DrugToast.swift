@@ -2,7 +2,7 @@
 //  DrugToast.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 25.11.2023.
+//  Created by Nikita Moiseev
 //
 
 import SwiftUI

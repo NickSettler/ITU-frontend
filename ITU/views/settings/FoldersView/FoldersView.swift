@@ -2,7 +2,7 @@
 //  FoldersView.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov, Elena Marochkina on 05.11.2023.
+//  Created by Elena Marochkina
 //
 
 import SwiftUI

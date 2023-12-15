@@ -2,7 +2,7 @@
 //  DrugButton.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 14.12.2023.
+//  Created by Nikita Moiseev
 //
 
 import SwiftUI

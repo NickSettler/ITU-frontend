@@ -2,7 +2,7 @@
 //  Household.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 01.12.2023.
+//  Created by Nikita Moiseev
 //
 
 import Foundation

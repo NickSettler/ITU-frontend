@@ -2,7 +2,7 @@
 //  GradientButton.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov, Elena Marochkina on 22.10.2023.
+//  Created by Nikita Pasynkov,Elena Marochkina
 //
 
 import SwiftUI

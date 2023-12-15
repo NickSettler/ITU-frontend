@@ -2,7 +2,7 @@
 //  Font.swift
 //  ITU
 //
-//  Created by Nikita on 18.11.2023.
+//  Created by Nikita Pasynkov
 //
 
 import Foundation

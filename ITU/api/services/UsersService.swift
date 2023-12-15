@@ -2,7 +2,7 @@
 //  UsersService.swift
 //  ITU
 //
-//  Created by Никита Моисеев on 30.11.2023.
+//  Created by Nikita Moiseev
 //
 
 import Foundation

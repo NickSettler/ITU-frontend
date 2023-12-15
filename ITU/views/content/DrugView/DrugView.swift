@@ -2,7 +2,7 @@
 //  DrugView.swift
 //  ITU
 //
-//  Created by Nikita Moiseev on 04.11.2023.
+//  Created by Nikita Moiseev
 //
 
 import SwiftUI

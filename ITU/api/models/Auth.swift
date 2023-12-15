@@ -2,7 +2,7 @@
 //  Auth.swift
 //  ITU
 //
-//  Created by Nikita Moiseev on 25.10.2023.
+//  Created by Nikita Moiseev
 //
 
 import Foundation

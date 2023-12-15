@@ -2,7 +2,7 @@
 //  Color.swift
 //  Finance App
 //
-//  Created by Nikita Pasynkov, Elena Marochkina on 21.10.2023.
+//  Created by Nikita Pasynkov,Elena Marochkina
 //
 
 import Foundation
