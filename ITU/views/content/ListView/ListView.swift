@@ -28,8 +28,9 @@ struct ListView: View {
             ScrollView(.vertical) {
                 ForEach(self.viewModel.filteredDrugs.indices, id: \.self) { index in
                     let drug = self.$viewModel.filteredDrugs[index]
+                    
                     NavigationLink {
-                        DrugView(drug: drug)
+                        DrugView(drug: drug, drugViewVisible: $viewModel.drugViewVisible)
                     } label: {
                         DrugCard(drug: drug)
                     }
@@ -38,6 +39,12 @@ struct ListView: View {
                     }
                     .padding(.horizontal)
                     .padding(.bottom, 24)
+                }
+            }
+            .onReceive(viewModel.$drugViewVisible) {
+                if !$0 {
+                    self.refreshFunc()
+                    viewModel.drugViewVisible = true
                 }
             }
         } else {

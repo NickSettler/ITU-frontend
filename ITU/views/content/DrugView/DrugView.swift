@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DrugView: View {
     @Binding var drug: Drug
+    @Binding var drugViewVisible: Bool
     
     @Environment(\.dismiss) var dismiss
     
@@ -18,6 +19,7 @@ struct DrugView: View {
             let safeArea = $0.safeAreaInsets
             
             DrugViewInner(
+                $drugViewVisible,
                 size: size,
                 safeArea: safeArea,
                 drug: $drug
@@ -30,6 +32,7 @@ struct DrugView: View {
                         return
                     }
                     
+                    self.drugViewVisible = false
                     dismiss()
                 }
         )
@@ -40,6 +43,6 @@ struct DrugView: View {
 
 #Preview {
     NavigationView {
-        DrugView(drug: .constant(allDrugs[0]))
+        DrugView(drug: .constant(allDrugs[0]), drugViewVisible: .constant(true))
     }
 }

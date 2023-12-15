@@ -10,6 +10,8 @@ import SwiftUI
 struct DrugViewInner: View {
     @StateObject var viewModel: DrugViewModel
     
+    var drugViewVisible: Binding<Bool>
+    
     var size: CGSize
     var safeArea: EdgeInsets
     @State var offsetY: CGFloat = 0
@@ -18,7 +20,8 @@ struct DrugViewInner: View {
     var subSectionGap: CGFloat = 12
     var toastGap: CGFloat = 8
     
-    init(size: CGSize, safeArea: EdgeInsets, drug: Binding<Drug>) {
+    init(_ drugViewVisible: Binding<Bool>, size: CGSize, safeArea: EdgeInsets, drug: Binding<Drug>) {
+        self.drugViewVisible = drugViewVisible
         self.size = size
         self.safeArea = safeArea
         self._viewModel = StateObject(
@@ -231,8 +234,6 @@ struct DrugViewInner: View {
         /// Limiting it to 0 - 1
         let progress = max(min(-offsetY / (headerHeight - minimumHeaderHeight), 1), 0)
         
-        print(progress)
-        
         return GeometryReader { _ in
             ZStack {
                 Rectangle()
@@ -303,5 +304,5 @@ struct DrugViewInner: View {
 }
 
 #Preview {
-    DrugView(drug: .constant(allDrugs[0]))
+    DrugView(drug: .constant(allDrugs[0]), drugViewVisible: .constant(true))
 }

@@ -11,6 +11,7 @@ import Foundation
 @MainActor class ListViewModel : ObservableObject {
     @Binding var drugsBinding: [Drug]
     @Published var folderID: String
+    @Published var drugViewVisible = true
     
     var filteredDrugs: [Drug] {
         get {
