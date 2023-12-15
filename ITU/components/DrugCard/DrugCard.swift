@@ -56,17 +56,20 @@ struct DrugCard: View {
                     
                     Spacer()
                     
-                    Text("10 tablets")
+                    Text("\(drug.count)")
                         .font(.caption)
                         .foregroundStyle(Color.Grey400)
                 }
-                HStack {
-                    Text("Tablets 100mg")
-                        .font(.caption)
-                        .foregroundStyle(Color.Grey300)
-                    
-                    Spacer()
 
+                if let form = drug.form?.name, let strength = drug.strength {
+                    HStack {
+                        Text("\(form) \(strength)")
+                            .font(.caption)
+                            .foregroundStyle(Color.Grey300)
+                        
+                        Spacer()
+
+                    }
                 }
             }
             .padding(.horizontal, 20)

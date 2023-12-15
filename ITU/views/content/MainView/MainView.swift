@@ -34,8 +34,8 @@ struct MainView: View {
     
     @ViewBuilder
     func CustomTabBar(
-        _ tint: Color = .accentColor,
-        _ inactiveTint: Color = .accentColor
+        _ tint: Color = .Primary300,
+        _ inactiveTint: Color = .Primary300
     ) -> some View {
         HStack(alignment: .bottom, spacing: 0) {
             ForEach(MenuTabModel.allCases, id: \.rawValue) {
@@ -53,10 +53,10 @@ struct MainView: View {
         .padding(.vertical, 10)
         .background {
             MenuTabShape(midpoint: viewModel.tabShapePosition.x)
-                .fill(Color.BackgroundColor)
+                .fill(Color.Primary50)
                 .ignoresSafeArea()
                 .shadow(
-                    color: Color.Primary200.opacity(0.2),
+                    color: Color.Primary400.opacity(0.2),
                     radius: 5,
                     x: 0,
                     y: -5
