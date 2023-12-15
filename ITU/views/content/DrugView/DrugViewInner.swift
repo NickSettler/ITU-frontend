@@ -56,6 +56,7 @@ struct DrugViewInner: View {
                                 }
                             }
                         }
+                        .padding(.horizontal, 16)
                         
                         VStack(alignment: .leading, spacing: subSectionGap) {
                             SectionTitle("General")
@@ -110,6 +111,7 @@ struct DrugViewInner: View {
                                 }
                             }
                         }
+                        .padding(.horizontal, 16)
                         
                         VStack(alignment: .leading, spacing: subSectionGap) {
                             SectionTitle("Sources")
@@ -184,9 +186,9 @@ struct DrugViewInner: View {
                                 }
                             }
                         }
+                        .padding(.horizontal, 16)
                     }
                     .padding(.top, 16)
-                    .padding(.horizontal, 16)
                 }
                 .background {
                     ScrollDetector { offset in
