@@ -22,6 +22,7 @@ struct TabBarItem: View {
             VStack(spacing: 0) {
                 HStack(spacing: 0){
                     Image(systemName: folder.icon ?? "folder")
+                        .font(.system(size: 14))
 
                     Text(folder.name)
                         .padding(.horizontal, 2)
@@ -34,7 +35,7 @@ struct TabBarItem: View {
                         .font(.callout)
                         .fontWeight(.medium)
                 }
-                .padding(.horizontal, 6)
+                .padding(.horizontal, 10)
 
                 if currentFolder == folder {
                     Color.Primary300
