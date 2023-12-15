@@ -9,10 +9,17 @@ import SwiftUI
 import Combine
 
 struct DrugAdditionView: View {
+    @Environment (\.dismiss) var dismiss
     
     @StateObject var viewModel = DrugAdditionViewModel()
     
-    @Environment(\.presentationMode) var presentationMode
+    init() {
+        self._viewModel = StateObject(wrappedValue: DrugAdditionViewModel())
+    }
+    
+    init(drug: Binding<Drug>) {
+        self._viewModel = StateObject(wrappedValue: DrugAdditionViewModel(drug: drug))
+    }
     
     var body: some View {
         NavigationStack {
@@ -37,7 +44,7 @@ struct DrugAdditionView: View {
                     
                     
                     Picker("Dosage", selection: $viewModel.selectedDosage) {
-                        ForEach(DrugAdditionViewModel.drugDosage.allCases) { option in
+                        ForEach(drugDosage.allCases) { option in
                             Text(String(describing: option)).tag(option)
                         }
                     }
@@ -54,7 +61,7 @@ struct DrugAdditionView: View {
                         }
                     
                     Picker("Count", selection: $viewModel.selectedMeasurement) {
-                        ForEach(DrugAdditionViewModel.countMeasurement.allCases) { option in
+                        ForEach(countMeasurement.allCases) { option in
                             Text(String(describing: option)).tag(option)
                         }
                     }
@@ -91,8 +98,8 @@ struct DrugAdditionView: View {
                 
                 Spacer()
 
-                GradientButton(title: "Add", fullWidth: true) {
-                    viewModel.createDrug()
+                GradientButton(title: viewModel.mode == .create ? "Add" : "Save", fullWidth: true) {
+                    viewModel.save()
                 }
                 .disabled(viewModel.createdDrug.name.isEmpty || viewModel.countNumber.isEmpty)
                 .padding(.top, 64)
@@ -101,7 +108,7 @@ struct DrugAdditionView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        self.presentationMode.wrappedValue.dismiss()
+                        self.dismiss()
                     } label: {
                         Text("Close")
                     }
@@ -111,7 +118,7 @@ struct DrugAdditionView: View {
         .presentationDetents([.large])
         .onReceive(viewModel.$didRequestComplete) {
             if ($0) {
-                self.presentationMode.wrappedValue.dismiss()
+                self.dismiss()
             }
         }
     }
