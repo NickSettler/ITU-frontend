@@ -7,7 +7,12 @@
 
 import Foundation
 
+/// Sequence extension
 extension Sequence {
+    /// Sort sequence by key path and comparator
+    /// - Parameters:
+    ///   - keyPath: Key path
+    ///   - comparator: Comparator closure (default: <)
     func sorted<T: Comparable>(
         by keyPath: KeyPath<Element, T>,
         using comparator: (T, T) -> Bool = (<)

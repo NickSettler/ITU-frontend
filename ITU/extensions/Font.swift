@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+/// Font extension for JetBrains Mono font
 enum JetBrainsMono: String {
     case regular = "JetBrainsMono-Regular"
     case italic = "JetBrainsMono-Italic"
@@ -25,6 +26,7 @@ enum JetBrainsMono: String {
     case thinItalic = "JetBrainsMono-ThinItalic"
 }
 
+/// Font extension for size
 extension Font.TextStyle {
     var size: CGFloat {
         switch self {
@@ -42,9 +44,16 @@ extension Font.TextStyle {
     }
 }
 
+/// Main font name
 fileprivate let helveticaFont = "Helvetica"
 
+/// Font extension for custom fonts
 extension Font {
+    /// Custom font
+    /// - Parameters:
+    ///   - name: Font name
+    ///   - size: Font size
+    ///   - relativeTo: Style relative to
     static func custom(_ font: JetBrainsMono, relativeTo style: Font.TextStyle) -> Font {
         custom(font.rawValue, size: style.size, relativeTo: style)
     }

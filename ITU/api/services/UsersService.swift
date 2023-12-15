@@ -8,6 +8,8 @@
 import Foundation
 
 struct UsersService {
+    /// Get current user
+    /// - Returns: current user
     static func getCurrentUser() async -> ApiSuccessResponse<User>? {
         try? await AuthService.conditionalRefresh()
         
@@ -25,7 +27,11 @@ struct UsersService {
             return nil
         }
     }
-    
+
+    /// Search users
+    /// - Parameters:
+    ///   - query: query to search
+    /// - Returns: Array of users that match the query
     static func search(query: String) async -> ApiSuccessResponse<[User]>? {
         try? await AuthService.conditionalRefresh()
         

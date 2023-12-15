@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// User structure
 class User : Codable, Hashable {
     var id: String
     var first_name: String?
@@ -25,7 +26,9 @@ class User : Codable, Hashable {
         case role
         case household = "household"
     }
-    
+
+    /// Init user from decoder (used for API response parsing)
+    /// - Parameter decoder: decoder
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -54,7 +57,9 @@ class User : Codable, Hashable {
             self.household = nil
         }
     }
-    
+
+    /// Init user with id
+    /// - Parameter id: user id
     convenience init(id: String) {
         self.init(
             id: id,
@@ -66,7 +71,16 @@ class User : Codable, Hashable {
             household: .init(id: -1)
         )
     }
-    
+
+    /// Init user with id, first_name, last_name, email, password, role and household
+    /// - Parameters:
+    ///   - id: user id
+    ///   - first_name: user first name
+    ///   - last_name: user last name
+    ///   - email: user email
+    ///   - password: user password
+    ///   - role: user role
+    ///   - household: user household
     init(id: String, first_name: String, last_name: String, email: String, password: String, role: Role, household: Household) {
         self.id = id
         self.first_name = first_name
@@ -76,11 +90,13 @@ class User : Codable, Hashable {
         self.role = role
         self.household = household
     }
-    
+
+    /// Compare two users by id
     static func == (lhs: User, rhs: User) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
+    /// Hash user by id
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

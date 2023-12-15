@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Drug card component
 struct DrugCard: View {
     @Binding var drug: Drug
     

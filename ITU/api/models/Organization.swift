@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Organization structure
 struct Organization : Codable {
     var code: String
     var country: Country
@@ -21,7 +22,9 @@ struct Organization : Codable {
         case manufacturer
         case holder
     }
-    
+
+    /// Init organization from decoder (used for API response parsing)
+    /// - Parameter decoder: decoder
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -42,7 +45,9 @@ struct Organization : Codable {
         self.manufacturer = try container.decodeIfPresent(String.self, forKey: .manufacturer)
         self.holder = try container.decodeIfPresent(String.self, forKey: .holder)
     }
-    
+
+    /// Init organization with code
+    /// - Parameter code: organization code
     init(code: String) {
         self.init(
             code: code,
@@ -50,7 +55,14 @@ struct Organization : Codable {
             name: code
         )
     }
-    
+
+    /// Init organization with code, country, name, manufacturer and holder
+    /// - Parameters:
+    ///   - code: organization code
+    ///   - country: organization country
+    ///   - name: organization name
+    ///   - manufacturer: organization manufacturer
+    ///   - holder: organization holder
     init(code: String, country: Country, name: String, manufacturer: String? = nil, holder: String? = nil) {
         self.code = code
         self.country = country

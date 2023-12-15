@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Tab bar view component
 struct TabBarView: View {
     @Binding var currentFolder: Folder
     @Binding var folders: [Folder]

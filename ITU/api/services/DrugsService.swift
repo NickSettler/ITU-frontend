@@ -107,7 +107,14 @@ struct DrugsService {
             return nil
         }
     }
-    
+
+    /// Move drug to another folder
+    ///
+    /// - Parameters:
+    ///     - id: Drug ID to move
+    ///     - folderID: Folder ID to move to
+    ///
+    /// - Returns: true if moved, false otherwise
     static func moveDrug(_ id: Int, folderID: String?) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
@@ -125,7 +132,13 @@ struct DrugsService {
             return false
         }
     }
-    
+
+    /// Delete drug function
+    ///
+    /// - Parameters:
+    ///     - id: Drug ID to delete
+    ///
+    /// - Returns: true if deleted, false otherwise
     static func deleteDrug(_ id: Int) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
@@ -144,6 +157,12 @@ struct DrugsService {
         }
     }
 
+    /// Get user drug by id function
+    ///
+    /// - Parameters:
+    ///     - id: Drug ID to get by
+    ///
+    /// - Returns: Drug entity
     static func getUserDrug(_ id: Int) async -> ApiSuccessResponse<GetUsersDrugResponse>? {
         try? await AuthService.conditionalRefresh()
 

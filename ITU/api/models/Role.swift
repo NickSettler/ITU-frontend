@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Role structure
 struct Role : Codable, Hashable {
     var id: String
     var name: String
@@ -29,7 +30,9 @@ struct Role : Codable, Hashable {
         case app_access
         case users
     }
-    
+
+    /// Init role from decoder (used for API response parsing)
+    /// - Parameter decoder: decoder
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -75,11 +78,24 @@ struct Role : Codable, Hashable {
             )
         }
     }
-    
+
+    /// Init role with id
+    /// - Parameter id: role id
     init(id: String) {
         self.init(id: id, name: "Role", icon: "icon", enforce_tfa: false, admin_access: false, app_access: false, users: [])
     }
-    
+
+    /// Init role with id, name, icon, description, ip_access, enforce_tfa, admin_access, app_access and users
+    /// - Parameters:
+    ///   - id: role id
+    ///   - name: role name
+    ///   - icon: role icon
+    ///   - description: role description
+    ///   - ip_access: role ip access
+    ///   - enforce_tfa: role enforce tfa
+    ///   - admin_access: role admin access
+    ///   - app_access: role app access
+    ///   - users: role users
     init(
         id: String,
         name: String,
@@ -101,7 +117,8 @@ struct Role : Codable, Hashable {
         self.app_access = app_access
         self.users = users.map { .init(id: $0) }
     }
-    
+
+    /// Compare two roles by id
     static func == (lhs: Role, rhs: Role) -> Bool {
         return lhs.id == rhs.id
     }

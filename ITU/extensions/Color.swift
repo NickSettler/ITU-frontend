@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+/// Color extension
 extension Color {
     static var theme: Color  {
         return Color("theme")
@@ -184,7 +185,11 @@ extension Color {
     static var Quaternary700: Color  {
         return Color("Quaternary700")
     }
-    
+
+    /// Init color from hex
+    /// - Parameters:
+    ///   - hex: Hex
+    ///   - alpha: Alpha
     init(hex: UInt, alpha: Double = 1) {
         self.init(
             .sRGB,
@@ -194,7 +199,9 @@ extension Color {
             opacity: alpha
         )
     }
-    
+
+    /// Get color components
+    /// - Returns: Color components
     private func components() -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         let scanner = Scanner(string: self.description.trimmingCharacters(in: CharacterSet.alphanumerics.inverted))
         var hexNumber: UInt64 = 0
@@ -209,7 +216,9 @@ extension Color {
         }
         return (r, g, b, a)
     }
-    
+
+    /// Get hex from color
+    /// - Returns: Hex
     func toHex() -> UInt? {
         let components = self.components()
         

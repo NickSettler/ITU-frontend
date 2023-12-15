@@ -8,6 +8,9 @@
 import Foundation
 
 struct FoldersService {
+    /// Get all user folders
+    ///
+    /// - Returns: A GetAllUserFoldersResponse with all user folders
     static func getFolders() async -> ApiSuccessResponse<GetAllUserFoldersResponse>? {
         try? await AuthService.conditionalRefresh()
         
@@ -25,7 +28,14 @@ struct FoldersService {
             return nil
         }
     }
-    
+
+    /// Create folder function
+    ///
+    /// - Parameters:
+    ///     - name: Folder name
+    ///     - icon: Folder icon
+    ///
+    /// - Returns: true if created, false otherwise
     static func createFolder(name: String, icon: String) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
@@ -44,7 +54,15 @@ struct FoldersService {
             return false
         }
     }
-    
+
+    /// Update folder function
+    ///
+    /// - Parameters:
+    ///     - id: Folder ID to update
+    ///     - name: Folder name
+    ///     - icon: Folder icon
+    ///
+    /// - Returns: true if updated, false otherwise
     static func updateFolder(id: String, name: String, icon: String) async -> Bool {
         try? await AuthService.conditionalRefresh()
 
@@ -64,6 +82,12 @@ struct FoldersService {
         }
     }
 
+    /// Delete folder function
+    ///
+    /// - Parameters:
+    ///     - id: Folder ID to delete
+    ///
+    /// - Returns: true if deleted, false otherwise
     static func deleteFolder(id: String) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
@@ -79,7 +103,13 @@ struct FoldersService {
             return false
         }
     }
-    
+
+    /// Delete folders function
+    ///
+    /// - Parameters:
+    ///     - ids: Folder IDs to delete
+    ///
+    /// - Returns: true if deleted, false otherwise
     static func deleteFolders(ids: [String]) async -> Bool {
         try? await AuthService.conditionalRefresh()
         

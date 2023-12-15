@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Menu tab shape
 struct MenuTabShape: Shape {
     var midpoint: CGFloat
     
@@ -14,7 +15,9 @@ struct MenuTabShape: Shape {
         get { midpoint }
         set { midpoint = newValue }
     }
-    
+
+    /// Get path of menu tab
+    /// - Parameter rect: Rectangle
     func path(in rect: CGRect) -> Path {
         return Path { path in
             path.addPath(Rectangle().path(in: rect))

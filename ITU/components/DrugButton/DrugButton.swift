@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Drug button color enum
 enum DRUG_BUTTON_COLOR : Int, Codable {
     case success = 0
     case warning = 1
@@ -29,6 +30,7 @@ enum DRUG_BUTTON_COLOR : Int, Codable {
     }
 }
 
+/// Drug button component
 struct DrugButton: View {
     var title: String
     var color: DRUG_BUTTON_COLOR = .success

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Folder structure
 struct Folder : Codable, Identifiable, Equatable, Hashable {
     var id: String
     var name: String
@@ -27,7 +28,9 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         case user_updated
         case date_updated
     }
-    
+
+    /// Init folder from decoder (used for API response parsing)
+    /// - Parameter decoder: decoder
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try values.decodeIfPresent(String.self, forKey: .id)!
@@ -56,11 +59,23 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         self.date_created = try values.decodeIfPresent(String.self, forKey: .date_created)!
         self.date_updated = try values.decodeIfPresent(String.self, forKey: .date_updated) ?? nil
     }
-    
+
+    /// Init folder with id
+    /// - Parameter id: folder id
     init (id: String) {
         self.init(id: id, name: id, icon: id, user_created: .init(id: id), date_created: "")
     }
-    
+
+    /// Init folder with id, name, icon, sort, user_created, date_created, user_updated, date_updated
+    /// - Parameters:
+    ///   - id: folder id
+    ///   - name: folder name
+    ///   - icon: folder icon
+    ///   - sort: folder sort
+    ///   - user_created: user who created folder
+    ///   - date_created: date when folder was created
+    ///   - user_updated: user who updated folder
+    ///   - date_updated: date when folder was updated
     init(
         id: String,
         name: String,
@@ -96,7 +111,8 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
     var isEmpty: Bool {
         return self.id == "";
     }
-    
+
+    /// Compare two folders by id
     static func == (lhs: Folder, rhs: Folder) -> Bool {
         return lhs.id == rhs.id
     }

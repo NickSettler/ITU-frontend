@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Role group enum
 enum E_ROLE_GROUP : Int, Codable {
     case success = 0
     case warning = 1
@@ -29,11 +30,13 @@ enum E_ROLE_GROUP : Int, Codable {
     }
 }
 
+/// Role group form enum
 enum E_ROLE_GROUP_FORM {
     case chip
     case rounded
 }
 
+/// Role group component
 struct RoleGroup<Content : View>: View {
     var form: E_ROLE_GROUP_FORM
     var role: E_ROLE_GROUP
@@ -43,27 +46,41 @@ struct RoleGroup<Content : View>: View {
     let paddindY: CGFloat
     
     let color: [Color]
-    
+
+    /// Init role group with content
+    /// - Parameter content: content
     init(
         @ViewBuilder content: () -> Content
     ) {
         self.init(role: .info, form: .rounded, content: content)
     }
-    
+
+    /// Init role group with role and content
+    /// - Parameters:
+    ///   - role: role
+    ///   - content: content
     init(
         role: E_ROLE_GROUP,
         @ViewBuilder content: () -> Content
     ) {
         self.init(role: role, form: .rounded, content: content)
     }
-    
+
+    /// Init role group with form and content
+    /// - Parameters:
+    ///   - form: form
+    ///   - content: content
     init(
         form: E_ROLE_GROUP_FORM,
         @ViewBuilder content: () -> Content
     ) {
         self.init(role: .info, form: form, content: content)
     }
-    
+
+    /// Init role group with role, form and content
+    /// - Parameters:
+    ///   - role: role
+    ///   - form: form
     init(
         role: E_ROLE_GROUP,
         form: E_ROLE_GROUP_FORM,

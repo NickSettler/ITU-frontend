@@ -12,7 +12,10 @@ import JWTDecode
 class NetworkAPI {
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) static var accessToken: String?
     @AppStorage(E_AUTH_STORAGE_KEYS.REFRESH_TOKEN.rawValue) static var refreshToken: String?
-    
+
+    /// Checks if token is expired
+    /// - Parameter token: token to check
+    /// - Returns: true if token is expired, false otherwise
     static func isTokenExpired(token: String) -> Bool {
         guard let decodedToken = try? decode(jwt: token) else {
             return true
@@ -28,7 +31,11 @@ class NetworkAPI {
         
         return date < Date.now
     }
-    
+
+    /// Parses data from response
+    /// - Parameter data: data to parse
+    /// - Throws: error if data is not parsable
+    /// - Returns: parsed data
     static func parseData<T: Decodable>(data: Data) throws -> T{
         do {
             let decodedData = try JSONDecoder().decode(T.self, from: data)

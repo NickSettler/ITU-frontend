@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Menu tab model. Used in bottom menu
 enum MenuTabModel : String, CaseIterable {
     case home = "Home"
     case settings = "Settings"

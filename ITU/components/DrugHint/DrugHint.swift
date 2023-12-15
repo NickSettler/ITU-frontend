@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+/// Drug hint component
 struct DrugHint: View {
     let color: [Color]
     let title: String
     let text: String
-    
+
+    /// Init drug hint with color, title and text
     init(color: [Color], title: String, text: String) {
         self.color = color
         self.title = title

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Drug chip component
 struct DrugChip: View {
     @State var isHintVisible: Bool = false
     
@@ -16,11 +17,13 @@ struct DrugChip: View {
     let hintText: String?
     
     let color: [Color]
-    
+
+    /// Init drug chip with text
     init(text: String) {
         self.init(role: .success, text: text)
     }
-    
+
+    /// Init drug chip with text, hint title and hint text
     init(text: String,
          hintTitle: String,
          hintText: String
@@ -32,7 +35,8 @@ struct DrugChip: View {
             hintText: hintText
         )
     }
-    
+
+    /// Init drug chip with role and text
     init(
         role: E_ROLE_GROUP,
         text: String
@@ -44,7 +48,8 @@ struct DrugChip: View {
             hintText: nil
         )
     }
-    
+
+    /// Init drug chip with role, text, hint title and hint text
     init(
         role: E_ROLE_GROUP,
         text: String,

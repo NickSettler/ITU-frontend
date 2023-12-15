@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 
+/// API response codes
 enum ApiResponseCode : String, Codable {
     case ContainsNullValues = "CONTAINS_NULL_VALUES"
     case ContentTooLarge = "CONTENT_TOO_LARGE"
@@ -38,6 +39,7 @@ enum ApiResponseCode : String, Codable {
     case ValueTooLong = "VALUE_TOO_LONG"
 }
 
+/// API success response structure
 struct ApiSuccessResponse<T : Decodable> : Decodable {
     let data: T
     
@@ -46,6 +48,7 @@ struct ApiSuccessResponse<T : Decodable> : Decodable {
     }
 }
 
+/// API error response extension structure
 struct ApiErrorResponseExtension : Codable {
     let code: ApiResponseCode
     let field: String?
@@ -58,6 +61,7 @@ struct ApiErrorResponseExtension : Codable {
     }
 }
 
+/// API error response item structure
 struct ApiErrorResponseItem : Codable {
     let message: String
     let extensions: ApiErrorResponseExtension?
@@ -66,18 +70,25 @@ struct ApiErrorResponseItem : Codable {
         case message
         case extensions
     }
-    
+
+    /// Init error response item with message
+    /// - Parameter message: error message
     init(message: String) {
         self.message = message
         self.extensions = nil
     }
-    
+
+    /// Init error response item with message and extensions
+    /// - Parameters:
+    ///   - message: error message
+    ///   - extensions: error extensions
     init(message: String, extensions: ApiErrorResponseExtension?) {
         self.message = message
         self.extensions = extensions
     }
 }
 
+/// API error response structure
 struct ApiErrorResponse : Error, Codable {
     let errors: [ApiErrorResponseItem]
     
@@ -98,6 +109,7 @@ struct ApiErrorResponse : Error, Codable {
     }
 }
 
+/// API result enum to handle success and failure cases
 enum ApiResult<Success: Decodable, Error: Decodable>: Decodable {
     case success(Success)
     case failure(Error)

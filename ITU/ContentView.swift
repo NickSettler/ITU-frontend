@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Main Content View
 struct ContentView: View {
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) var access_token: String?
     

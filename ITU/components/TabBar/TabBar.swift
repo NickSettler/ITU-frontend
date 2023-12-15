@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Tabs
 struct TabBar: View {
     @Binding var offset: CGFloat
     @State var width : CGFloat = 0
@@ -72,13 +73,17 @@ struct TabBar: View {
         }
         .frame(height: 40)
     }
-    
+
+    /// Get offset for tab indicator
+    /// - Returns: offset
     func getOffset()->CGFloat{
         let progress = offset / UIScreen.main.bounds.width
         
         return progress * width
     }
-    
+
+    /// Get index from offset
+    /// - Returns: index of tab
     func getIndexFromOffset()->CGFloat{
         let indexFloat = offset / UIScreen.main.bounds.width
         

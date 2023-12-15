@@ -7,10 +7,12 @@
 
 import SwiftUI
 
+/// TextField Type Enum
 enum TextFieldType: String {
     case email, text, first_name, last_name
 }
 
+/// Custom TextField Component
 struct CustomTextField: View {
     var sfIcon: String?
     var iconTint: Color = .gray
@@ -31,13 +33,10 @@ struct CustomTextField: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 8, content: {
-            
             if (sfIcon != nil) {
                 Image(systemName: sfIcon!)
                     .foregroundStyle(iconTint)
-                /// Since I Need Same Width to Align TextFields Equally
                     .frame(width: 30)
-                /// Slightly Bringing Down
                     .offset(y: 2)
             }
             

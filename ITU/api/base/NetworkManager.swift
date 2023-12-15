@@ -20,7 +20,13 @@ actor NetworkManager: GlobalActor {
     private let maxWaitTime = 15.0
     var commonHeaders: HTTPHeaders = [
     ]
-    
+
+    /// Send POST request
+    /// - Parameters:
+    ///   - path: path to send request to
+    ///   - parameters: parameters to send
+    /// - Throws: error if request fails
+    /// - Returns: response data
     func post(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             if (!NetworkAPI.isTokenExpired(token: token)) {
@@ -48,7 +54,13 @@ actor NetworkManager: GlobalActor {
             }
         }
     }
-    
+
+    /// Send PATCH request
+    /// - Parameters:
+    ///   - path: path to send request to
+    ///   - parameters: parameters to send
+    /// - Throws: error if request fails
+    /// - Returns: response data
     func patch(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             if !NetworkAPI.isTokenExpired(token: token) {
@@ -77,6 +89,12 @@ actor NetworkManager: GlobalActor {
         }
     }
 
+    /// Send DELETE request
+    /// - Parameters:
+    ///   - path: path to send request to
+    ///   - parameters: parameters to send
+    /// - Throws: error if request fails
+    /// - Returns: response data
     func delete(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             if (!NetworkAPI.isTokenExpired(token: token)) {
@@ -104,7 +122,13 @@ actor NetworkManager: GlobalActor {
             }
         }
     }
-    
+
+    /// Send GET request
+    /// - Parameters:
+    ///   - path: path to send request to
+    ///   - parameters: parameters to send
+    /// - Throws: error if request fails
+    /// - Returns: response data
     func get(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             commonHeaders.add(name: "Authorization", value: "Bearer " + token)
@@ -127,7 +151,10 @@ actor NetworkManager: GlobalActor {
             }
         }
     }
-    
+
+    /// Handle error from request
+    /// - Parameter error: error to handle
+    /// - Returns: handled error
     private func handleError(error: AFError) -> Error {
         if let underlyingError = error.underlyingError {
             let nserror = underlyingError as NSError

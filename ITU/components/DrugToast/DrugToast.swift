@@ -9,6 +9,7 @@ import SwiftUI
 import SheeKit
 import UniformTypeIdentifiers
 
+/// Bounds preference key struct
 struct BoundsPreferenceKey: PreferenceKey {
     typealias Value = Anchor<CGRect>?
     
@@ -22,6 +23,7 @@ struct BoundsPreferenceKey: PreferenceKey {
     }
 }
 
+/// Drug toast component
 struct DrugToast: View {
     @State var isHintVisible: Bool = false
     
@@ -33,7 +35,8 @@ struct DrugToast: View {
     var hintText: String? = nil
     
     let color: [Color]
-    
+
+    /// Init drug toast with role, title and text
     init(
         role: E_ROLE_GROUP,
         title: String,
@@ -44,7 +47,8 @@ struct DrugToast: View {
         self.title = title
         self.text = text
     }
-    
+
+    /// Init drug toast with role, title, text, hint title and hint text
     init(
         role: E_ROLE_GROUP,
         title: String,

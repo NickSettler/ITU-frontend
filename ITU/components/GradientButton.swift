@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Gradient button component
 struct GradientButton: View {
     var title: String
     var icon: String?

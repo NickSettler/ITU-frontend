@@ -7,13 +7,19 @@
 
 import SwiftUI
 
+/// Searching view
 struct SearchingView<MContent : View, SContent: View>: View {
     @Environment(\.isSearching) private var isSearching
     @Binding var searchText: String
     
     var mainContent: MContent
     var searchContent: SContent
-    
+
+    /// Init searching view
+    /// - Parameters:
+    ///   - searchText: Binding to search text
+    ///   - mainContent: Main content
+    ///   - searchContent: Search content
     init(
         searchText: Binding<String>,
         @ViewBuilder mainContent: () -> MContent,

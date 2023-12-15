@@ -7,12 +7,12 @@
 
 import Foundation
 
-
-
+/// Drug expiration state enum
 enum E_DRUG_EXPIRY_STATE{
     case    not, soon, expired
 }
 
+/// Drug structure
 struct Drug : Codable, Identifiable {
     var id: Int
     var name: String
@@ -79,7 +79,9 @@ struct Drug : Codable, Identifiable {
         case expiration_date
         case count
     }
-    
+
+    /// Init drug from decoder (used for API response parsing)
+    /// - Parameter decoder: decoder
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -222,7 +224,13 @@ struct Drug : Codable, Identifiable {
         
         self.count = try values.decodeIfPresent(String.self, forKey: .count)!
     }
-    
+
+    /// Init drug with id, name, complement, expiration date and location
+    /// - Parameters:
+    ///   - id: drug id
+    ///   - name: drug name
+    ///   - complement: drug complement
+    ///   - expiration_date: drug expiration date
     init(id: Int, name: String, complement: String, expiration_date: String) {
         self.id = id
         self.name = name
@@ -235,7 +243,14 @@ struct Drug : Codable, Identifiable {
         self.form = Form.empty
         self.count = ""
     }
-    
+
+    /// Init drug with id, name, complement, expiration date and location
+    /// - Parameters:
+    ///   - id: drug id
+    ///   - name: drug name
+    ///   - complement: drug complement
+    ///   - expiration_date: drug expiration date
+    ///   - location: drug folder
     init(id: Int, name: String, complement: String, expiration_date: String, location: Folder?) {
         self.id = id
         self.name = name
@@ -248,7 +263,8 @@ struct Drug : Codable, Identifiable {
         self.form = Form.empty
         self.count = ""
     }
-    
+
+    /// Get empty drug
     static var empty: Drug {
         get {
             return .init(id: 0, name: "", complement: "", expiration_date: "", location: nil)
