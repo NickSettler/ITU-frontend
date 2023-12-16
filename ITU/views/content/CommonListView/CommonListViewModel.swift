@@ -44,6 +44,33 @@ import SwiftUI
         }
     }
     
+    func getTabsColors() -> Dictionary<String, Color> {
+        var folderColors: Dictionary<String, Color> = [:]
+        
+        for folder in folders {
+            var currentTabColor = Color.textColorSecondary
+            
+            for drug in drugs {
+                
+                if (drug.location?.id == folder.id){
+                    
+                    if (drug.expiry_state == .expired) {
+                        folderColors[folder.id] = Color.Quaternary400
+                        break
+                    } else if (drug.expiry_state == .soon) {
+                        currentTabColor = Color.Secondary200
+                    }
+                }
+            }
+            
+            if folderColors[folder.id] != Color.Quaternary400 {
+                folderColors[folder.id] = currentTabColor
+            }
+        }
+        
+        return folderColors
+    }
+    
     func refresh() {
         self.getAllUserFolders()
         self.getAllUserDrugs()

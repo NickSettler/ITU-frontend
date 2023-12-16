@@ -22,7 +22,8 @@ struct CommonListView: View {
                 VStack(spacing: 0) {
                     TabBarView(
                         currentFolder: self.$viewModel.selectedFolder,
-                        folders: self.$viewModel.folders
+                        folders: self.$viewModel.folders,
+                        folderColors: viewModel.getTabsColors()
                     )
                     
                     TabView(selection: self.$viewModel.selectedFolder) {
@@ -51,7 +52,7 @@ struct CommonListView: View {
                     
                 }
             } searchContent: {
-                Text("SEACRHHHH")
+                Text("Search")
             }
             .navigationTitle("My drugs")
             .navigationBarTitleDisplayMode(.inline)
