@@ -59,14 +59,14 @@ import Foundation
     }
     
     func calculateTextHeight(_ text: String) -> CGFloat {
-            let font = UIFont.preferredFont(forTextStyle: .body)
-            let constraintRect = CGSize(width: UIScreen.main.bounds.width - 32, height: .greatestFiniteMagnitude)
-            let boundingBox = text.boundingRect(
-                with: constraintRect,
-                options: [.usesLineFragmentOrigin, .usesFontLeading],
-                attributes: [.font: font],
-                context: nil
-            )
-            return max(boundingBox.height + 16, 30) // Adjust as needed
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let constraintRect = CGSize(width: UIScreen.main.bounds.width - 32, height: .greatestFiniteMagnitude)
+        let boundingBox = text.boundingRect(
+            with: constraintRect,
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: font],
+            context: nil
+        )
+        return max(boundingBox.height + 16, 30) // Adjust as needed
     }
 }

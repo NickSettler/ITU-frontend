@@ -53,18 +53,18 @@ struct FolderSheet: View {
                 
                 // Description Field
                 ZStack(alignment: .topLeading) {
-                        TextEditorWithDynamicSize(
-                            text: $viewModel.descriptionText
-                            )
-                                .cornerRadius(8)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .stroke(Color.gray, lineWidth: 1) // Border styling
-                                        )
-                        
-                    }
+                    TextEditorWithDynamicSize(
+                        text: $viewModel.descriptionText
+                    )
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.gray, lineWidth: 1) // Border styling
+                    )
+                    
+                }
                 .frame(maxHeight: viewModel.calculateTextHeight(viewModel.currentFolder.description ?? ""))
-        
+                
                 
                 Spacer()
                 
@@ -77,7 +77,7 @@ struct FolderSheet: View {
                 }
             }
             .padding()
-
+            
         }
         .presentationDetents([.medium])
         .onReceive(viewModel.$didRequestComplete) {

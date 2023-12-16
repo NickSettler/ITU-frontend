@@ -2,7 +2,7 @@
 //  ResizableTextBox.swift
 //  ITU
 //
-//  Created by Nikita on 16.12.2023.
+//  Created by Elena Marochkina
 //
 
 import Foundation
