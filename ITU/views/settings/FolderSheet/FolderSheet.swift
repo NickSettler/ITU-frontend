@@ -65,9 +65,10 @@ struct FolderSheet: View {
                                     RoundedRectangle(cornerRadius: 4)
                                         .stroke(Color.gray, lineWidth: 1) // Border styling
                                         )
-                                .frame(maxHeight: 100)
+                        
                     }
-                
+                .frame(maxHeight: calculateTextHeight(viewModel.currentFolder.description ?? ""))
+        
                 
                 Spacer()
                 
@@ -91,6 +92,18 @@ struct FolderSheet: View {
     }
 }
 
+private func calculateTextHeight(_ text: String) -> CGFloat {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let constraintRect = CGSize(width: UIScreen.main.bounds.width - 32, height: .greatestFiniteMagnitude)
+        let boundingBox = text.boundingRect(
+            with: constraintRect,
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: font],
+            context: nil
+        )
+        return max(boundingBox.height + 16, 30) // Adjust as needed
+    }
+
 struct TextEditorWithDynamicSize: View {
     @Binding var text: String
     @State private var contentHeight: CGFloat = .zero
@@ -98,7 +111,7 @@ struct TextEditorWithDynamicSize: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             TextEditor(text: $text)
-                .frame(minHeight: 30, maxHeight: .infinity)
+                .frame(minHeight: 10, maxHeight: .infinity)
                 .background(
                     GeometryReader { proxy in
                         Color.clear.preference(
@@ -108,12 +121,8 @@ struct TextEditorWithDynamicSize: View {
                     }
                 )
                 .onPreferenceChange(ViewHeightKey.self) {
-                    contentHeight = max($0, 30) // Adjust the minimum height as needed
+                    contentHeight = max($0, 10) // Adjust the minimum height as needed
                 }
-                .onAppear {
-                    print(text)
-                    contentHeight = calculateTextHeight(text)
-                    }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .overlay(
                     VStack {
@@ -130,17 +139,8 @@ struct TextEditorWithDynamicSize: View {
     }
 }
 
-private func calculateTextHeight(_ text: String) -> CGFloat {
-        if text.isEmpty {
-            return 30
-        } else {
-            let size = text.size(withAttributes: [.font: UIFont.preferredFont(forTextStyle: .body)])
-            return max(size.height, 30)
-        }
-    }
-
 struct ViewHeightKey: PreferenceKey {
-    static var defaultValue: CGFloat { 20 }
+    static var defaultValue: CGFloat { 10 }
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = max(value, nextValue())
     }

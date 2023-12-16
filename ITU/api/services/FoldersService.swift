@@ -22,10 +22,6 @@ struct FoldersService {
             
             let result: ApiSuccessResponse<GetAllUserFoldersResponse> = try NetworkAPI.parseData(data: data)
             
-            for folder in result.data {
-                print(folder)
-            }
-            
             return result
         } catch let error {
             print(error.localizedDescription)
@@ -42,8 +38,6 @@ struct FoldersService {
     /// - Returns: true if created, false otherwise
     static func createFolder(name: String, icon: String, description: String, isPrivate: Bool) async -> Bool {
         try? await AuthService.conditionalRefresh()
-        print(name, icon, description, isPrivate)
-        
         
         do {
             _ = try await NetworkManager.shared.post(
