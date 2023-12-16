@@ -2,7 +2,7 @@
 //  NotificationsViewModel.swift
 //  ITU
 //
-//  Created by Елена Марочкина on 30.11.2023.
+//  Created by Elena Marochkina
 //
 
 import Foundation
