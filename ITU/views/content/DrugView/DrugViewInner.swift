@@ -66,7 +66,9 @@ struct DrugViewInner: View {
                                 DrugToast(
                                     role: viewModel.expiryDateToastRole,
                                     title: "Expiration date",
-                                    text: viewModel.drug.expiration_date.formatted(.dateTime.month(.twoDigits).year())
+                                    text: viewModel.drug.expiration_date.formatted(.dateTime.month(.twoDigits).year()),
+                                    hintTitle: "Expirtion date",
+                                    hintText: viewModel.expiryDateHint
                                 )
                                 
                                 if let location = viewModel.drug.location {
@@ -89,7 +91,9 @@ struct DrugViewInner: View {
                                         DrugToast(
                                             role: .success,
                                             title: "Strength",
-                                            text: strength
+                                            text: strength,
+                                            hintTitle: "Strength",
+                                            hintText: "The term strength refers to the concentration or dosage of the active ingredient(s) in a medication."
                                         )
                                     }
                                     
@@ -97,7 +101,10 @@ struct DrugViewInner: View {
                                         DrugToast(
                                             role: .success,
                                             title: "Form",
-                                            text: form
+                                            text: form,
+                                            hintTitle: "Form",
+                                            hintText: "A drug form is just the way medicine comes. It could be a pill you swallow, a shot you get, or even a cream you put on your skin. It's like the package that helps the medicine work the best for you."
+                                            
                                         )
                                     }
                                     
@@ -105,7 +112,10 @@ struct DrugViewInner: View {
                                         DrugToast(
                                             role: .success,
                                             title: "Route",
-                                            text: route
+                                            text: route,
+                                            hintTitle:"Route",
+                                            hintText:"The route is how you take or apply a medicine. It's like the path the medicine follows to get into your body and start working."
+                                            
                                         )
                                     }
                                     
@@ -113,7 +123,9 @@ struct DrugViewInner: View {
                                         DrugToast(
                                             role: .success,
                                             title: "Package",
-                                            text: package
+                                            text: package,
+                                            hintTitle: "Package",
+                                            hintText: "A package is like the wrapping of your medicine. It's what keeps it safe and easy to use."
                                         )
                                     }
                                     
@@ -121,7 +133,10 @@ struct DrugViewInner: View {
                                         DrugToast(
                                             role: .success,
                                             title: "Dosage",
-                                            text: dosage
+                                            text: dosage,
+                                            hintTitle: "Dosage",
+                                            hintText: "Dosage is simply the amount of medicine you're supposed to take or use. It's like following a recipe – it tells you how much of the medicine will be effective and safe for your body. "
+                                            
                                         )
                                     }
                                     
@@ -129,7 +144,10 @@ struct DrugViewInner: View {
                                         DrugToast(
                                             role: .success,
                                             title: "Drug class",
-                                            text: pharm_class
+                                            text: pharm_class,
+                                            hintTitle: "Drug Class",
+                                            hintText: "Drug class is like putting medicines into groups based on how they work or what they treat. It's a way to organize them. For example, pain relievers might be in one class, while antibiotics are in another."
+                                            
                                         )
                                     }
                                 }
@@ -145,15 +163,17 @@ struct DrugViewInner: View {
                                     if let organization = viewModel.drug.organization?.name {
                                         DrugToast(
                                             role: .success,
-                                            title: "Organization",
-                                            text: organization
+                                            title: "Marketing authorization holder",
+                                            text: organization,
+                                            hintTitle: "Marketing authorization holder",
+                                            hintText: "The marketing authorization holder is the company or organization that has been given the official approval to market and sell a specific medicine or medical product."
                                         )
                                     }
                                     
                                     if let organization_country = viewModel.drug.organization_country?.name {
                                         DrugToast(
                                             role: .success,
-                                            title: "Organization country",
+                                            title: "Marketing authorization holder country",
                                             text: organization_country
                                         )
                                     }
@@ -161,7 +181,7 @@ struct DrugViewInner: View {
                                     if let actual_organization = viewModel.drug.actual_organization?.name {
                                         DrugToast(
                                             role: .success,
-                                            title: "Actual organization",
+                                            title: "Manufacturer",
                                             text: actual_organization
                                         )
                                     }
@@ -169,8 +189,10 @@ struct DrugViewInner: View {
                                     if let actual_organization_country = viewModel.drug.actual_organization_country?.name {
                                         DrugToast(
                                             role: .success,
-                                            title: "Actual organization country",
-                                            text: actual_organization_country
+                                            title: "Manufacturer country",
+                                            text: actual_organization_country,
+                                            hintTitle: "Manufacturer country",
+                                            hintText: "A manufacturer is a company or facility that produces or makes a product, including medicines."
                                         )
                                     }
                                     
@@ -212,13 +234,16 @@ struct DrugViewInner: View {
                         
                         if viewModel.drug.hasRegistration {
                             VStack(alignment: .leading, spacing: subSectionGap) {
-                                SectionTitle("Registraion")
+                                SectionTitle("Registration")
                                 
                                 if let registration_status = viewModel.drug.registration_status?.name {
                                     DrugToast(
                                         role: .success,
                                         title: "Registration status",
-                                        text: registration_status
+                                        text: registration_status,
+                                        hintTitle: "Registration status",
+                                        hintText: "Registration status is like the permission a medicine gets to be sold. If it's approved or registered, it means it passed the safety and effectiveness checks by the authorities. If it's pending, it's still being reviewed."
+                                        
                                     )
                                 }
                                 
