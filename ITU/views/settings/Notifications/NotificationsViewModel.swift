@@ -41,7 +41,6 @@ import SwiftUI
         
         for drug in drugs {
             let difference = Calendar.current.dateComponents([.day], from: actualDate, to: drug.expiration_date)
-            print(difference)
             
             if selectedUnit == 1 {
                 daysBeforeExpired = selectedNumber

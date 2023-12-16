@@ -59,7 +59,7 @@ struct CommonListView: View {
             .toolbarBackground(.hidden, for: .navigationBar)
         }
         .sheet(isPresented: $viewModel.isDrugCreateVisible) {
-            DrugAdditionView()
+            DrugAdditionView(selectedFolder: viewModel.selectedFolder)
         }
         .searchable(
             text: $viewModel.searchQuery,

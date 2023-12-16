@@ -33,6 +33,7 @@ enum DRUG_ADDITION_MODE {
 
 @MainActor class DrugAdditionViewModel : ObservableObject {
     private(set) var drugBinding: Binding<Drug>?
+    private(set) var selectedFolder: Folder? = nil
     
     @Published var mode: DRUG_ADDITION_MODE = .create
     @Published var createdDrug: Drug = .empty
@@ -65,7 +66,9 @@ enum DRUG_ADDITION_MODE {
     
     @Published var didRequestComplete: Bool = false
     
-    init() { }
+    init(selectedFolder: Folder) {
+        self.selectedFolder = selectedFolder
+    }
     
     init(drug: Binding<Drug>) {
         self.drugBinding = drug
@@ -110,6 +113,10 @@ enum DRUG_ADDITION_MODE {
         }
         
         createdDrug.form!.form = selectedForm
+        
+        if selectedFolder != .allFolder {
+            createdDrug.location = selectedFolder
+        }
     }
     
     private func createDrug() {
