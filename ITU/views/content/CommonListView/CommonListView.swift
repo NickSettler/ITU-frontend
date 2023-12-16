@@ -51,7 +51,7 @@ struct CommonListView: View {
                     
                 }
             } searchContent: {
-                Text("SEACRHHHH")
+                Text("Search")
             }
             .navigationTitle("My drugs")
             .navigationBarTitleDisplayMode(.inline)
@@ -60,11 +60,6 @@ struct CommonListView: View {
         .sheet(isPresented: $viewModel.isDrugCreateVisible) {
             DrugAdditionView()
         }
-        .searchable(
-            text: $viewModel.searchQuery,
-            placement: .navigationBarDrawer(displayMode: .always),
-            prompt: "Search drugs"
-        )
         .onReceive(viewModel.$isDrugCreateVisible) {
             if (!$0) {
                 viewModel.refresh()
