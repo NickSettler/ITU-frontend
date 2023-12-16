@@ -11,7 +11,9 @@ import SwiftUI
 struct TabBarView: View {
     @Binding var currentFolder: Folder
     @Binding var folders: [Folder]
+    var folderColors: Dictionary<String, Color>?
     @Namespace var namespace
+    
 
     var body: some View {
         HStack {
@@ -20,7 +22,7 @@ struct TabBarView: View {
                     ForEach(self.folders, id: \.id) { folder in
                         TabBarItem(
                             currentFolder: self.$currentFolder,
-                            namespace: namespace.self,
+                            tabColor: folderColors?[folder.id], namespace: namespace.self,
                             folder: folder
                         )
                     }

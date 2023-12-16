@@ -10,6 +10,8 @@ import SwiftUI
 /// Tab bar item component
 struct TabBarItem: View {
     @Binding var currentFolder: Folder
+    var tabColor: Color?
+    
     let namespace: Namespace.ID
     
     var folder: Folder
@@ -24,7 +26,7 @@ struct TabBarItem: View {
                 HStack(spacing: 0){
                     Image(systemName: folder.icon ?? "folder")
                         .font(.system(size: 14))
-
+                    
                     Text(folder.name)
                         .padding(.horizontal, 2)
                         .frame(
@@ -37,9 +39,11 @@ struct TabBarItem: View {
                         .fontWeight(.medium)
                 }
                 .padding(.horizontal, 10)
-
+                
                 if currentFolder == folder {
-                    Color.Primary300
+                    (tabColor != Color.textColorSecondary ? tabColor : Color.Primary300)
+
+        
                         .frame(height: 2)
                         .matchedGeometryEffect(
                             id: "underline",
@@ -58,9 +62,7 @@ struct TabBarItem: View {
         }
         .buttonStyle(.plain)
         .foregroundColor(
-            currentFolder == folder
-            ? Color.Primary300
-            : Color.textColorSecondary
+            currentFolder == folder ? (tabColor != Color.textColorSecondary ? tabColor : Color.Primary300) : tabColor
         )
     }
 }
