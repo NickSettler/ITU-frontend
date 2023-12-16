@@ -36,7 +36,7 @@ struct FoldersService {
     ///     - icon: Folder icon
     ///
     /// - Returns: true if created, false otherwise
-    static func createFolder(name: String, icon: String) async -> Bool {
+    static func createFolder(name: String, icon: String, description: String, isPrivate: Bool) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
         do {
@@ -44,7 +44,9 @@ struct FoldersService {
                 path: "/items/user_locations",
                 parameters: [
                     "name": name,
-                    "icon": icon
+                    "icon": icon,
+                    "description": description,
+                    "private": isPrivate
                 ]
             )
             
@@ -63,7 +65,7 @@ struct FoldersService {
     ///     - icon: Folder icon
     ///
     /// - Returns: true if updated, false otherwise
-    static func updateFolder(id: String, name: String, icon: String) async -> Bool {
+    static func updateFolder(id: String, name: String, icon: String, description: String, isPrivate: Bool) async -> Bool {
         try? await AuthService.conditionalRefresh()
 
         do {
@@ -71,7 +73,9 @@ struct FoldersService {
                 path: "/items/user_locations/" + id,
                 parameters: [
                     "name": name,
-                    "icon": icon
+                    "icon": icon,
+                    "description": description,
+                    "private": isPrivate
                 ]
             )
 

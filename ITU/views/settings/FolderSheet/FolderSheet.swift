@@ -46,6 +46,26 @@ struct FolderSheet: View {
                         SymbolPicker(symbol: $viewModel.currentFolder.icon)
                     }
                 }
+                
+                // Privacy Checkbox
+                Toggle("Private", isOn: $viewModel.currentFolder.isPrivate)
+                    .padding(.vertical, 32)
+                
+                // Description Field
+                ZStack(alignment: .topLeading) {
+                    TextEditorWithDynamicSize(
+                        text: $viewModel.descriptionText
+                    )
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.gray, lineWidth: 1) // Border styling
+                    )
+                    
+                }
+                .frame(maxHeight: viewModel.calculateTextHeight(viewModel.currentFolder.description ?? ""))
+                
+                
                 Spacer()
                 
                 GradientButton(title: "Save", fullWidth: true) {
@@ -57,15 +77,7 @@ struct FolderSheet: View {
                 }
             }
             .padding()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        self.presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Text("Close")
-                    }
-                }
-            }
+            
         }
         .presentationDetents([.medium])
         .onReceive(viewModel.$didRequestComplete) {

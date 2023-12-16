@@ -25,6 +25,7 @@ struct DrugsService {
                 parameters: nil
             )
             let result: ApiSuccessResponse<GetAllUsersDrugsResponse> = try NetworkAPI.parseData(data: data)
+            
             return result
         } catch let error {
             print(error.localizedDescription)
