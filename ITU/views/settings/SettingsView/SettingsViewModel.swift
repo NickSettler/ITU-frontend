@@ -2,7 +2,7 @@
 //  SettingsViewModel.swift
 //  ITU
 //
-//  Created by Nikita Pasynkov
+//  Created by Elena Marochkina
 //
 
 import Foundation

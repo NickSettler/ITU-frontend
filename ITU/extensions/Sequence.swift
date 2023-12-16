@@ -2,7 +2,7 @@
 //  Sequence.swift
 //  ITU
 //
-//  Created by Nikita Moiseev
+//  Created by Nikita Pasynkov
 //
 
 import Foundation

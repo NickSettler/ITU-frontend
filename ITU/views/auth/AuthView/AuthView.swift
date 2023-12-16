@@ -2,7 +2,7 @@
 //  AuthView.swift
 //  ITU
 //
-//  Created by Nikita Moiseev
+//  Created by Elena Marochkina
 //
 
 import SwiftUI
