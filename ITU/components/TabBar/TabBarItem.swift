@@ -41,9 +41,9 @@ struct TabBarItem: View {
                 .padding(.horizontal, 10)
                 
                 if currentFolder == folder {
-                    (tabColor != Color.textColorSecondary ? tabColor : Color.Primary300)
-
-        
+                    (tabColor != Color.textColorSecondary 
+                     ? tabColor
+                     : Color.Primary300)
                         .frame(height: 2)
                         .matchedGeometryEffect(
                             id: "underline",
@@ -62,7 +62,11 @@ struct TabBarItem: View {
         }
         .buttonStyle(.plain)
         .foregroundColor(
-            currentFolder == folder ? (tabColor != Color.textColorSecondary ? tabColor : Color.Primary300) : tabColor
+            currentFolder == folder 
+            ? (tabColor != Color.textColorSecondary
+               ? tabColor
+               : Color.Primary300)
+            : tabColor
         )
     }
 }

@@ -13,7 +13,6 @@ struct TabBarView: View {
     @Binding var folders: [Folder]
     var folderColors: Dictionary<String, Color>?
     @Namespace var namespace
-    
 
     var body: some View {
         HStack {
