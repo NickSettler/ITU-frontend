@@ -12,16 +12,20 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
     var id: String
     var name: String
     var icon: String?
+    var isPrivate: Bool
+    var description: String?
     var sort: Int?
     var user_created: User
     var date_created: String
     var user_updated: User?
     var date_updated: String?
     
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id
         case name
         case icon
+        case isPrivate = "private"
+        case description
         case sort
         case user_created
         case date_created
@@ -36,6 +40,8 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         self.id = try values.decodeIfPresent(String.self, forKey: .id)!
         self.name = try values.decodeIfPresent(String.self, forKey: .name)!
         self.icon = try? values.decodeIfPresent(String.self, forKey: .icon)
+        self.isPrivate = (try? values.decode(Bool.self, forKey: .isPrivate)) ?? false
+        self.description = try? values.decodeIfPresent(String.self, forKey: .description)
         self.sort = try values.decodeIfPresent(Int.self, forKey: .sort) ?? 1
         
         if let user_created = try? values.decodeIfPresent(User.self, forKey: .user_created) {
@@ -63,7 +69,7 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
     /// Init folder with id
     /// - Parameter id: folder id
     init (id: String) {
-        self.init(id: id, name: id, icon: id, user_created: .init(id: id), date_created: "")
+        self.init(id: id, name: id, icon: id, isPrivate: false, user_created: .init(id: id), date_created: "")
     }
 
     /// Init folder with id, name, icon, sort, user_created, date_created, user_updated, date_updated
@@ -81,6 +87,7 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         name: String,
         icon: String,
         sort: Int? = nil,
+        isPrivate: Bool,
         user_created: User,
         date_created: String,
         user_updated: User? = nil,
@@ -89,6 +96,7 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         self.id = id
         self.name = name
         self.icon = icon
+        self.isPrivate = isPrivate
         self.sort = sort
         self.user_created = user_created
         self.date_created = date_created
@@ -98,13 +106,13 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
     
     static var allFolder: Folder {
         get {
-            .init(id: "ALL", name: "All", icon: "", sort: 0, user_created: .init(id: "test"), date_created: "")
+            .init(id: "ALL", name: "All", icon: "", sort: 0, isPrivate: false, user_created: .init(id: "test"), date_created: "")
         }
     }
     
     static var empty: Folder {
         get {
-            .init(id: "", name: "", icon: "", sort: 0, user_created: .init(id: ""), date_created: "")
+            .init(id: "", name: "", icon: "", sort: 0, isPrivate: false, user_created: .init(id: ""), date_created: "")
         }
     }
     

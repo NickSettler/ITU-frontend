@@ -22,6 +22,10 @@ struct FoldersService {
             
             let result: ApiSuccessResponse<GetAllUserFoldersResponse> = try NetworkAPI.parseData(data: data)
             
+            for folder in result.data {
+                print(folder)
+            }
+            
             return result
         } catch let error {
             print(error.localizedDescription)
@@ -36,15 +40,19 @@ struct FoldersService {
     ///     - icon: Folder icon
     ///
     /// - Returns: true if created, false otherwise
-    static func createFolder(name: String, icon: String) async -> Bool {
+    static func createFolder(name: String, icon: String, description: String, isPrivate: Bool) async -> Bool {
         try? await AuthService.conditionalRefresh()
+        print(name, icon, description, isPrivate)
+        
         
         do {
             _ = try await NetworkManager.shared.post(
                 path: "/items/user_locations",
                 parameters: [
                     "name": name,
-                    "icon": icon
+                    "icon": icon,
+                    "description": description,
+                    "private": isPrivate
                 ]
             )
             
@@ -63,7 +71,7 @@ struct FoldersService {
     ///     - icon: Folder icon
     ///
     /// - Returns: true if updated, false otherwise
-    static func updateFolder(id: String, name: String, icon: String) async -> Bool {
+    static func updateFolder(id: String, name: String, icon: String, description: String, isPrivate: Bool) async -> Bool {
         try? await AuthService.conditionalRefresh()
 
         do {
@@ -71,7 +79,9 @@ struct FoldersService {
                 path: "/items/user_locations/" + id,
                 parameters: [
                     "name": name,
-                    "icon": icon
+                    "icon": icon,
+                    "description": description,
+                    "private": isPrivate
                 ]
             )
 

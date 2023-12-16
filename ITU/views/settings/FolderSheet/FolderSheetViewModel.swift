@@ -25,11 +25,10 @@ import Foundation
     
     func createFolder() {
         Task {
-            let created = await FoldersService.createFolder(name: self.currentFolder.name, icon: self.currentFolder.icon ?? "")
+            let created = await FoldersService.createFolder(name: self.currentFolder.name, icon: self.currentFolder.icon ?? "", description: self.currentFolder.description ?? "", isPrivate: self.currentFolder.isPrivate)
             
             if (created) {
                 self.didRequestComplete = true
-                
             }
         }
     }
@@ -39,7 +38,9 @@ import Foundation
             let updated = await FoldersService.updateFolder(
                 id: self.currentFolder.id,
                 name: self.currentFolder.name,
-                icon: self.currentFolder.icon ?? ""
+                icon: self.currentFolder.icon ?? "",
+                description: self.currentFolder.description ?? "",
+                isPrivate: self.currentFolder.isPrivate
             )
             
             if updated {
