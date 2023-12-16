@@ -7,14 +7,20 @@
 
 import SwiftUI
 
+/// `LoginView` is a view for handling user login.
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
     
+    /// A binding for showing SignUp view.
     @Binding var showSignup: Bool
+
+    /// A state for showing Forgot Password view.
     @State private var showForgotPasswordView: Bool = false
+
     /// Reset Password View (with New Password and Confimration Password View)
     @State private var showResetView: Bool = false
     
+    /// Body of `LoginView`.
     var body: some View {
         VStack(alignment: .leading, spacing: 15, content: {
             Spacer(minLength: 0)
@@ -88,6 +94,7 @@ struct LoginView: View {
     }
 }
 
+    // Represents `LoginView`.
 #Preview {
     LoginView(showSignup: .constant(false))
 }

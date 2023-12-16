@@ -7,8 +7,10 @@
 
 import Foundation
 
-/// Organization structure
+/// Represents the data structure of an Organization.
 struct Organization : Codable {
+
+    // MARK: - Properties
     var code: String
     var country: Country
     var name: String
@@ -23,8 +25,9 @@ struct Organization : Codable {
         case holder
     }
 
-    /// Init organization from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `Organization` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -46,8 +49,8 @@ struct Organization : Codable {
         self.holder = try container.decodeIfPresent(String.self, forKey: .holder)
     }
 
-    /// Init organization with code
-    /// - Parameter code: organization code
+    /// Initializes a `Organization` instance with provided code.
+    /// - Parameter code: Code as string.
     init(code: String) {
         self.init(
             code: code,
@@ -56,13 +59,13 @@ struct Organization : Codable {
         )
     }
 
-    /// Init organization with code, country, name, manufacturer and holder
+    /// Initializes a `Organization` instance with provided informations.
     /// - Parameters:
-    ///   - code: organization code
-    ///   - country: organization country
-    ///   - name: organization name
-    ///   - manufacturer: organization manufacturer
-    ///   - holder: organization holder
+    ///   - code: Code for the Organization
+    ///   - country: Country of the Organization
+    ///   - name: Name of the Organization
+    ///   - manufacturer: Manufacturer for the Organization
+    ///   - holder: Holder for the Organization
     init(code: String, country: Country, name: String, manufacturer: String? = nil, holder: String? = nil) {
         self.code = code
         self.country = country

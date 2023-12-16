@@ -7,18 +7,22 @@
 
 import Foundation
 
-/// RegistraionStatus structure
+/// Represents the data structure of a Hormone.
+/// It conforms to Codable for ease of parsing
 struct Hormone : Codable {
+
+    // MARK: - Properties
     var code: String
     var name: String
-    
+
     enum CodingKeys: CodingKey {
         case code
         case name
     }
 
-    /// Init registraion status from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `Hormone` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -26,16 +30,16 @@ struct Hormone : Codable {
         self.name = try container.decode(String.self, forKey: .name)
     }
 
-    /// Init registraion status with code
-    /// - Parameter code: registraion status code
+    /// Initializes a `Hormone` instance with provided code.
+    /// - Parameter code: Code as string.
     init(code: String) {
         self.init(code: code, name: code)
     }
 
-    /// Init registraion status with code and name
+    /// Initializes a `Hormone` instance with provided code and name.
     /// - Parameters:
-    ///   - code: registraion status code
-    ///   - name: registraion status name
+    ///   - code: Code as string.
+    ///   - name: Name of the Hormone
     init(code: String, name: String) {
         self.code = code
         self.name = name

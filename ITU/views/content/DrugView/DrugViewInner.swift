@@ -7,13 +7,14 @@
 
 import SwiftUI
 
+/// `DrugViewInner` is a view representing the detailed information about a drug.
 struct DrugViewInner: View {
     @Environment (\.dismiss) var dismiss
     
     @StateObject var viewModel: DrugViewModel
     
+    /// Variables for managing view offsets and sizes
     var drugViewVisible: Binding<Bool>
-    
     var size: CGSize
     var safeArea: EdgeInsets
     @State var offsetY: CGFloat = 0
@@ -22,6 +23,7 @@ struct DrugViewInner: View {
     var subSectionGap: CGFloat = 12
     var toastGap: CGFloat = 8
     
+    /// Initializer to create a new instance of `DrugViewModel`
     init(_ drugViewVisible: Binding<Bool>, size: CGSize, safeArea: EdgeInsets, drug: Binding<Drug>) {
         self.drugViewVisible = drugViewVisible
         self.size = size
@@ -31,6 +33,7 @@ struct DrugViewInner: View {
         )
     }
     
+    /// Body of `DrugViewInner`.
     var body: some View {
         ScrollViewReader { scrollProxy in
             ScrollView(.vertical, showsIndicators: false) {
@@ -67,7 +70,7 @@ struct DrugViewInner: View {
                                     role: viewModel.expiryDateToastRole,
                                     title: "Expiration date",
                                     text: viewModel.drug.expiration_date.formatted(.dateTime.month(.twoDigits).year()),
-                                    hintTitle: "Expirtion date",
+                                    hintTitle: "Expiration date",
                                     hintText: viewModel.expiryDateHint
                                 )
                                 
@@ -566,6 +569,7 @@ struct DrugViewInner: View {
     }
 }
 
+// Represents `DrugView` with first drug from `allDrugs` and `drugViewVisible` as true
 #Preview {
     DrugView(drug: .constant(allDrugs[0]), drugViewVisible: .constant(true))
 }

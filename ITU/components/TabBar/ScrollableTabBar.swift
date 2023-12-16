@@ -7,25 +7,25 @@
 
 import SwiftUI
 
+/// `ScrollableTabBar` is a SwiftUI view to represent a scrollable tab bar with content.
 struct ScrollableTabBar<Content: View>: UIViewRepresentable {
 
-    // to store our SwiftUI View...
+    // The SwiftUI View that will be rendered within the scrollable tab bar.
     var content: Content
     
     // Getting Rect To Calculate Width And Height Of ScrollView...
-    
     var rect: CGRect
     
-    // ContentOffset...
+    // ContentOffset for the scrollView
     @Binding var offset: CGFloat
     
-    // Tabs...
+    // The tabs to display within the tab bar.
     var tabs: [Any]
     
-    // ScrollView...
-    // For Paging AKA Scrollable Tabs...
+    // ScrollView to enable the content to scroll.
     let scrollView = UIScrollView()
-    
+
+    ///Initializes a `ScrollableTabBar`.
     init(
         tabs: [Any],
         rect: CGRect,
@@ -115,6 +115,7 @@ struct ScrollableTabBar<Content: View>: UIViewRepresentable {
     }
 }
 
+// Preview of a `ScrollableTabBar` with text.
 #Preview {
     GeometryReader{proxy in
         let rect = proxy.frame(in: .global)

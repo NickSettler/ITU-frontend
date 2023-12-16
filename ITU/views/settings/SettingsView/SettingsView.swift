@@ -7,16 +7,22 @@
 
 import SwiftUI
 
+/// `SettingsView` displays the settings menu of the application that includes User Info, In-App Settings,
+/// and Authentication options to log out.
 struct SettingsView: View {
+    // Access token from the AppStorage
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) private var accessToken: String?
+    // Refresh token from the AppStorage
     @AppStorage(E_AUTH_STORAGE_KEYS.REFRESH_TOKEN.rawValue) private var refreshToken: String?
     
     @StateObject var viewModel = SettingsViewModel()
     
+    /// The UI structure for the SettingsView.
     var body: some View {
         NavigationStack {
             VStack {
                 List {
+                    // View to present current User Information
                     if let currentUser = viewModel.currentUser {
                         Section(header: Text("User Info")) {
                             VStack(alignment: .leading, spacing: 4) {
@@ -30,6 +36,7 @@ struct SettingsView: View {
                             }
                         }
                     }
+                    // In-App Settings Section
                     Section(header: Text("In-App Settings")) {
                         NavigationLink {
                             FoldersView()
@@ -66,6 +73,7 @@ struct SettingsView: View {
                         }
                         }
                     }
+                    // Authentication Section
                     Section(header: Text("Auth")) {
                         HStack(alignment: .center) {
                             Image(systemName: "door.right.hand.open")
@@ -90,6 +98,7 @@ struct SettingsView: View {
     }
 }
 
+// Preview of the `SettingsView`.
 #Preview {
     SettingsView()
 }

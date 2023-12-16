@@ -7,7 +7,9 @@
 
 import Foundation
 
-/// RegistraionStatus structure
+/// `Doping` struct used to represent a doping status fetched from an API.
+/// This struct is decodable which allows for direct initialization from
+/// the data associated with a JSON response.
 struct Doping : Codable {
     var doping: String
     var name: String
@@ -17,8 +19,11 @@ struct Doping : Codable {
         case name
     }
 
-    /// Init registraion status from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    /// Initializes a `Doping` instance from a decoder (used for API response parsing).
+    ///
+    /// - Parameter decoder: Decoder instance to decode the JSON response.
+    ///
+    /// - Throws: Throws an error if there are missing keys in the JSON response.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -26,16 +31,19 @@ struct Doping : Codable {
         self.name = try container.decode(String.self, forKey: .name)
     }
 
-    /// Init registraion status with code
-    /// - Parameter doping: registraion status code
+    /// Initializes a `Doping` instance with a specified doping.
+    /// The name of the doping status will also be set to the provided doping.
+    ///
+    /// - Parameter doping: A string that represents the doping status.
     init(doping: String) {
         self.init(doping: doping, name: doping)
     }
 
-    /// Init registraion status with code and name
+    /// Initializes a `Doping` instance with specified doping and name.
+    ///
     /// - Parameters:
-    ///   - code: registraion status code
-    ///   - name: registraion status name
+    ///   - doping: A string that represents the doping status.
+    ///   - name: A string that represents the status name.
     init(doping: String, name: String) {
         self.doping = doping
         self.name = name

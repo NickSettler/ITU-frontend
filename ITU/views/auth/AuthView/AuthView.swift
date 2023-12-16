@@ -7,9 +7,11 @@
 
 import SwiftUI
 
+/// `AuthView` is the main authentication view, which includes `LoginView` and `SignUpView`.
 struct AuthView: View {
     @StateObject private var viewModel = AuthViewModel()
     
+    /// Body of `AuthView`.
     var body: some View {
         NavigationStack {
             LoginView(showSignup: $viewModel.showSignup)
@@ -54,7 +56,7 @@ struct AuthView: View {
         }
     }
     
-    /// Moving Blurred background
+    /// Moving blurry background circle.
     @ViewBuilder
     func CircleView() -> some View {
         Circle()
@@ -78,5 +80,6 @@ struct AuthView: View {
 }
 
 #Preview {
+    // Represents `AuthView`.
     AuthView()
 }

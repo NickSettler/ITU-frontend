@@ -10,12 +10,13 @@ import Foundation
 import Alamofire
 import JWTDecode
 
+/// `DrugsService` is a struct that contains all the Drug related network calls
 struct DrugsService {
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) private static var accessToken: String?
     
-    /// Get all user drugs function
+    /// Gets all drugs that the user has access to.
     ///
-    /// - Returns: Array of user drugs, they has access to
+    /// - Returns: An instance of `ApiSuccessResponse<GetAllUsersDrugsResponse>` type
     static func getAllUserDrugs() async -> ApiSuccessResponse<GetAllUsersDrugsResponse>? {
         try? await AuthService.conditionalRefresh()
         
@@ -33,12 +34,12 @@ struct DrugsService {
         }
     }
 
-    /// Create new drug function
+    /// Creates a new drug record for a user.
     ///
     /// - Parameters:
-    ///     - createdDrug: Drug entity to be created
+    ///     - createdDrug: A `Drug` instance representing the new drug.
     ///
-    /// - Returns: true if created, false otherwise
+    /// - Returns: True if created successfully, false otherwise
     static func createDrug(createdDrug: Drug) async -> Bool {
         try? await AuthService.conditionalRefresh()
 
@@ -71,13 +72,13 @@ struct DrugsService {
         }
     }
     
-    /// Update existing drug function
+    /// Updates an existing drug.
     ///
     /// - Parameters:
     ///     - id: Drug ID to update by
-    ///     - createdDrug: Drug entity to be updated
+    ///     - createdDrug: A `Drug` instance representing the updated drug.
     ///
-    /// - Returns: updated drug entity
+    /// - Returns: An instance of `ApiSuccessResponse<Drug>` type
     static func updateDrug(id: Int, updatedDrug: Drug) async -> ApiSuccessResponse<Drug>? {
         try? await AuthService.conditionalRefresh()
 
@@ -110,13 +111,13 @@ struct DrugsService {
         }
     }
 
-    /// Move drug to another folder
+    /// Moves a drug to another folder
     ///
     /// - Parameters:
     ///     - id: Drug ID to move
     ///     - folderID: Folder ID to move to
     ///
-    /// - Returns: true if moved, false otherwise
+    /// - Returns: True if moved successfully, false otherwise
     static func moveDrug(_ id: Int, folderID: String?) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
@@ -135,12 +136,12 @@ struct DrugsService {
         }
     }
 
-    /// Delete drug function
+    /// Delete a drug
     ///
     /// - Parameters:
     ///     - id: Drug ID to delete
     ///
-    /// - Returns: true if deleted, false otherwise
+    /// - Returns: True if deleted successfully, false otherwise`
     static func deleteDrug(_ id: Int) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
@@ -159,12 +160,12 @@ struct DrugsService {
         }
     }
 
-    /// Get user drug by id function
+    /// Fetches a user drug by its id.
     ///
     /// - Parameters:
     ///     - id: Drug ID to get by
     ///
-    /// - Returns: Drug entity
+    /// - Returns: An instance of `ApiSuccessResponse<GetUsersDrugResponse>` type
     static func getUserDrug(_ id: Int) async -> ApiSuccessResponse<GetUsersDrugResponse>? {
         try? await AuthService.conditionalRefresh()
 

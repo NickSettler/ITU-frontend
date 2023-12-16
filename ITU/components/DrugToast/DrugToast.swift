@@ -23,12 +23,14 @@ struct BoundsPreferenceKey: PreferenceKey {
     }
 }
 
-/// Drug toast component
+/// A SwiftUI view component that displays brief information and allows for a context menu and hint overlay.
 struct DrugToast: View {
+    // State controlling the visibility of the hint
     @State var isHintVisible: Bool = false
-    
+
+    // Properties defining the role, color, title, text and hint of the Toast
     let role: E_ROLE_GROUP
-    
+
     var title: String
     var text: String
     var hintTitle: String? = nil
@@ -128,6 +130,7 @@ struct DrugToast: View {
     }
 }
 
+// Previews of the DrugToast with different settings.
 #Preview {
     let hintTitle = "Route"
     let hintText = "Route means a way how the medicine should be delivered into the organism. For example, oral route mostly means that you should swallow the medicine."

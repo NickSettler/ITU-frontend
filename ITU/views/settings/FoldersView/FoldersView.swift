@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+/// `FoldersView` is a view representing a list of folders.
 struct FoldersView: View {
     @Environment(\.editMode) var editMode
     
     @StateObject var viewModel = FoldersViewModel()
     
+    /// The body of `FoldersView`.
     var body: some View {
         GeometryReader { proxy in
             ScrollView(.vertical, showsIndicators: false) {

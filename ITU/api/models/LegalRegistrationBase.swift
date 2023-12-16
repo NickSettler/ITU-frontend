@@ -7,8 +7,11 @@
 
 import Foundation
 
-/// RegistraionStatus structure
+/// Represents the data structure of a LegalRegistrationBase.
+/// It conforms to Codable for ease of parsing
 struct LegalRegistrationBase : Codable {
+
+    // MARK: - Properties
     var code: String
     var name: String
     
@@ -17,8 +20,9 @@ struct LegalRegistrationBase : Codable {
         case name
     }
 
-    /// Init registraion status from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `LegalRegistrationBase` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -26,16 +30,16 @@ struct LegalRegistrationBase : Codable {
         self.name = try container.decode(String.self, forKey: .name)
     }
 
-    /// Init registraion status with code
-    /// - Parameter code: registraion status code
+    /// Initializes a `LegalRegistrationBase` instance with provided code.
+    /// - Parameter code: Code as string.
     init(code: String) {
         self.init(code: code, name: code)
     }
 
-    /// Init registraion status with code and name
+    /// Initializes a `LegalRegistrationBase` instance with provided code and name.
     /// - Parameters:
-    ///   - code: registraion status code
-    ///   - name: registraion status name
+    ///   - code: Code as string.
+    ///   - name: Name of the registration status
     init(code: String, name: String) {
         self.code = code
         self.name = name

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// `ListView` is a view representing a list of drugs.
 struct ListView: View {
     @Namespace var animation
     
@@ -16,6 +17,7 @@ struct ListView: View {
     
     private(set) var refreshFunc: () -> Void
     
+    /// Initializes a new instance of `ListView` with the provided binding to the drug list, folderID, and a function for refreshing data.
     init(drugs: Binding<[Drug]>, folderID: String, refreshFunc: @escaping () -> Void) {
         self._drugs = drugs
         self._viewModel = ObservedObject(wrappedValue: ListViewModel(drugs: drugs, folderID: folderID)
@@ -23,7 +25,10 @@ struct ListView: View {
         self.refreshFunc = refreshFunc
     }
     
+    /// The body of `ListView`.
     var body: some View {
+        // Displays a ScrollView containing a list of drugs with navigation links to `DrugView`.
+        // Each item in the list is an instance of `DrugCard` view.
         if !self.viewModel.filteredDrugs.isEmpty {
             ScrollView(.vertical) {
                 ForEach(self.viewModel.filteredDrugs.indices, id: \.self) { index in
@@ -48,6 +53,7 @@ struct ListView: View {
                 }
             }
         } else {
+            // Displays a VStack with a message and a refresh button, indicating that there are no drugs found in the folder.
             VStack (spacing: 48) {
                 Spacer()
                 

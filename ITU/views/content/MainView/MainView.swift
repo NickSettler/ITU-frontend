@@ -7,12 +7,14 @@
 
 import SwiftUI
 
+/// `MainView` is a view representing the main content view of the application. It contains a `TabView` and a custom `TabBar`.
 struct MainView: View {
     @Namespace private var animation
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) var access_token: String?
     
     @StateObject private var viewModel = MainViewModel()
     
+    /// The body of `MainView`.
     var body: some View {
         GeometryReader { proxy in
             VStack(spacing: 0) {
@@ -33,6 +35,7 @@ struct MainView: View {
     }
     
     @ViewBuilder
+    /// `CustomTabBar` is a private function returning a view that represents a custom `TabBar`.
     func CustomTabBar(
         _ tint: Color = .Primary300,
         _ inactiveTint: Color = .Primary300
@@ -75,6 +78,7 @@ struct MainView: View {
     }
 }
 
+/// `MenuTabItem` is a view that represents a single item in the custom tab bar.
 struct MenuTabItem : View {
     var tint: Color
     var inactiveTint: Color

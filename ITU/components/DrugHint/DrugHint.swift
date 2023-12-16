@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-/// Drug hint component
+/// A SwiftUI view component that displays a hint for a drug.
 struct DrugHint: View {
+    // Properties defining the color, title and text of the hint
     let color: [Color]
     let title: String
     let text: String
@@ -42,6 +43,7 @@ struct DrugHint: View {
     }
 }
 
+// An example of how the DrugHint gets rendered
 #Preview {
     DrugHint(
         color: E_ROLE_GROUP.success.color,

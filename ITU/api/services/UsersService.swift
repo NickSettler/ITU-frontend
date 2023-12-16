@@ -7,9 +7,12 @@
 
 import Foundation
 
+/// `UsersService` is a struct that contains all operations related to users.
 struct UsersService {
-    /// Get current user
-    /// - Returns: current user
+
+    /// Fetches the current logged in user
+    ///
+    /// - Returns: An instance of `ApiSuccessResponse<User>` type on success, nil on failure
     static func getCurrentUser() async -> ApiSuccessResponse<User>? {
         try? await AuthService.conditionalRefresh()
         
@@ -28,10 +31,12 @@ struct UsersService {
         }
     }
 
-    /// Search users
+    /// Searches users by the given query
+    ///
     /// - Parameters:
-    ///   - query: query to search
-    /// - Returns: Array of users that match the query
+    ///   - query: The search term as string
+    ///
+    /// - Returns: An Array of `User` instances in `ApiSuccessResponse<[User]>` on success, nil on failure
     static func search(query: String) async -> ApiSuccessResponse<[User]>? {
         try? await AuthService.conditionalRefresh()
         

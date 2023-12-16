@@ -8,11 +8,19 @@
 import SwiftUI
 import Combine
 
+/// `DrugAdditionView` is a view representing a form UI to add new drug to the list.
 struct DrugAdditionView: View {
+
+    /// `dismiss` environment variable used for dismissing the sheet
     @Environment (\.dismiss) var dismiss
     
+    /// ViewModel for drug addition
     @StateObject var viewModel: DrugAdditionViewModel
-    
+
+    /// Initializers for creating or updating a drug
+    /// - Parameters:
+    ///     - selectedFolder: Selected `Folder` to add new drug
+    ///     - drug: Binding to the drug data to update
     init(selectedFolder: Folder) {
         self._viewModel = StateObject(wrappedValue: DrugAdditionViewModel(selectedFolder: selectedFolder))
     }
@@ -21,6 +29,7 @@ struct DrugAdditionView: View {
         self._viewModel = StateObject(wrappedValue: DrugAdditionViewModel(drug: drug))
     }
     
+    /// Body of `DrugAdditionView`.
     var body: some View {
         NavigationStack {
             VStack {
@@ -124,6 +133,7 @@ struct DrugAdditionView: View {
     }
 }
 
+// Represents `DrugAdditionView` with an `.allFolder` selected.
 #Preview {
     DrugAdditionView(selectedFolder: .allFolder)
 }

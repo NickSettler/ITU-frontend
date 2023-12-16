@@ -8,15 +8,20 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// `HouseholdView` is a view that shows the details of the user's household, including the owner and members. It also provides options to manage the household.
 struct HouseholdView: View {
     @StateObject var viewModel = HouseholdViewModel()
     
+    /// The body of `HouseholdView`.
     var body: some View {
         ZStack {
+            // when a household exists
             if let household = viewModel.currentUser?.household {
+                // scrollable list of household details
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 20) {
                         if viewModel.hasOwner {
+                            // show owner details
                             VStack(spacing: 12) {
                                 Text("Owner")
                                     .font(.title)
@@ -44,6 +49,7 @@ struct HouseholdView: View {
                             .padding()
                         }
                         
+                        // show member details
                         VStack(spacing: 12) {
                             Text("Members")
                                 .font(.title)
@@ -82,6 +88,7 @@ struct HouseholdView: View {
                                             }
                                         }
                                     }
+                                    // context menus for household management
                                     .if(viewModel.isCurrentUserOwner) {
                                         $0.contextMenu {
                                             Button {
@@ -140,6 +147,7 @@ struct HouseholdView: View {
                     HouseholdAddSheet(memberID: $viewModel.addMemberIDRequired)
                 }
             } else {
+                // view when no household exists
                 noHousehold
             }
         }
@@ -153,8 +161,10 @@ struct HouseholdView: View {
         }
     }
     
+     // View for when no household exists:
     var noHousehold: some View {
         VStack (spacing: 48) {
+            // information about missing household
             VStack (spacing: 12) {
                 Image(systemName: "space")
                     .font(.system(size: 60))
@@ -164,6 +174,7 @@ struct HouseholdView: View {
                     .font(.title)
             }
             
+            // Button for creating a new household
             GradientButton(title: "CREATE") {
                 viewModel.createHousehold()
             }

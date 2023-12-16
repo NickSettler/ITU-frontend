@@ -7,13 +7,18 @@
 
 import SwiftUI
 
-/// Tab bar view component
+/// `TabBarView` is a customizable SwiftUI view component that represents a horizontal scrollable custom tab bar.
 struct TabBarView: View {
+    // The currently selected folder tab.
     @Binding var currentFolder: Folder
+    // The array of "Folder"s which will comprise the tabs in the tab bar.
     @Binding var folders: [Folder]
+    // A dictionary mapping the folder id to respective colors.
     var folderColors: Dictionary<String, Color>?
+    // A namespace for transitions.
     @Namespace var namespace
 
+    /// Body of `TabBarView`.
     var body: some View {
         HStack {
             ScrollView(.horizontal, showsIndicators: false) {
@@ -46,6 +51,7 @@ struct TabBarView: View {
     }
 }
 
+// a preview of a `TabBarView` with a single "All" folder tab.
 #Preview {
     TabBarView(
         currentFolder: .constant(.allFolder),

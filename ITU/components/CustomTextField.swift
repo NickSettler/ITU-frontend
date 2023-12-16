@@ -7,22 +7,30 @@
 
 import SwiftUI
 
-/// TextField Type Enum
+/// TextFieldType represents different types of text fields.
 enum TextFieldType: String {
     case email, text, first_name, last_name
 }
 
-/// Custom TextField Component
+/// CustomTextField is a custom text field SwiftUI component.
 struct CustomTextField: View {
+    // SystemName of SF Icon to display.
     var sfIcon: String?
+    // Tint color of the icon.
     var iconTint: Color = .gray
+    // A placeholder string to show when the text field is empty.
     var hint: String
+    // The type of the TextField.
     var type: TextFieldType = .text
-    /// Hides TextField
+    // Hides the TextField when true.
     var isPassword: Bool = false
+
+    // The entered text in the TextField.
     @Binding var value: String
-    /// View Properties
+
+    // To control the visibility of the password.
     @State private var showPassword: Bool = false
+
     /// When Switching Between Hide/Reveal Password Field, The Keyboard is Closing, to avoid that using the FocusState
     @FocusState private var passwordState: HideState?
     
@@ -31,6 +39,7 @@ struct CustomTextField: View {
         case reveal
     }
     
+    /// Body of CustomTextField.
     var body: some View {
         HStack(alignment: .top, spacing: 8, content: {
             if (sfIcon != nil) {
@@ -103,6 +112,7 @@ struct CustomTextField: View {
     }
 }
 
+// Preview shows an email TextField and a password TextField.
 #Preview {
     VStack(spacing: 25) {
         CustomTextField(

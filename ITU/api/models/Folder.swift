@@ -7,8 +7,12 @@
 
 import Foundation
 
-/// Folder structure
+/// Represents the data structure of a Folder.
+/// It conforms to Codable, Identifiable, Equatable and Hashable for ease of
+/// parsing, list handling and comparison.
 struct Folder : Codable, Identifiable, Equatable, Hashable {
+
+    // MARK: - Properties
     var id: String
     var name: String
     var icon: String?
@@ -33,8 +37,9 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         case date_updated
     }
 
-    /// Init folder from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `Folder` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try values.decodeIfPresent(String.self, forKey: .id)!
@@ -66,22 +71,23 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         self.date_updated = try values.decodeIfPresent(String.self, forKey: .date_updated) ?? nil
     }
 
-    /// Init folder with id
-    /// - Parameter id: folder id
+    /// Initializes a `Folder` instance with provided id.
+    /// - Parameter id: Unique identifier.
     init (id: String) {
         self.init(id: id, name: id, icon: id, isPrivate: false, user_created: .init(id: id), date_created: "")
     }
 
-    /// Init folder with id, name, icon, sort, user_created, date_created, user_updated, date_updated
+    /// Initializes a `Folder` instance with provided informations.
     /// - Parameters:
-    ///   - id: folder id
-    ///   - name: folder name
-    ///   - icon: folder icon
-    ///   - sort: folder sort
-    ///   - user_created: user who created folder
-    ///   - date_created: date when folder was created
-    ///   - user_updated: user who updated folder
-    ///   - date_updated: date when folder was updated
+    ///   - id: Unique ientifier.
+    ///   - name: Name of the Folder
+    ///   - icon: Icon for the Folder
+    ///   - sort: Sorting index for the Folder
+    ///   - isPrivate: Specifies if Folder is private
+    ///   - user_created: User who created this Folder
+    ///   - date_created: Date when this Folder was created
+    ///   - user_updated: User who updated this Folder
+    ///   - date_updated: Date when this Folder was updated
     init(
         id: String,
         name: String,
@@ -103,13 +109,16 @@ struct Folder : Codable, Identifiable, Equatable, Hashable {
         self.user_updated = user_updated
         self.date_updated = date_updated
     }
-    
+
+    // MARK: - Computed Properties
+    /// Provides an instance of `Folder` that represents all Folders.
     static var allFolder: Folder {
         get {
             .init(id: "ALL", name: "All", icon: "", sort: 0, isPrivate: false, user_created: .init(id: "test"), date_created: "")
         }
     }
-    
+
+    // Provides an empty instance of `Folder`
     static var empty: Folder {
         get {
             .init(id: "", name: "", icon: "", sort: 0, isPrivate: false, user_created: .init(id: ""), date_created: "")
