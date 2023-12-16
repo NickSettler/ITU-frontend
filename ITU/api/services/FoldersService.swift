@@ -21,20 +21,8 @@ struct FoldersService {
             )
             
             let result: ApiSuccessResponse<GetAllUserFoldersResponse> = try NetworkAPI.parseData(data: data)
-
-            let currentUserId = await UsersService.getCurrentUser()?.data.id
-
-            let filteredData = result.data.filter { folder in
-                if folder.user_created.id != currentUserId && folder.isPrivate {
-                    return false
-                } else {
-                    return true
-                }
-            }
-
-            let filteredResult: ApiSuccessResponse<GetAllUserFoldersResponse> = .init(data: filteredData)
-
-            return filteredResult
+            
+            return result
         } catch let error {
             print(error.localizedDescription)
             return nil

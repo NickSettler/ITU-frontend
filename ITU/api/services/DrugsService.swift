@@ -26,23 +26,7 @@ struct DrugsService {
             )
             let result: ApiSuccessResponse<GetAllUsersDrugsResponse> = try NetworkAPI.parseData(data: data)
             
-            let currentUserId = await UsersService.getCurrentUser()?.data.id
-            
-            let filteredData = result.data.filter { drug in
-                if (drug.location == nil) {
-                    return true
-                }
-                
-                if (drug.location!.isPrivate && drug.location!.user_created.id != currentUserId) {
-                    return false
-                } else {
-                    return true
-                }
-            }
-            
-            let filteredResult: ApiSuccessResponse<GetAllUsersDrugsResponse> = .init(data: filteredData)
-            
-            return filteredResult
+            return result
         } catch let error {
             print(error.localizedDescription)
             return nil
