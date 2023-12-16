@@ -59,7 +59,8 @@ struct DrugsService {
                     "strength": createdDrug.strength ?? "",
                     "form": createdDrugForm.form,
                     "count": createdDrug.count,
-                    "expiration_date": formattedDate
+                    "expiration_date": formattedDate,
+                    "location": createdDrug.location?.id ?? nil
                 ]
             )
 

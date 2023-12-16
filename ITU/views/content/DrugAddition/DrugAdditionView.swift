@@ -11,10 +11,10 @@ import Combine
 struct DrugAdditionView: View {
     @Environment (\.dismiss) var dismiss
     
-    @StateObject var viewModel = DrugAdditionViewModel()
+    @StateObject var viewModel: DrugAdditionViewModel
     
-    init() {
-        self._viewModel = StateObject(wrappedValue: DrugAdditionViewModel())
+    init(selectedFolder: Folder) {
+        self._viewModel = StateObject(wrappedValue: DrugAdditionViewModel(selectedFolder: selectedFolder))
     }
     
     init(drug: Binding<Drug>) {
@@ -125,5 +125,5 @@ struct DrugAdditionView: View {
 }
 
 #Preview {
-    DrugAdditionView()
+    DrugAdditionView(selectedFolder: .allFolder)
 }
