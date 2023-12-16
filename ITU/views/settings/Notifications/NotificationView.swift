@@ -10,19 +10,18 @@ import UserNotifications
 
 struct NotificationView: View {
     @StateObject var viewModel = NotificationViewModel()
-
+    
     var body: some View {
         VStack {
             List {
                 Toggle("Allow Expiration date notifications", isOn: $viewModel.isNotificationAllowed)
                     .onChange(of: viewModel.isNotificationAllowed) { newValue in
-                        print(viewModel.isNotificationAllowed)
                         if newValue {
                             viewModel.performOnAction()
                         }
                     }
                     .padding()
-
+                
                 if viewModel.isNotificationAllowed {
                     Section(header: Text("Reminder Settings")) {
                         Picker("Select Frequency", selection: $viewModel.reminderFrequency) {
@@ -31,14 +30,14 @@ struct NotificationView: View {
                             Text("Every month").tag(24 * 60 * 60 * 30)
                         }
                         .pickerStyle(SegmentedPickerStyle())
-                        .foregroundColor(.primary)
+                        .foregroundColor(.gray)
                         
                         
                     }
                     Section{
                         Text("Choose the time before the expiration date you want to receive notifications from the app")
                             .font(.system(size: 14))
-                            .foregroundColor(.primary)
+                            .foregroundColor(.gray)
                             .padding()
                         HStack {
                             VStack{
@@ -51,33 +50,33 @@ struct NotificationView: View {
                                         }
                                     }
                                     .pickerStyle(WheelPickerStyle())
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.gray)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 1.75)
                                 }
                                 .pickerStyle(WheelPickerStyle())
-                                .foregroundColor(.primary)
+                                .foregroundColor(.gray)
                                 .padding()
                                 
                             }
-
+                            
                             Picker("Unit", selection: $viewModel.selectedUnit) {
-                                    Text("Days").tag(1)
-                                    Text("Months").tag(30)
+                                Text("Days").tag(1)
+                                Text("Months").tag(30)
                             }
-                                .pickerStyle(SegmentedPickerStyle())
-                                .foregroundColor(.primary)
-                                .padding(.top, 30)
-                                                   
+                            .pickerStyle(SegmentedPickerStyle())
+                            .foregroundColor(.gray)
+                            .padding(.top, 30)
+                            
                         }
                     }
                 }
             }
             .onChange(of: viewModel.isNotificationAllowed) {
                 viewModel.getAllUserDrugs()
-
+                
                 // Check if there is any drug with an expired state
                 let hasExpiredDrug = viewModel.drugs.contains { $0.expiry_state == .expired }
-
+                
                 // If notifications are allowed and there is an expired drug, schedule a daily notification
                 if viewModel.isNotificationAllowed && hasExpiredDrug {
                     viewModel.scheduleNotification()

@@ -36,19 +36,19 @@ import SwiftUI
     }
     
     func scheduleNotification() {
-
+        
         let actualDate = Date()
         
         for drug in drugs {
             let difference = Calendar.current.dateComponents([.day], from: actualDate, to: drug.expiration_date)
             print(difference)
-        
+            
             if selectedUnit == 1 {
                 daysBeforeExpired = selectedNumber
             } else if selectedUnit == 30 {
                 daysBeforeExpired = selectedNumber * 30
             }
-
+            
             if let daysDifference = difference.day {
                 if daysDifference > 0 && daysDifference <= daysBeforeExpired {
                     // Schedule notification for expiration in a month
@@ -60,7 +60,7 @@ import SwiftUI
             }
         }
     }
-
+    
     func scheduleReminderNotification(title: String, body: String) {
         let content = UNMutableNotificationContent()
         content.title = title
@@ -98,8 +98,6 @@ import SwiftUI
             }
         }
     }
-
-
     
     func performOnAction () {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
@@ -111,7 +109,5 @@ import SwiftUI
             }
         }
     }
-
+    
 }
-
-
