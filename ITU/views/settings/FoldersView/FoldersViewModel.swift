@@ -16,15 +16,22 @@ extension Array where Element: Hashable {
     }
 }
 
+/// `FoldersViewModel` is a class designed to manage and provide data for the FoldersView.
 @MainActor class FoldersViewModel : ObservableObject {
     var currentFolder: Binding<Folder?> = .constant(nil)
     
+    // Represents whether the folder creation modal is presented.
     @Published var isPresented: Bool = false
+
+    // Manages the animation state.
     @Published var isAnimating: Bool = true
+
+    // List of folders in the view.
     @Published var folders: [Folder] = []
     
     var initialFolders: [Folder] = []
     
+    /// Fetches all user folders using the FoldersService.
     func getAllUserFolders() {
         Task {
             let foldersResponse = await FoldersService.getFolders()
@@ -41,10 +48,19 @@ extension Array where Element: Hashable {
         }
     }
     
+    /// Handles moving a folder from an index to another.
+    ///
+    /// - Parameters:
+    ///     - a: The index set of the folder to move.
+    ///     - b: The index to move the folder to.
     func handleMove(a: IndexSet, b: Int) {
         self.folders.move(fromOffsets: a, toOffset: b)
     }
     
+    /// Handles deleting folders with the given offsets.
+    ///
+    /// - Parameters:
+    ///     - offsets: The index set of the folders to delete.
     func handleDelete(offsets: IndexSet) {
         let idsToDelete = offsets.map { self.folders[$0].id }
         Task {
@@ -56,6 +72,7 @@ extension Array where Element: Hashable {
         }
     }
     
+    /// Handles saving changes in folders' order.
     func handleSaveChanges() {
         self.folders = self.folders.enumerated().map { index, element in
             var _element = element

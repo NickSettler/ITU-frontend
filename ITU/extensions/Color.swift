@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-/// Color extension
+/// Color extension to provide application specific colors and helper functions for hex conversions.
 extension Color {
     static var theme: Color  {
         return Color("theme")
@@ -186,10 +186,13 @@ extension Color {
         return Color("Quaternary700")
     }
 
-    /// Init color from hex
+	// Various static properties that return named colors.
+
+  	/// Initialize Color from a hex value.
+  	///
     /// - Parameters:
-    ///   - hex: Hex
-    ///   - alpha: Alpha
+	///   - hex: Unsigned integer of the hex value.
+    ///   - alpha: The opacity of the color. Defaults to 1.
     init(hex: UInt, alpha: Double = 1) {
         self.init(
             .sRGB,
@@ -200,7 +203,7 @@ extension Color {
         )
     }
 
-    /// Get color components
+	/// Get color components
     /// - Returns: Color components
     private func components() -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         let scanner = Scanner(string: self.description.trimmingCharacters(in: CharacterSet.alphanumerics.inverted))
@@ -217,7 +220,7 @@ extension Color {
         return (r, g, b, a)
     }
 
-    /// Get hex from color
+	/// Get hex from color
     /// - Returns: Hex
     func toHex() -> UInt? {
         let components = self.components()

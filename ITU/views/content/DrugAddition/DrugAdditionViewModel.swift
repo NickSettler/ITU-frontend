@@ -8,6 +8,9 @@
 import SwiftUI
 import Foundation
 
+/// Enums representing drug dosage, count measurement, and drug addition mode.
+/// Enums are conforming to `Identifiable` and `CaseIterable` for easy use with SwiftUI Pickers and iteration through all cases.
+
 enum drugDosage: String, CaseIterable, Identifiable {
     case mg = "mg"
     case mcg = "mcg"
@@ -31,10 +34,14 @@ enum DRUG_ADDITION_MODE {
     case update
 }
 
+/// `DrugAdditionViewModel` is a view model designed to manage and publish the data for `DrugAdditionView`.
 @MainActor class DrugAdditionViewModel : ObservableObject {
+
+    // Private state objects and local variables
     private(set) var drugBinding: Binding<Drug>?
     private(set) var selectedFolder: Folder? = nil
     
+    /// Publication of different types of data used in `DrugAdditionView`
     @Published var mode: DRUG_ADDITION_MODE = .create
     @Published var createdDrug: Drug = .empty
     
@@ -66,6 +73,7 @@ enum DRUG_ADDITION_MODE {
     
     @Published var didRequestComplete: Bool = false
     
+    /// Initializers for updating a drug or creating a new drug in a selected folder.
     init(selectedFolder: Folder) {
         self.selectedFolder = selectedFolder
     }
@@ -97,6 +105,7 @@ enum DRUG_ADDITION_MODE {
         }
     }
     
+    /// Prepare createdDrug for saving based on user inputs.
     private func prepare() {
         if (countNumber != "") {
             countBinding = "\(countNumber) \(selectedMeasurement.rawValue)"
@@ -119,6 +128,7 @@ enum DRUG_ADDITION_MODE {
         }
     }
     
+    /// Function for creating a drug
     private func createDrug() {
         Task {
             self.prepare()
@@ -131,6 +141,7 @@ enum DRUG_ADDITION_MODE {
         }
     }
     
+    /// Function for updating a drug
     private func updateDrug() {
         Task {
             self.prepare()
@@ -143,6 +154,7 @@ enum DRUG_ADDITION_MODE {
         }
     }
     
+    /// Function to handle saving of drug. If mode is `create`, create drug, else update drug.
     func save() {
         if mode == .create {
             self.createDrug()

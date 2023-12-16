@@ -7,15 +7,20 @@
 
 import SwiftUI
 
+/// `CommonListView` is a view representing a list of common items, such as drugs.
 struct CommonListView: View {
+    // The ViewModel to manage the list data
     @StateObject var viewModel = CommonListViewModel()
     
+    /// Offset states for tracking user's scroll offset
     @State var offset: CGFloat = 0
     @State var offsetY: CGFloat = 0
     
+    /// Size and safeArea are properties to define the view's layout constraint.
     var size: CGSize
     var safeArea: EdgeInsets
     
+    /// Body of `CommonListView`.
     var body: some View {
         NavigationView {
             SearchingView(searchText: $viewModel.searchQuery) {
@@ -71,12 +76,14 @@ struct CommonListView: View {
                 viewModel.refresh()
             }
         }
+        // This action calls viewModel.refresh() when the view first appears
         .onAppear {
             viewModel.refresh()
         }
     }
 }
 
+// Represents `CommonListView`.
 #Preview {
     CommonListView(size: .zero, safeArea: .init(.zero))
 }

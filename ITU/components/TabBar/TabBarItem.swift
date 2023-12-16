@@ -7,15 +7,20 @@
 
 import SwiftUI
 
-/// Tab bar item component
+/// `TabBarItem` is a structure to render a tab bar item for the custom tab bar.
 struct TabBarItem: View {
+    // The currently selected folder tab
     @Binding var currentFolder: Folder
+    // The color of the tab
     var tabColor: Color?
-    
+
+    // The matched geometry effect namespace
     let namespace: Namespace.ID
-    
+
+    // The folder that this tab represents
     var folder: Folder
-    
+
+    /// Body of `TabBarItem`.
     var body: some View {
         Button {
             withAnimation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0.3)) {
@@ -71,6 +76,7 @@ struct TabBarItem: View {
     }
 }
 
+// Usage of `TabBarItem` in a custom `TabBarView`.
 #Preview {
     TabBarView(
         currentFolder: .constant(.allFolder),

@@ -8,14 +8,21 @@
 import Foundation
 import SwiftUI
 
+/// `CommonListViewModel` is a view model designed to manage and publish the list data for `CommonListView`.
 @MainActor class CommonListViewModel : ObservableObject {
+
+    /// Selected `Folder` & search query
     @Published var selectedFolder: Folder = .allFolder
     @Published var searchQuery: String = ""
+
+    /// Flag to control drug creation UI visibility
     @Published var isDrugCreateVisible: Bool = false
     
+    /// User's folders and drugs data
     @Published var folders: [Folder] = [.allFolder]
     @Published var drugs: [Drug] = []
     
+    /// Fetch user's folders from server
     func getAllUserFolders() {
         Task {
             if let res = await FoldersService.getFolders() {
@@ -32,6 +39,7 @@ import SwiftUI
         }
     }
     
+    /// Fetch user's drugs from server
     func getAllUserDrugs() {
         Task {
             if let res = await DrugsService.getAllUserDrugs() {
@@ -44,6 +52,9 @@ import SwiftUI
         }
     }
     
+    /// Generate tabs color dictionary based on the drug state.
+    /// This function takes no parameters.
+    /// - Returns: A dictionary where keys are folder IDs, and values are the associated Color items.
     func getTabsColors() -> Dictionary<String, Color> {
         var folderColors: Dictionary<String, Color> = [:]
         
@@ -70,7 +81,9 @@ import SwiftUI
         
         return folderColors
     }
-    
+
+    /// Refresh the folders and drugs data.
+    /// It updates 'folders' and 'drugs' properties by fetching latest data from the server.
     func refresh() {
         self.getAllUserFolders()
         self.getAllUserDrugs()

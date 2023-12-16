@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-/// Role group enum
+/// Enumeration to represent different types of alerts, conforming to both `Int` and `Codable`.
 enum E_ROLE_GROUP : Int, Codable {
+    // Cases
     case success = 0
     case warning = 1
     case error = 2
     case info = -1
-    
+
+    // Computed property to get a color theme based on the role group.
     var color: [Color] {
         get {
             switch (self) {
@@ -30,14 +32,16 @@ enum E_ROLE_GROUP : Int, Codable {
     }
 }
 
-/// Role group form enum
+/// Enumeration to define different forms of RoleGroup
 enum E_ROLE_GROUP_FORM {
     case chip
     case rounded
 }
 
-/// Role group component
+/// A customizable SwiftUI view component that wraps some content and adjusts its appearance based on the alert type and form.
 struct RoleGroup<Content : View>: View {
+
+    // Various properties to decide style and content to display
     var form: E_ROLE_GROUP_FORM
     var role: E_ROLE_GROUP
     var content: Content
@@ -95,7 +99,8 @@ struct RoleGroup<Content : View>: View {
         
         self.content = content()
     }
-    
+
+    /// Body of RoleGroup. Generates a view based on the values and content provided
     var body: some View {
         ZStack {
             content
@@ -123,7 +128,8 @@ struct RoleGroup<Content : View>: View {
             ).inset(by: -0.5)
         )
     }
-    
+
+    // Computed properties to represent different background styles for role group
     var chipBackground: some View {
         RoundedRectangle(
             cornerRadius: 10000
@@ -149,6 +155,7 @@ struct RoleGroup<Content : View>: View {
     }
 }
 
+// Previews of the RoleGroup with different settings.
 #Preview {
     VStack {
         VStack {

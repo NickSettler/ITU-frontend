@@ -7,10 +7,12 @@
 
 import Foundation
 
+/// `FoldersService` is a struct that contains all the Folder related network calls
 struct FoldersService {
-    /// Get all user folders
+
+    /// Gets all user folders.
     ///
-    /// - Returns: A GetAllUserFoldersResponse with all user folders
+    /// - Returns: An instance of `ApiSuccessResponse<GetAllUserFoldersResponse>` type
     static func getFolders() async -> ApiSuccessResponse<GetAllUserFoldersResponse>? {
         try? await AuthService.conditionalRefresh()
         
@@ -29,13 +31,15 @@ struct FoldersService {
         }
     }
 
-    /// Create folder function
+    /// Creates a new folder for a user.
     ///
     /// - Parameters:
-    ///     - name: Folder name
-    ///     - icon: Folder icon
+    ///     - name: Name of the new folder
+    ///     - icon: Icon of the new folder
+    ///     - description: Description of the new folder
+    ///     - isPrivate: Boolean flag indicating if the folder is private or not
     ///
-    /// - Returns: true if created, false otherwise
+    /// - Returns: True if created successfully, false otherwise
     static func createFolder(name: String, icon: String, description: String, isPrivate: Bool) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
@@ -57,14 +61,16 @@ struct FoldersService {
         }
     }
 
-    /// Update folder function
+    /// Updates an existing folder.
     ///
     /// - Parameters:
-    ///     - id: Folder ID to update
-    ///     - name: Folder name
-    ///     - icon: Folder icon
+    ///     - id: Folder ID to update by
+    ///     - name: New name of the folder
+    ///     - icon: New icon of the folder
+    ///     - description: New description of the folder
+    ///     - isPrivate: New value for the boolean flag indicating if the folder is private or not
     ///
-    /// - Returns: true if updated, false otherwise
+    /// - Returns: True if updated successfully, false otherwise
     static func updateFolder(id: String, name: String, icon: String, description: String, isPrivate: Bool) async -> Bool {
         try? await AuthService.conditionalRefresh()
 
@@ -86,12 +92,12 @@ struct FoldersService {
         }
     }
 
-    /// Delete folder function
+    /// Deletes a folder based on its Id.
     ///
     /// - Parameters:
     ///     - id: Folder ID to delete
     ///
-    /// - Returns: true if deleted, false otherwise
+    /// - Returns: True if deleted successfully, false otherwise
     static func deleteFolder(id: String) async -> Bool {
         try? await AuthService.conditionalRefresh()
         
@@ -108,12 +114,12 @@ struct FoldersService {
         }
     }
 
-    /// Delete folders function
+    /// Deletes multiple folders based on their Ids.
     ///
     /// - Parameters:
-    ///     - ids: Folder IDs to delete
+    ///     - ids: Array of Folder IDs to delete
     ///
-    /// - Returns: true if deleted, false otherwise
+    /// - Returns: True if all folders are deleted successfully, false otherwise
     static func deleteFolders(ids: [String]) async -> Bool {
         try? await AuthService.conditionalRefresh()
         

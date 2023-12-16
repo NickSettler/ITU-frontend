@@ -8,16 +8,16 @@
 import Foundation
 import Alamofire
 
+/// `AuthService` is a struct that contains all the authentication-related network calls
 struct AuthService {
-    /// User sign in
+    /// Sign In service call that posts user credentials to `/auth/login` and returns `SignInResponse`
     ///
     /// - Author: Elena Marochkina
     ///
     /// - Parameters:
-    ///     - email: User email
-    ///     - password: User password
-    ///
-    /// - Returns: A SignInResponse with access token
+    ///   - email: User's email as string.
+    ///   - password: User's password as string.
+    /// - Returns: An instance of `ApiSuccessResponse<SignInResponse>` type
     static func signIn(
         email: String,
         password: String
@@ -37,18 +37,17 @@ struct AuthService {
             return nil
         }
     }
-    
-    /// User sign up
+
+    /// Sign Up service call that posts a new user's details to `/users` and returns `SignInResponse`
     ///
     /// - Author: Nikita Pasynkov
     ///
     /// - Parameters:
-    ///     - email: User email
-    ///     - password: User password
-    ///     - firstName: User first name
-    ///     - lastName: User last name
-    ///
-    /// - Returns: A SignInResponse with access token
+    ///   - email: New User's email as string.
+    ///   - password: New User's password as string.
+    ///   - firstName: New User's firstName as string.
+    ///   - lastName: New User's lastName as string.
+    /// - Returns: An instance of `ApiSuccessResponse<SignInResponse>` type
     static func signUp(
         email: String,
         password: String,
@@ -73,11 +72,11 @@ struct AuthService {
         }
     }
     
-    /// Refresh token
+    /// Refresh token service call that posts to `/auth/refresh` with refresh_token
     ///
     /// - Author: Elena Marochkina
     ///
-    /// - Returns: A SignInResponse with access token
+    /// - Returns: An instance of `ApiSuccessResponse<SignInResponse>` type
     static func refresh() async -> ApiSuccessResponse<SignInResponse>? {
         guard let refreshToken = NetworkAPI.refreshToken else {
             return nil
@@ -99,9 +98,8 @@ struct AuthService {
         }
     }
     
-    /// Atempt to refresh user access token
-    ///
-    /// - Author: Elena Marochkina
+    /// Conditional Refresh service call that attempts to refresh user access token
+    /// Author: Elena Marochkina
     static func conditionalRefresh() async throws {
         guard let token = NetworkAPI.accessToken else {
             throw ApiErrorResponse.noTokenError

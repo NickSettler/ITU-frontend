@@ -7,10 +7,14 @@
 
 import Foundation
 
+/// `HouseholdViewModel` is a class designed to manage and provide data for the HouseholdView,
+/// includes methods for managing members of the household, making network requests to fetch, add, delete members,
+/// and handling transfer of household ownership.
 @MainActor final class HouseholdViewModel : ObservableObject {
     @Published var currentUser: User? = .init(id: "")
     @Published var addMemberID: String?
     
+    // Various computed properties providing details based on the currentUser info, such as household and owner info, and if the view should show the add member sheet etc.
     var currentUserID: String? { self.currentUser?.id }
     var currentUserIDRequired: String { self.currentUser?.id ?? ""}
     var currentUserHousehold: Household? { self.currentUser?.household }
@@ -57,12 +61,14 @@ import Foundation
         set { addMemberID = newValue }
     }
     
+    /// Fetches the current user details from server using the UsersService.
     func getCurrentUser() {
         Task {
             self.currentUser = await UsersService.getCurrentUser()?.data
         }
     }
     
+    /// Makes a network request to about creating a new household.
     func createHousehold() {
         Task {
             guard let uid = currentUser?.id else {
@@ -74,7 +80,9 @@ import Foundation
             self.getCurrentUser()
         }
     }
-    
+
+    /// If the member id is valid and the member is not already a part of the household, then a network request is made to add the member.
+    /// After the request, it fetches the updated user info from the server.
     func addMember() {
         Task {
             guard let householdID = currentUser?.household?.id,
@@ -102,7 +110,9 @@ import Foundation
             self.addMemberID = nil
         }
     }
-    
+
+    /// If the member to be removed is part of the current household, makes a network request to remove the member from the household.
+    /// After the request, it fetches the updated user info from the server.
     func removeMember(_ mid: String) {
         Task {
             guard let householdID = currentUser?.household?.id,
@@ -130,7 +140,9 @@ import Foundation
             self.addMemberID = nil
         }
     }
-    
+
+/// If the new owner id is valid, makes a network request to transfer the ownership of the household to the new owner.
+/// After the request, it fetches the updated user info from the server.
     func transfer(_ newOwnerID: String) {
         Task {
             guard let householdID = currentUser?.household?.id else {
@@ -153,7 +165,8 @@ import Foundation
             self.addMemberID = nil
         }
     }
-    
+
+    /// Makes a network request to delete the current household. After the request, it fetches the updated user info from the server.
     func deleteHousehold() {
         Task {
             guard let householdID = currentUser?.household?.id else {

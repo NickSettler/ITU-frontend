@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-/// Font extension for JetBrains Mono font
+/// Enum `JetBrainsMono` represents the types of JetBrains Mono font.
 enum JetBrainsMono: String {
     case regular = "JetBrainsMono-Regular"
     case italic = "JetBrainsMono-Italic"
@@ -26,7 +26,7 @@ enum JetBrainsMono: String {
     case thinItalic = "JetBrainsMono-ThinItalic"
 }
 
-/// Font extension for size
+/// Extension of `Font.TextStyle` to calculate font sizes.
 extension Font.TextStyle {
     var size: CGFloat {
         switch self {
@@ -47,17 +47,19 @@ extension Font.TextStyle {
 /// Main font name
 fileprivate let helveticaFont = "Helvetica"
 
-/// Font extension for custom fonts
+/// Font extension to define custom fonts in the app.
 extension Font {
-    /// Custom font
-    /// - Parameters:
+
+	/// Creates a custom font
+	/// - Parameters:
     ///   - name: Font name
     ///   - size: Font size
     ///   - relativeTo: Style relative to
     static func custom(_ font: JetBrainsMono, relativeTo style: Font.TextStyle) -> Font {
         custom(font.rawValue, size: style.size, relativeTo: style)
     }
-    
+
+	// Set of predefined custom fonts
     static let mono = custom(JetBrainsMono.light.rawValue, size: 16)
     
     static let helvetica16 = custom(helveticaFont, size: 16)

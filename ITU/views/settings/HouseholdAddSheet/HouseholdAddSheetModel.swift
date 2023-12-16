@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import SwiftUI
 
+/// `HouseholdAddSheetModel` is a class designed to manage and provide data for the HouseholdAddSheet view.
 @MainActor final class HouseholdAddSheetModel : ObservableObject {
     @Published var searched: Bool = false
     @Published var searchEmail: String = ""
@@ -36,6 +37,7 @@ import SwiftUI
     
     private var bag = Set<AnyCancellable>()
     
+    /// Initializes a new instance of `HouseholdAddSheetModel` with a `Binding` representing the new member ID, and a debouncing delay time.
     init(memberID: Binding<String>, dueTime: TimeInterval = 0.5) {
         self.addMemberID = memberID
         $searchEmail
@@ -47,6 +49,10 @@ import SwiftUI
             .store(in: &bag)
     }
     
+    /// Searches for users whose emails match the provided query using the UsersService.
+    ///
+    /// - Parameters:
+    ///     - query: The query to search for.
     func search(query: String) {
         Task {
             if query.isEmpty {
@@ -60,7 +66,8 @@ import SwiftUI
             self.searched = true
         }
     }
-    
+
+    /// Adds the user found by email to the household.
     func addUser() {
         let isOnlyUser = foundUsers.count == 1 && foundUsers[0].email == searchEmail
         

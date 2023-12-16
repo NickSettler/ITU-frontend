@@ -7,13 +7,18 @@
 
 import Foundation
 
-/// Drug expiration state enum
+/// Represents the expiration state of the drug
 enum E_DRUG_EXPIRY_STATE{
-    case    not, soon, expired
+    case not        // Drug is not expired
+    case soon       // Drug is about to expire soon
+    case expired    // Drug is expired
 }
 
-/// Drug structure
+/// Represents the data structure of a Drug.
+/// It conforms to Codable and Identifiable for ease of parsing and list handling.
 struct Drug : Codable, Identifiable {
+
+    // MARK: - Properties
     var id: Int
     var name: String
     var location: Folder?
@@ -60,6 +65,8 @@ struct Drug : Codable, Identifiable {
     var date_updated: String?
     var expiration_date: Date
     var count: String
+
+    // MARK: - Computed Properties
     var expiry_state: E_DRUG_EXPIRY_STATE {
         get {
             let currentDate = Date()
@@ -124,8 +131,9 @@ struct Drug : Codable, Identifiable {
         case count
     }
 
-    /// Init drug from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `Drug` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -364,10 +372,10 @@ struct Drug : Codable, Identifiable {
 
     /// Init drug with id, name, complement, expiration date and location
     /// - Parameters:
-    ///   - id: drug id
-    ///   - name: drug name
-    ///   - complement: drug complement
-    ///   - expiration_date: drug expiration date
+    ///   - id: Unique identifier
+    ///   - name: Name of the Drug
+    ///   - complement: Complementary information
+    ///   - expiration_date: Expiration date in "yyyy-MM-dd" format
     init(id: Int, name: String, complement: String, expiration_date: String) {
         self.id = id
         self.name = name
@@ -425,7 +433,7 @@ struct Drug : Codable, Identifiable {
         return self.supplied != nil || self.EAN != nil || self.brail_sign != nil || self.expiration != nil || self.expiration_period != nil || self.mrp_number != nil || self.safety_element != nil
     }
 
-    /// Get empty drug
+    /// Provides an empty instance of `Drug`
     static var empty: Drug {
         get {
             return .init(id: 0, name: "", complement: "", expiration_date: "", location: nil)
@@ -437,12 +445,14 @@ typealias GetAllUsersDrugsResponse = [Drug]
 
 typealias GetUsersDrugResponse = Drug
 
+/// Used for formatting date strings in API response, format: "yyyy-MM-dd"
 private var dateFormatter: DateFormatter {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
     return formatter
 }
 
+/// Sample data for testing
 let allDrugs: [Drug] = [
     .init(id: 1, name: "PARACETAMOL AUROVITAS", complement: "500MG TBL NOB 10 II", expiration_date: "2025-10-12"),
     .init(id: 2, name: "PARACETAMOL AUROVITAS", complement: "500MG TBL NOB 20 II", expiration_date: "2025-10-12"),

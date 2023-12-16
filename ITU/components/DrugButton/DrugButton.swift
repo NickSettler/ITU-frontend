@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-/// Drug button color enum
+/// Enum specifying the button color variant. Conforms to Codable protocol.
 enum DRUG_BUTTON_COLOR : Int, Codable {
     case success = 0
     case warning = 1
     case error = 2
     case info = -1
-    
+
+    // Returns an array of Colors depending on the button color
     var color: [Color] {
         get {
             switch (self) {
@@ -30,7 +31,8 @@ enum DRUG_BUTTON_COLOR : Int, Codable {
     }
 }
 
-/// Drug button component
+/// A SwiftUI view component that displays a button with a customizable title,
+/// color and icon, and invokes a closure when the button is clicked.
 struct DrugButton: View {
     var title: String
     var color: DRUG_BUTTON_COLOR = .success
@@ -38,7 +40,8 @@ struct DrugButton: View {
     var fullWidth: Bool = false
     var disabled: Bool = false
     var onClick: () -> ()
-    
+
+    // Derived Colors for button background, text and icon
     var backgroundColor: Color {
         return color.color[0]
     }
@@ -83,6 +86,7 @@ struct DrugButton: View {
     }
 }
 
+// Previews of the DrugButton with different settings.
 #Preview {
     VStack {
         VStack {

@@ -8,16 +8,21 @@
 import Foundation
 import SwiftUI
 
+/// `NotificationViewModel` provides methods and properties to manage drug notifications
 @MainActor class NotificationViewModel : ObservableObject {
+    // An array of drugs
     @Published var drugs: [Drug] = []
+    // An array of expired drugs
     @Published var expiredDrugs: [Drug] = []
     
+    // App storage for user preferences regarding notifications
     @AppStorage("isNotificationAllowed") var isNotificationAllowed: Bool = false
     @AppStorage("reminderFrequency") var reminderFrequency: Int = 24 * 60 * 60 // Default: 24 hours
     @AppStorage("selectedNumber") var selectedNumber: Int = 1 // Default: 30 days
     @AppStorage("selectedUnit") var selectedUnit: Int = 30 // Default: 1 month
     @AppStorage("daysBeforeExpired") var daysBeforeExpired: Int = 30 // Default: 30 days
     
+    /// Query all drugs from server using the DrugsService.
     func getAllUserDrugs() {
         Task {
             if let res = await DrugsService.getAllUserDrugs() {
@@ -30,11 +35,13 @@ import SwiftUI
         }
     }
     
+    /// Remove all pending and delivered notifications
     func removeNotifications() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
     
+    /// Schedule drug expiry notifications based on the user's selected days before expiry.
     func scheduleNotification() {
         
         let actualDate = Date()
@@ -60,6 +67,11 @@ import SwiftUI
         }
     }
     
+    /// Schedule a reminder type of notification.
+    ///
+    /// - Parameters:
+    ///     - title: The title of the notification.
+    ///     - body: The body of the notification.
     func scheduleReminderNotification(title: String, body: String) {
         let content = UNMutableNotificationContent()
         content.title = title
@@ -98,6 +110,7 @@ import SwiftUI
         }
     }
     
+    /// Request user permission for sending notifications.
     func performOnAction () {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
             success, error in

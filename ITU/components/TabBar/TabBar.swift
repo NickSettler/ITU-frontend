@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-/// Tabs
+/// `TabBar` is a SwiftUI view to represent a horizontally scrollabe tab bar.
 struct TabBar: View {
+    // The offset of the content within the tab bar.
     @Binding var offset: CGFloat
+    // The width of the tab bar.
     @State var width : CGFloat = 0
     
     var body: some View {
@@ -74,16 +76,16 @@ struct TabBar: View {
         .frame(height: 40)
     }
 
-    /// Get offset for tab indicator
-    /// - Returns: offset
+    /// Function to calculate the offset for the tab indicator.
+    /// - Returns: The offset for the tab indicator.
     func getOffset()->CGFloat{
         let progress = offset / UIScreen.main.bounds.width
         
         return progress * width
     }
 
-    /// Get index from offset
-    /// - Returns: index of tab
+    /// Function to get the index of the tab given the offset.
+    /// - Returns: The index of the tab.
     func getIndexFromOffset()->CGFloat{
         let indexFloat = offset / UIScreen.main.bounds.width
         
@@ -91,6 +93,7 @@ struct TabBar: View {
     }
 }
 
+// Example usage of `TabBar`.
 #Preview {
     var offset: CGFloat = 0
     let offsetBinding: Binding<CGFloat> = .init(

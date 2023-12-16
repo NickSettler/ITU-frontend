@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+/// `SignUpView` is a view for handling user registration process.
 struct SignUpView: View {
     @StateObject private var viewModel = SignUpViewModel()
     
+    /// Binding to control the visibility of the SignUpView
     @Binding var showSignup: Bool
     
+    /// Body of `SignUpView`.
     var body: some View {
         VStack(alignment: .leading, spacing: 15, content: {
             /// Back Button
@@ -103,6 +106,7 @@ struct SignUpView: View {
     }
 }
 
+// Represents `SignUpView`.
 #Preview {
     SignUpView(showSignup: .constant(false))
 }

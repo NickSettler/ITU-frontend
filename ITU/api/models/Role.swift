@@ -7,8 +7,10 @@
 
 import Foundation
 
-/// Role structure
+/// Represents the data structure of a Role.
 struct Role : Codable, Hashable {
+
+    // MARK: - Properties
     var id: String
     var name: String
     var icon: String
@@ -18,7 +20,7 @@ struct Role : Codable, Hashable {
     var admin_access: Bool
     var app_access: Bool
     var users: [User]
-    
+
     enum CodingKeys: CodingKey {
         case id
         case name
@@ -31,8 +33,9 @@ struct Role : Codable, Hashable {
         case users
     }
 
-    /// Init role from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `Role` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -79,23 +82,21 @@ struct Role : Codable, Hashable {
         }
     }
 
-    /// Init role with id
-    /// - Parameter id: role id
     init(id: String) {
         self.init(id: id, name: "Role", icon: "icon", enforce_tfa: false, admin_access: false, app_access: false, users: [])
     }
 
-    /// Init role with id, name, icon, description, ip_access, enforce_tfa, admin_access, app_access and users
+    /// Initializes a `Role` instance with id, name, icon, description, ip_access, enforce_tfa, admin_access, app_access and users
     /// - Parameters:
-    ///   - id: role id
-    ///   - name: role name
-    ///   - icon: role icon
-    ///   - description: role description
-    ///   - ip_access: role ip access
-    ///   - enforce_tfa: role enforce tfa
-    ///   - admin_access: role admin access
-    ///   - app_access: role app access
-    ///   - users: role users
+    ///   - id: Unique identifier for the Role
+    ///   - name: Name of the Role
+    ///   - icon: Represents an icon for the Role
+    ///   - description: A brief description about the Role
+    ///   - ip_access: Represents IP access for the Role
+    ///   - enforce_tfa: Flag to enforce Two Factor Authentication for the Role
+    ///   - admin_access: Flag to provide admin access for the Role
+    ///   - app_access: Flag to provide app access for the Role
+    ///   - users: List of users having this Role
     init(
         id: String,
         name: String,
@@ -118,7 +119,8 @@ struct Role : Codable, Hashable {
         self.users = users.map { .init(id: $0) }
     }
 
-    /// Compare two roles by id
+    // MARK: - Instance Methods
+    /// Compare two Roles based on their ids
     static func == (lhs: Role, rhs: Role) -> Bool {
         return lhs.id == rhs.id
     }

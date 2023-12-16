@@ -7,8 +7,10 @@
 
 import Foundation
 
-/// Household structure
+/// Represents the data structure of a Household.
 struct Household : Codable, Hashable {
+
+    // MARK: - Properties
     var id: Int
     var user_created: User?
     var members: [User]
@@ -19,8 +21,9 @@ struct Household : Codable, Hashable {
         case members
     }
 
-    /// Init household from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `Household` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try values.decode(Int.self, forKey: .id)
@@ -41,29 +44,30 @@ struct Household : Codable, Hashable {
         }
     }
 
-    /// Init household with id, user_created and members
+    /// Initializes a `Household` instance with provided id, user created and members.
     /// - Parameters:
-    ///   - id: household id
-    ///   - user_created: user who created household
-    ///   - members: household members
+    ///   - id: Unique Identifier
+    ///   - user_created: User who created this Household
+    ///   - members: Members of this Household
     init(id: Int, user_created: User? = nil, members: [User]) {
         self.id = id
         self.user_created = user_created
         self.members = members
     }
 
-    /// Init household with id
-    /// - Parameter id: household id
+    /// Initializes a `Household` instance with provided id.
+    /// - Parameter id: Unique Identifier
     init(id: Int) {
         self.init(id: id, user_created: nil, members: [])
     }
 
-    /// Compare two households by id
+    // MARK: - Instance Methods
+    /// Compare two Households based on their ids
     static func == (lhs: Household, rhs: Household) -> Bool {
         return lhs.id == rhs.id
     }
 
-    /// Hash household by id, user_created and members
+    /// Hash Household by id, user_created and members
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(user_created)

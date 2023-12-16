@@ -7,15 +7,20 @@
 
 import SwiftUI
 
+/// `HouseholdAddSheet` is a view representing a sheet for adding a new user to a household by searching for their email.
 struct HouseholdAddSheet: View {
+
+    // ViewModel for managing and providing data
     @StateObject var viewModel: HouseholdAddSheetModel
     
     @Environment(\.presentationMode) var presentationMode
     
+    /// Initializes a new instance of `HouseholdAddSheet` with a `Binding` representing the new member ID.
     init(memberID: Binding<String>) {
         self._viewModel = StateObject(wrappedValue: HouseholdAddSheetModel(memberID: memberID))
     }
     
+    /// The body of `HouseholdAddSheet`.
     var body: some View {
         NavigationStack {
             VStack() {

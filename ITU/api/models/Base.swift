@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-/// API response codes
+/// Enum used to represent all possible API response codes
 enum ApiResponseCode : String, Codable {
     case ContainsNullValues = "CONTAINS_NULL_VALUES"
     case ContentTooLarge = "CONTENT_TOO_LARGE"
@@ -39,7 +39,10 @@ enum ApiResponseCode : String, Codable {
     case ValueTooLong = "VALUE_TOO_LONG"
 }
 
-/// API success response structure
+/// Struct used to encapsulate API success responses with a specified data structure.
+///
+/// This struct will decode any decodable data contained in the 'data' field
+/// of a success response from the API.
 struct ApiSuccessResponse<T : Decodable> : Decodable {
     let data: T
     
@@ -48,7 +51,7 @@ struct ApiSuccessResponse<T : Decodable> : Decodable {
     }
 }
 
-/// API error response extension structure
+/// Structure representing the contextual information in an error response
 struct ApiErrorResponseExtension : Codable {
     let code: ApiResponseCode
     let field: String?
@@ -61,7 +64,7 @@ struct ApiErrorResponseExtension : Codable {
     }
 }
 
-/// API error response item structure
+/// Struct used to encapsulate API error response items
 struct ApiErrorResponseItem : Codable {
     let message: String
     let extensions: ApiErrorResponseExtension?
@@ -71,37 +74,41 @@ struct ApiErrorResponseItem : Codable {
         case extensions
     }
 
-    /// Init error response item with message
-    /// - Parameter message: error message
+    /// Initializes an error response item with provided error message
+    ///
+    /// - Parameter message: The error message text
     init(message: String) {
         self.message = message
         self.extensions = nil
     }
 
-    /// Init error response item with message and extensions
+    /// Initializes an error response item with provided error message and extensions
+    ///
     /// - Parameters:
-    ///   - message: error message
-    ///   - extensions: error extensions
+    ///   - message: The error message text
+    ///   - extensions: Error extensions providing additional context to the error
     init(message: String, extensions: ApiErrorResponseExtension?) {
         self.message = message
         self.extensions = extensions
     }
 }
 
-/// API error response structure
+/// Struct used to encapsulate API error responses
 struct ApiErrorResponse : Error, Codable {
     let errors: [ApiErrorResponseItem]
-    
+
     enum CodingKeys: String, CodingKey {
         case errors
     }
-    
+
+    /// Returns ApiErrorResponse instance with the error message "Something went wrong"
     static var wrongError: ApiErrorResponse {
         get {
             return .init(errors: [.init(message: "Something went wrong")])
         }
     }
-    
+
+    /// Returns ApiErrorResponse instance with the error message "No token is present"
     static var noTokenError: ApiErrorResponse {
         get {
             return .init(errors: [.init(message: "No token is present")])
@@ -109,7 +116,13 @@ struct ApiErrorResponse : Error, Codable {
     }
 }
 
-/// API result enum to handle success and failure cases
+/// Enum used for handling API result. Can handle both success and failure cases.
+///
+/// The `ApiResult` enumeration is a type used to represent either a success
+/// or a failure. It includes an associated value of a generic type for each case.
+///
+/// `ApiResult` can be specialized with any type that conforms to `Decodable`
+/// protocol for successful and failed API responses.
 enum ApiResult<Success: Decodable, Error: Decodable>: Decodable {
     case success(Success)
     case failure(Error)

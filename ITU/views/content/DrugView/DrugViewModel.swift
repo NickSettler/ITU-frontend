@@ -30,8 +30,11 @@ struct DrugChipData : Codable, Hashable {
 }
 
 @MainActor class DrugViewModel : ObservableObject {
+
+    // A reference to an instance of Drug class
     var drugBinding: Binding<Drug>
-    
+
+    // The @Published properties cause the UI to update when their values change:
     @Published var drug: Drug
     @Published var getRequestInProgress: Bool = false
     @Published var rotation = 0.0
@@ -54,6 +57,7 @@ struct DrugChipData : Codable, Hashable {
     
     @Published var isDeletedRequestComplete: Bool = false
     
+    // Some computed properties
     var expiryDateToastRole: E_ROLE_GROUP {
         get {
             switch(drug.expiry_state) {
@@ -125,11 +129,13 @@ struct DrugChipData : Codable, Hashable {
         }
     }
 
+    // Initializes a new instance of DrugViewModel with the provided drug binding
     init(drug: Binding<Drug>) {
         self.drugBinding = drug
         self.drug = drug.wrappedValue
     }
     
+    // Fetches drug information from a backend service.
     func getDrugInfo(_ bindingUpdate: Bool = true) {
         Task {
             withAnimation(.interactiveSpring(response: 0.55, dampingFraction: 0.65, blendDuration: 0.65)) {
@@ -161,6 +167,7 @@ struct DrugChipData : Codable, Hashable {
         }
     }
     
+    // Deletes a drug using a backend service
     func deleteDrug() {
         Task {
             let deleted = await DrugsService.deleteDrug(drug.id)

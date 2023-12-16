@@ -7,17 +7,20 @@
 
 import SwiftUI
 
-/// Menu tab shape
+/// `MenuTabShape` represents the custom shape used for the menu tab.
 struct MenuTabShape: Shape {
+    // The value used to determine the location of the curve in the shape
     var midpoint: CGFloat
     
+    // Property used for animation
     var animatableData: CGFloat {
         get { midpoint }
         set { midpoint = newValue }
     }
 
-    /// Get path of menu tab
-    /// - Parameter rect: Rectangle
+    /// Function that draw the path for the MenuTabShape
+    /// - Parameter rect: The rectangular bounds used to draw the shape.
+    /// - Returns: A path that represents the Menu Tab Shape.
     func path(in rect: CGRect) -> Path {
         return Path { path in
             path.addPath(Rectangle().path(in: rect))

@@ -7,8 +7,10 @@
 
 import Foundation
 
-/// PharmClass structure
+/// Represents the data structure of a PharmClass.
 struct PharmClass : Codable {
+
+    // MARK: - Properties
     var code: String
     var name: String
     
@@ -17,8 +19,9 @@ struct PharmClass : Codable {
         case name
     }
 
-    /// Init pharm class from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `PharmClass` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -26,16 +29,16 @@ struct PharmClass : Codable {
         self.name = try container.decode(String.self, forKey: .name)
     }
 
-    /// Init pharm class with code
-    /// - Parameter code: pharm class code
+    /// Initializes a `PharmClass` instance with provided code.
+    /// - Parameter code: Code as string.
     init(code: String) {
         self.init(code: code, name: code)
     }
 
-    /// Init pharm class with code and name
+    /// Initializes a `PharmClass` instance with provided code and name.
     /// - Parameters:
-    ///   - code: pharm class code
-    ///   - name: pharm class name
+    ///   - code: Code as string.
+    ///   - name: Name of the PharmClass
     init(code: String, name: String) {
         self.code = code
         self.name = name

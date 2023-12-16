@@ -7,13 +7,15 @@
 
 import Foundation
 
+/// `HouseholdService` is a struct that contains all the Household related network calls
 struct HouseholdService {
-    /// Create household
+
+    /// Creates a new household for a user.
     ///
     /// - Parameters:
-    ///     - currentUID: User id
+    ///     - currentUID: The User ID as string.
     ///
-    /// - Returns: A Household
+    /// - Returns: An instance of `ApiSuccessResponse<Household>` type
     static func create(_ currentUID: String) async -> ApiSuccessResponse<Household>? {
         try? await AuthService.conditionalRefresh()
         
@@ -36,13 +38,13 @@ struct HouseholdService {
         }
     }
 
-    /// Update household
+    /// Updates an existing household.
     ///
     /// - Parameters:
-    ///     - householdID: Household id
-    ///     - parameters: Household parameters
+    ///     - householdID: The Household ID as integer.
+    ///     - parameters: The parameters to update in the household as a dictionary.
     ///
-    /// - Returns: A Household
+    /// - Returns: An instance of `ApiSuccessResponse<Household>` type
     static func update(_ householdID: Int, parameters: [String: Any]) async -> ApiSuccessResponse<Household>? {
         try? await AuthService.conditionalRefresh()
         
@@ -61,10 +63,10 @@ struct HouseholdService {
         }
     }
 
-    /// Delete household
+    /// Deletes a household based on its Id.
     ///
     /// - Parameters:
-    ///     - householdID: Household id
+    ///     - householdID: The Household ID to delete as integer.
     ///
     /// - Returns: Void
     static func delete(_ householdID: Int) async -> Void {

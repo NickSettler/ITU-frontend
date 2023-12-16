@@ -7,16 +7,20 @@
 
 import SwiftUI
 
-/// Drug chip component
+/// A SwiftUI view component that displays a chipped form of a drug with a hint.
 struct DrugChip: View {
+    // State controlling the visibility of the hint
     @State var isHintVisible: Bool = false
-    
+
+    // Properties defining the look and content of the chip
     let role: E_ROLE_GROUP
     let text: String
     let hintTitle: String?
     let hintText: String?
     
     let color: [Color]
+
+    // Multiple initializers for the component
 
     /// Init drug chip with text
     init(text: String) {
@@ -98,6 +102,7 @@ struct DrugChip: View {
     }
 }
 
+// Previews of the DrugChip with different settings.
 #Preview {
     ScrollView(.horizontal, showsIndicators: false) {
         HStack {

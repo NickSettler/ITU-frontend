@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Drug card component
+/// A SwiftUI view component that displays a card for a drug with information about its name, count, form, strength, and expiration date.
 struct DrugCard: View {
     @Binding var drug: Drug
     
@@ -82,7 +82,7 @@ struct DrugCard: View {
     }
 }
 
-
+// Example usage of the DrugCard view within CommonListView.
 #Preview {
     CommonListView(size: .zero, safeArea: .init(.zero))
 }

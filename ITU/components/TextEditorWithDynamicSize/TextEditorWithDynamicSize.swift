@@ -8,10 +8,14 @@
 import Foundation
 import SwiftUI
 
+/// `TextEditorWithDynamicSize` is a SwiftUI view component that represents a text editor that adjusts its size when the user enters a large amount of text.
 struct TextEditorWithDynamicSize: View {
+    // The text in the text editor
     @Binding var text: String
+    // The height of the text in the text editor
     @State private var contentHeight: CGFloat = .zero
     
+    /// Body of `TextEditorWithDynamicSize`.
     var body: some View {
         ZStack(alignment: .topLeading) {
             TextEditor(text: $text)
@@ -43,6 +47,7 @@ struct TextEditorWithDynamicSize: View {
     }
 }
 
+/// `ViewHeightKey` is a SwiftUI preference key to get the height of a view.
 struct ViewHeightKey: PreferenceKey {
     static var defaultValue: CGFloat { 10 }
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {

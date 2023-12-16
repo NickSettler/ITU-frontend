@@ -9,24 +9,38 @@ import SwiftUI
 import Foundation
 import Alamofire
 
+/// This is the base URL for the API.
 private let API_BASE_URL = "https://directus.settler.tech"
 
+/// Network Manager using Alamofire library
+///
+/// - Author: Nikita Moiseev
+///
+/// Manages network calls with various HTTP methods. Main methods encapsulated here are GET, POST, PATCH, DELETE.
 actor NetworkManager: GlobalActor {
+    /// Stores the access token of the user session
     @AppStorage(E_AUTH_STORAGE_KEYS.ACCESS_TOKEN.rawValue) private var accessToken: String?
     
+    /// Singleton instance of the NetworkManager
     static let shared = NetworkManager()
     private init() {}
     
+    /// Max waiting time for each request
     private let maxWaitTime = 15.0
+    /// Headers that common to all requests
     var commonHeaders: HTTPHeaders = [
     ]
 
     /// Send POST request
+    ///
     /// - Parameters:
-    ///   - path: path to send request to
-    ///   - parameters: parameters to send
-    /// - Throws: error if request fails
-    /// - Returns: response data
+    ///   - path: API endpoint to send request to
+    ///   - parameters: The parameters included in the request body
+    ///
+    /// - Throws: An error if the request fails
+    ///
+    /// - Returns: The server response data
+    ///
     func post(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             if (!NetworkAPI.isTokenExpired(token: token)) {
@@ -56,11 +70,15 @@ actor NetworkManager: GlobalActor {
     }
 
     /// Send PATCH request
+    ///
     /// - Parameters:
-    ///   - path: path to send request to
-    ///   - parameters: parameters to send
-    /// - Throws: error if request fails
-    /// - Returns: response data
+    ///   - path: API endpoint to send request to
+    ///   - parameters: The parameters included in the request body
+    ///
+    /// - Throws: An error if the request fails
+    ///
+    /// - Returns: The server response data
+    ///
     func patch(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             if !NetworkAPI.isTokenExpired(token: token) {
@@ -90,11 +108,15 @@ actor NetworkManager: GlobalActor {
     }
 
     /// Send DELETE request
+    ///
     /// - Parameters:
-    ///   - path: path to send request to
-    ///   - parameters: parameters to send
-    /// - Throws: error if request fails
-    /// - Returns: response data
+    ///   - path: API endpoint to send request to
+    ///   - parameters: The parameters included in the request body
+    ///
+    /// - Throws: An error if the request fails
+    ///
+    /// - Returns: The server response data
+    ///
     func delete(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             if (!NetworkAPI.isTokenExpired(token: token)) {
@@ -124,11 +146,15 @@ actor NetworkManager: GlobalActor {
     }
 
     /// Send GET request
+    ///
     /// - Parameters:
-    ///   - path: path to send request to
-    ///   - parameters: parameters to send
-    /// - Throws: error if request fails
-    /// - Returns: response data
+    ///   - path: API endpoint to send request to
+    ///   - parameters: The parameters to include in the query string
+    ///
+    /// - Throws: An error if the request fails
+    ///
+    /// - Returns: The server response data
+    ///
     func get(path: String, parameters: Parameters?) async throws -> Data {
         if let token = self.accessToken {
             commonHeaders.add(name: "Authorization", value: "Bearer " + token)
@@ -153,8 +179,12 @@ actor NetworkManager: GlobalActor {
     }
 
     /// Handle error from request
-    /// - Parameter error: error to handle
-    /// - Returns: handled error
+    ///
+    /// - Parameters:
+    ///   - error: The error occurred during the request
+    ///
+    /// - Returns: Handled error with an updated error message, if needed
+    ///
     private func handleError(error: AFError) -> Error {
         if let underlyingError = error.underlyingError {
             let nserror = underlyingError as NSError

@@ -8,15 +8,18 @@
 import SwiftUI
 import SymbolPicker
 
+/// `FolderSheet` is a view representing a form for creating or editing a folder.
 struct FolderSheet: View {
     @Environment(\.presentationMode) var presentationMode
     
     @StateObject private var viewModel : FolderSheetViewModel
     
+    /// Initializes a new instance of `FolderSheet` with the provided binding to the current folder.
     init(currentFolder: Binding<Folder>) {
         _viewModel = StateObject(wrappedValue: FolderSheetViewModel(currentFolder: currentFolder))
     }
     
+    /// The body of `FolderSheet`.
     var body: some View {
         NavigationStack {
             VStack {

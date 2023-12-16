@@ -7,8 +7,11 @@
 
 import Foundation
 
-/// RegistraionStatus structure
+/// Represents the data structure of a Unit.
+/// It conforms to Codable for ease of parsing
 struct Unit : Codable {
+
+    // MARK: - Properties
     var unit: String
     var name: String
     
@@ -17,8 +20,9 @@ struct Unit : Codable {
         case name
     }
 
-    /// Init registraion status from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `Unit` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -26,16 +30,16 @@ struct Unit : Codable {
         self.name = try container.decode(String.self, forKey: .name)
     }
 
-    /// Init registraion status with code
-    /// - Parameter unit: registraion status code
+    /// Initializes a `Unit` instance with provided unit string.
+    /// - Parameter unit: Unit as string.
     init(unit: String) {
         self.init(unit: unit, name: unit)
     }
 
-    /// Init registraion status with code and name
+    /// Initializes a `Unit` instance with provided unit string and name.
     /// - Parameters:
-    ///   - unit: registraion status code
-    ///   - name: registraion status name
+    ///   - unit: Unit as string.
+    ///   - name: Name of the Unit
     init(unit: String, name: String) {
         self.unit = unit
         self.name = name

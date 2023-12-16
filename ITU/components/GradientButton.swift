@@ -7,14 +7,20 @@
 
 import SwiftUI
 
-/// Gradient button component
+/// `GradientButton` is a SwiftUI custom view component that represents a button with a gradient background.
 struct GradientButton: View {
+    // The title of the button.
     var title: String
+    // The SystemName of SF icon to display.
     var icon: String?
+    // If `true`, the button will have the maximum width.
     var fullWidth: Bool = false
+    // If `true`, disables the button.
     var disabled: Bool = false
+    // The closure that is triggered when the button is clicked.
     var onClick: () -> ()
     
+    /// Body of `GradientButton`.
     var body: some View {
         Button(action: disabled ? {} : onClick, label: {
             HStack(spacing: 15) {
@@ -45,6 +51,7 @@ struct GradientButton: View {
     }
 }
 
+// A variety of `GradientButton`s.
 #Preview {
     VStack {
         GradientButton(title: "Login", icon: "arrow.right") {

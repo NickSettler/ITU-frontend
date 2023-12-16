@@ -7,11 +7,16 @@
 
 import SwiftUI
 
+/// `DrugMoveSheet` is a view presenting an UI to move the drug to a different folder.
 struct DrugMoveSheet: View {
+
+    /// `dismiss` environment variable used for dismissing the sheet
     @Environment (\.dismiss) var dismiss
     
+    /// ViewModel for moving the drug
     @StateObject private var viewModel: DrugMoveSheetModel
     
+    /// Initializer to create a new instance of `DrugMoveSheetModel` with provided `drugID` and `currentFolder`
     init(drugID: Int, currentFolder: Folder) {
         self._viewModel = StateObject(
             wrappedValue: DrugMoveSheetModel(
@@ -21,6 +26,7 @@ struct DrugMoveSheet: View {
         )
     }
     
+    /// Body of `DrugMoveSheet`.
     var body: some View {
         NavigationStack {
             VStack {
@@ -65,6 +71,7 @@ struct DrugMoveSheet: View {
     }
 }
 
+// Represents `DrugMoveSheet` with initial `drugID` as -1 and `currentFolder` as .empty
 #Preview {
     NavigationStack {
         DrugMoveSheet(drugID: -1, currentFolder: .empty)

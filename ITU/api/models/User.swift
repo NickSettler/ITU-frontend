@@ -7,8 +7,11 @@
 
 import Foundation
 
-/// User structure
+/// Represents the data structure of a User.
+/// It conforms to Codable and Hashable.
 class User : Codable, Hashable {
+
+    // MARK: - Properties
     var id: String
     var first_name: String?
     var last_name: String?
@@ -27,8 +30,9 @@ class User : Codable, Hashable {
         case household = "household"
     }
 
-    /// Init user from decoder (used for API response parsing)
-    /// - Parameter decoder: decoder
+    // MARK: - Initializers
+    /// Decodes the `User` instance from a Decoder.
+    /// - Parameter decoder: An instance of Decoder.
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -58,8 +62,8 @@ class User : Codable, Hashable {
         }
     }
 
-    /// Init user with id
-    /// - Parameter id: user id
+    /// Initializes a `User` instance with provided id.
+    /// - Parameter id: Id as string.
     convenience init(id: String) {
         self.init(
             id: id,
@@ -72,15 +76,15 @@ class User : Codable, Hashable {
         )
     }
 
-    /// Init user with id, first_name, last_name, email, password, role and household
+    /// Initializes a `User` instance with provided details like id, email etc.
     /// - Parameters:
-    ///   - id: user id
-    ///   - first_name: user first name
-    ///   - last_name: user last name
-    ///   - email: user email
-    ///   - password: user password
-    ///   - role: user role
-    ///   - household: user household
+    ///   - id: Unique identifier for the User
+    ///   - first_name: FirstName of the User
+    ///   - last_name: LastName of the User
+    ///   - email: Email Id for the User
+    ///   - password: Password for the User
+    ///   - role: Role of the User
+    ///   - household: Household of the User
     init(id: String, first_name: String, last_name: String, email: String, password: String, role: Role, household: Household) {
         self.id = id
         self.first_name = first_name
@@ -91,12 +95,13 @@ class User : Codable, Hashable {
         self.household = household
     }
 
-    /// Compare two users by id
+    // MARK: - Instance Methods
+    /// Compare two Users based on their ids
     static func == (lhs: User, rhs: User) -> Bool {
         return lhs.id == rhs.id
     }
 
-    /// Hash user by id
+    /// Hash a User based on id
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
